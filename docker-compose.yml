@@ -1,0 +1,14 @@
+version: alpine
+services:
+  database:
+    image: postgres:alpine
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=123456"
+      - "POSTGRES_DB=noxus"
+    ports:
+      - 5432:5432
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+volumes:
+  pg-data:
