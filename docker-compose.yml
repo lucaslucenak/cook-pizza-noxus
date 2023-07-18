@@ -2,6 +2,7 @@ version: alpine
 services:
   database:
     image: postgres:alpine
+    container_name: dev-postgresql
     environment:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=123456"
