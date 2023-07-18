@@ -53,6 +53,7 @@ public class AddressModel {
         this.clientAccount = clientAccount;
     }
 
+
     public Long getId() {
         return id;
     }

@@ -19,10 +19,11 @@ public class EdgeModel {
     @ManyToMany(mappedBy = "edges")
     private List<PizzaModel> pizzas;
 
-    public EdgeModel(Long id, String edge, Double price) {
+    public EdgeModel(Long id, String edge, Double price, List<PizzaModel> pizzas) {
         this.id = id;
         this.edge = edge;
         this.price = price;
+        this.pizzas = pizzas;
     }
 
     public EdgeModel() {
@@ -50,6 +51,14 @@ public class EdgeModel {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public List<PizzaModel> getPizzas() {
+        return pizzas;
+    }
+
+    public void setPizzas(List<PizzaModel> pizzas) {
+        this.pizzas = pizzas;
     }
 
     @Override

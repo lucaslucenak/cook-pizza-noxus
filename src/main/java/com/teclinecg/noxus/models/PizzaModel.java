@@ -3,6 +3,7 @@ package com.teclinecg.noxus.models;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -37,4 +38,77 @@ public class PizzaModel {
             inverseJoinColumns = @JoinColumn(name = "edge_id")
     )
     private List<EdgeModel> edges;
+
+    public PizzaModel() {
+    }
+
+    public PizzaModel(Long id, Double price, List<OrderModel> orders, SizeModel pizzaSize, List<FlavorModel> flavors, List<EdgeModel> edges) {
+        this.id = id;
+        this.price = price;
+        this.orders = orders;
+        this.pizzaSize = pizzaSize;
+        this.flavors = flavors;
+        this.edges = edges;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public List<OrderModel> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderModel> orders) {
+        this.orders = orders;
+    }
+
+    public SizeModel getPizzaSize() {
+        return pizzaSize;
+    }
+
+    public void setPizzaSize(SizeModel pizzaSize) {
+        this.pizzaSize = pizzaSize;
+    }
+
+    public List<FlavorModel> getFlavors() {
+        return flavors;
+    }
+
+    public void setFlavors(List<FlavorModel> flavors) {
+        this.flavors = flavors;
+    }
+
+    public List<EdgeModel> getEdges() {
+        return edges;
+    }
+
+    public void setEdges(List<EdgeModel> edges) {
+        this.edges = edges;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PizzaModel that = (PizzaModel) o;
+        return id.equals(that.id) && Objects.equals(price, that.price) && Objects.equals(orders, that.orders) && Objects.equals(pizzaSize, that.pizzaSize) && Objects.equals(flavors, that.flavors) && Objects.equals(edges, that.edges);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, price, orders, pizzaSize, flavors, edges);
+    }
 }

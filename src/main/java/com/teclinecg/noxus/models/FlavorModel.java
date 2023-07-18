@@ -22,10 +22,11 @@ public class FlavorModel {
     public FlavorModel() {
     }
 
-    public FlavorModel(Long id, String flavor, Double price) {
+    public FlavorModel(Long id, String flavor, Double price, List<PizzaModel> pizzas) {
         this.id = id;
         this.flavor = flavor;
         this.price = price;
+        this.pizzas = pizzas;
     }
 
     public Long getId() {
@@ -50,6 +51,14 @@ public class FlavorModel {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public List<PizzaModel> getPizzas() {
+        return pizzas;
+    }
+
+    public void setPizzas(List<PizzaModel> pizzas) {
+        this.pizzas = pizzas;
     }
 
     @Override
