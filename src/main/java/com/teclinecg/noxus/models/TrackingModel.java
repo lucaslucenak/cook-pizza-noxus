@@ -1,4 +1,4 @@
 package com.teclinecg.noxus.models;
 
-public class TrackingStatusModel {
+public class TrackingModel {
 }

@@ -28,6 +28,6 @@ public class ClientAccountModel {
     private List<AddressModel> address;
 
     @ManyToOne
-    @JoinColumn(name = "account_status_id")
-    private AccountStatusModel accountStatus;
+    @JoinColumn(name = "status_id")
+    private StatusModel status;
 }

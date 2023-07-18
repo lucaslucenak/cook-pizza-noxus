@@ -6,26 +6,26 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "flavor")
-public class FlavorModel {
+@Table(name = "edge")
+public class EdgeModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String flavor;
+    private String edge;
     private Double price;
 
-    @ManyToMany(mappedBy = "flavors")
+    @ManyToMany(mappedBy = "edges")
     private List<PizzaModel> pizzas;
 
-    public FlavorModel() {
+    public EdgeModel(Long id, String edge, Double price) {
+        this.id = id;
+        this.edge = edge;
+        this.price = price;
     }
 
-    public FlavorModel(Long id, String flavor, Double price) {
-        this.id = id;
-        this.flavor = flavor;
-        this.price = price;
+    public EdgeModel() {
     }
 
     public Long getId() {
@@ -36,12 +36,12 @@ public class FlavorModel {
         this.id = id;
     }
 
-    public String getFlavor() {
-        return flavor;
+    public String getEdge() {
+        return edge;
     }
 
-    public void setFlavor(String flavor) {
-        this.flavor = flavor;
+    public void setEdge(String edge) {
+        this.edge = edge;
     }
 
     public Double getPrice() {
@@ -56,12 +56,12 @@ public class FlavorModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FlavorModel that = (FlavorModel) o;
-        return id.equals(that.id) && Objects.equals(flavor, that.flavor) && Objects.equals(price, that.price);
+        EdgeModel edgeModel = (EdgeModel) o;
+        return id.equals(edgeModel.id) && Objects.equals(edge, edgeModel.edge) && Objects.equals(price, edgeModel.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, flavor, price);
+        return Objects.hash(id, edge, price);
     }
 }

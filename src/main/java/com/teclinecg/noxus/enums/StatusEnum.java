@@ -1,6 +1,6 @@
 package com.teclinecg.noxus.enums;
 
-public enum AccountStatusEnum {
+public enum StatusEnum {
     ACTIVE,
     INACTIVE
 }

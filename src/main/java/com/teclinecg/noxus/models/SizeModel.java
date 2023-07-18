@@ -4,7 +4,7 @@ import com.teclinecg.noxus.enums.PizzaSizeEnum;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "pizza_size")
+@Table(name = "size")
 public class SizeModel {
 
     @Id

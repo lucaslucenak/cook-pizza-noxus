@@ -1,16 +1,16 @@
 package com.teclinecg.noxus.models;
 
-import com.teclinecg.noxus.enums.AccountStatusEnum;
+import com.teclinecg.noxus.enums.StatusEnum;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "account_status")
-public class AccountStatusModel {
+@Table(name = "status")
+public class StatusModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(value = EnumType.STRING)
-    private AccountStatusEnum accountStatus;
+    private StatusEnum status;
 }

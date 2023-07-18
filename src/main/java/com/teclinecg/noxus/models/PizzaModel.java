@@ -24,4 +24,12 @@ public class PizzaModel {
             inverseJoinColumns = @JoinColumn(name = "flavor_id")
     )
     private List<FlavorModel> flavors;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pizza_edge",
+            joinColumns = @JoinColumn(name = "pizza_id"),
+            inverseJoinColumns = @JoinColumn(name = "edge_id")
+    )
+    private List<EdgeModel> edges;
 }
