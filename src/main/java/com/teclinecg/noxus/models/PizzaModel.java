@@ -13,6 +13,11 @@ public class PizzaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Double price;
+
+    @ManyToMany(mappedBy = "pizzas")
+    private List<OrderModel> orders;
+
     @ManyToOne
     @JoinColumn(name = "pizza_size_id")
     private SizeModel pizzaSize;
