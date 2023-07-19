@@ -16,8 +16,9 @@ public class PizzaModel {
 
     private Double price;
 
-    @ManyToMany(mappedBy = "pizzas")
-    private List<OrderModel> orders;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private OrderModel order;
 
     @ManyToOne
     @JoinColumn(name = "pizza_size_id")
@@ -42,10 +43,10 @@ public class PizzaModel {
     public PizzaModel() {
     }
 
-    public PizzaModel(Long id, Double price, List<OrderModel> orders, SizeModel pizzaSize, List<FlavorModel> flavors, List<EdgeModel> edges) {
+    public PizzaModel(Long id, Double price, OrderModel order, SizeModel pizzaSize, List<FlavorModel> flavors, List<EdgeModel> edges) {
         this.id = id;
         this.price = price;
-        this.orders = orders;
+        this.order = order;
         this.pizzaSize = pizzaSize;
         this.flavors = flavors;
         this.edges = edges;
@@ -67,12 +68,12 @@ public class PizzaModel {
         this.price = price;
     }
 
-    public List<OrderModel> getOrders() {
-        return orders;
+    public OrderModel getOrder() {
+        return order;
     }
 
-    public void setOrders(List<OrderModel> orders) {
-        this.orders = orders;
+    public void setOrder(OrderModel order) {
+        this.order = order;
     }
 
     public SizeModel getPizzaSize() {
@@ -104,11 +105,11 @@ public class PizzaModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PizzaModel that = (PizzaModel) o;
-        return id.equals(that.id) && Objects.equals(price, that.price) && Objects.equals(orders, that.orders) && Objects.equals(pizzaSize, that.pizzaSize) && Objects.equals(flavors, that.flavors) && Objects.equals(edges, that.edges);
+        return id.equals(that.id) && Objects.equals(price, that.price) && Objects.equals(order, that.order) && Objects.equals(pizzaSize, that.pizzaSize) && Objects.equals(flavors, that.flavors) && Objects.equals(edges, that.edges);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, price, orders, pizzaSize, flavors, edges);
+        return Objects.hash(id, price, order, pizzaSize, flavors, edges);
     }
 }

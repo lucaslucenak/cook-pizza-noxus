@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "delivery_yype")
+@Table(name = "delivery_type")
 public class DeliveryTypeModel {
 
     @Id

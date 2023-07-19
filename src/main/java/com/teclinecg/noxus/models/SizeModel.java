@@ -14,7 +14,7 @@ public class SizeModel {
     private Long id;
 
     @Enumerated(value = EnumType.STRING)
-    private PizzaSizeEnum pizzaSize;
+    private PizzaSizeEnum size;
 
     public SizeModel() {
     }
@@ -28,11 +28,11 @@ public class SizeModel {
     }
 
     public PizzaSizeEnum getPizzaSize() {
-        return pizzaSize;
+        return size;
     }
 
     public void setPizzaSize(PizzaSizeEnum pizzaSize) {
-        this.pizzaSize = pizzaSize;
+        this.size = pizzaSize;
     }
 
     @Override
@@ -40,11 +40,11 @@ public class SizeModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SizeModel sizeModel = (SizeModel) o;
-        return id.equals(sizeModel.id) && pizzaSize == sizeModel.pizzaSize;
+        return id.equals(sizeModel.id) && size == sizeModel.size;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, pizzaSize);
+        return Objects.hash(id, size);
     }
 }

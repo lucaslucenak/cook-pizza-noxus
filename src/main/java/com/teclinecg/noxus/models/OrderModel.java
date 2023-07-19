@@ -19,12 +19,7 @@ public class OrderModel {
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
 
-    @ManyToMany
-    @JoinTable(
-            name = "order_pizza",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "pizza_id")
-    )
+    @OneToMany
     private List<PizzaModel> pizzas;
 
     @ManyToMany
