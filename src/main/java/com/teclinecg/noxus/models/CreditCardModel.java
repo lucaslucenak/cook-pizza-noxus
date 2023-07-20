@@ -18,19 +18,19 @@ public class CreditCardModel {
     private String expirationDate;
 
     @ManyToOne
-    @JoinColumn(name = "client_account_id")
-    private ClientAccountModel clientAccount;
+    @JoinColumn(name = "customer_account_id")
+    private CustomerAccountModel customerAccount;
 
     public CreditCardModel() {
     }
 
-    public CreditCardModel(Long id, String ownerName, String number, String ccv, String expirationDate, ClientAccountModel clientAccount) {
+    public CreditCardModel(Long id, String ownerName, String number, String ccv, String expirationDate, CustomerAccountModel customerAccount) {
         this.id = id;
         this.ownerName = ownerName;
         this.number = number;
         this.ccv = ccv;
         this.expirationDate = expirationDate;
-        this.clientAccount = clientAccount;
+        this.customerAccount = customerAccount;
     }
 
     public Long getId() {
@@ -73,12 +73,12 @@ public class CreditCardModel {
         this.expirationDate = expirationDate;
     }
 
-    public ClientAccountModel getClientAccount() {
-        return clientAccount;
+    public CustomerAccountModel getCustomerAccount() {
+        return customerAccount;
     }
 
-    public void setClientAccount(ClientAccountModel clientAccount) {
-        this.clientAccount = clientAccount;
+    public void setCustomerAccount(CustomerAccountModel customerAccount) {
+        this.customerAccount = customerAccount;
     }
 
     @Override
@@ -86,11 +86,11 @@ public class CreditCardModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreditCardModel that = (CreditCardModel) o;
-        return id.equals(that.id) && Objects.equals(ownerName, that.ownerName) && Objects.equals(number, that.number) && Objects.equals(ccv, that.ccv) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(clientAccount, that.clientAccount);
+        return id.equals(that.id) && Objects.equals(ownerName, that.ownerName) && Objects.equals(number, that.number) && Objects.equals(ccv, that.ccv) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(customerAccount, that.customerAccount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ownerName, number, ccv, expirationDate, clientAccount);
+        return Objects.hash(id, ownerName, number, ccv, expirationDate, customerAccount);
     }
 }

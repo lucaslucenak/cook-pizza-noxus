@@ -1,6 +1,5 @@
 package com.teclinecg.noxus.models;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -35,13 +34,13 @@ public class AddressModel {
     private String referencePoint;
 
     @ManyToOne
-    @JoinColumn(name = "client_account_id")
-    private ClientAccountModel clientAccount;
+    @JoinColumn(name = "customer_account_id")
+    private CustomerAccountModel customerAccount;
 
     public AddressModel() {
     }
 
-    public AddressModel(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, ClientAccountModel clientAccount) {
+    public AddressModel(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount) {
         this.id = id;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
@@ -50,7 +49,7 @@ public class AddressModel {
         this.cep = cep;
         this.complement = complement;
         this.referencePoint = referencePoint;
-        this.clientAccount = clientAccount;
+        this.customerAccount = customerAccount;
     }
 
 
@@ -118,12 +117,12 @@ public class AddressModel {
         this.referencePoint = referencePoint;
     }
 
-    public ClientAccountModel getClientAccount() {
-        return clientAccount;
+    public CustomerAccountModel getCustomerAccount() {
+        return customerAccount;
     }
 
-    public void setClientAccount(ClientAccountModel clientAccount) {
-        this.clientAccount = clientAccount;
+    public void setCustomerAccount(CustomerAccountModel customerAccount) {
+        this.customerAccount = customerAccount;
     }
 
     @Override

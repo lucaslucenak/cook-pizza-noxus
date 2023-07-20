@@ -32,7 +32,7 @@ public class OrderModel {
 
     @ManyToOne
     @JoinColumn(name = "client_account_id")
-    private ClientAccountModel clientAccount;
+    private CustomerAccountModel clientAccount;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
@@ -53,7 +53,7 @@ public class OrderModel {
     public OrderModel() {
     }
 
-    public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, List<DrinkModel> drinks, ClientAccountModel clientAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType) {
+    public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, List<DrinkModel> drinks, CustomerAccountModel clientAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType) {
         this.id = id;
         this.orderPrice = orderPrice;
         this.observation = observation;
@@ -124,11 +124,11 @@ public class OrderModel {
         this.drinks = drinks;
     }
 
-    public ClientAccountModel getClientAccount() {
+    public CustomerAccountModel getClientAccount() {
         return clientAccount;
     }
 
-    public void setClientAccount(ClientAccountModel clientAccount) {
+    public void setClientAccount(CustomerAccountModel clientAccount) {
         this.clientAccount = clientAccount;
     }
 

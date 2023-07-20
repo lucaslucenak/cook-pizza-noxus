@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "client_account")
-public class ClientAccountModel {
+@Table(name = "customer_account")
+public class CustomerAccountModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +35,10 @@ public class ClientAccountModel {
     @JoinColumn(name = "status_id")
     private StatusModel status;
 
-    public ClientAccountModel() {
+    public CustomerAccountModel() {
     }
 
-    public ClientAccountModel(Long id, String firstName, String lastName, String cpf, String email, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
+    public CustomerAccountModel(Long id, String firstName, String lastName, String cpf, String email, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -117,7 +117,7 @@ public class ClientAccountModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ClientAccountModel that = (ClientAccountModel) o;
+        CustomerAccountModel that = (CustomerAccountModel) o;
         return id.equals(that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(cpf, that.cpf) && Objects.equals(email, that.email) && Objects.equals(addresses, that.addresses) && Objects.equals(creditCards, that.creditCards) && Objects.equals(status, that.status);
     }
 
