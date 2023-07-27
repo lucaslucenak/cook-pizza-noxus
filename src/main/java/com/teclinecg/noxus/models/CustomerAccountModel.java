@@ -25,10 +25,10 @@ public class CustomerAccountModel {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "clientAccount", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerAccount", cascade = CascadeType.ALL)
     private List<AddressModel> addresses;
 
-    @OneToMany(mappedBy = "clientAccount", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerAccount", cascade = CascadeType.ALL)
     private List<CreditCardModel> creditCards;
 
     @ManyToOne
