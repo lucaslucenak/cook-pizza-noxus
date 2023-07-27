@@ -31,8 +31,8 @@ public class OrderModel {
     private List<DrinkModel> drinks;
 
     @ManyToOne
-    @JoinColumn(name = "client_account_id")
-    private CustomerAccountModel clientAccount;
+    @JoinColumn(name = "customer_account_id")
+    private CustomerAccountModel customerAccount;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
@@ -53,7 +53,7 @@ public class OrderModel {
     public OrderModel() {
     }
 
-    public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, List<DrinkModel> drinks, CustomerAccountModel clientAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType) {
+    public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, List<DrinkModel> drinks, CustomerAccountModel customerAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType) {
         this.id = id;
         this.orderPrice = orderPrice;
         this.observation = observation;
@@ -61,7 +61,7 @@ public class OrderModel {
         this.arrivalForecast = arrivalForecast;
         this.pizzas = pizzas;
         this.drinks = drinks;
-        this.clientAccount = clientAccount;
+        this.customerAccount = customerAccount;
         this.address = address;
         this.deliveryTax = deliveryTax;
         this.paymentMethod = paymentMethod;
@@ -124,12 +124,12 @@ public class OrderModel {
         this.drinks = drinks;
     }
 
-    public CustomerAccountModel getClientAccount() {
-        return clientAccount;
+    public CustomerAccountModel getCustomerAccount() {
+        return customerAccount;
     }
 
-    public void setClientAccount(CustomerAccountModel clientAccount) {
-        this.clientAccount = clientAccount;
+    public void setCustomerAccount(CustomerAccountModel customerAccount) {
+        this.customerAccount = customerAccount;
     }
 
     public AddressModel getAddress() {
@@ -169,11 +169,11 @@ public class OrderModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderModel that = (OrderModel) o;
-        return id.equals(that.id) && Objects.equals(orderPrice, that.orderPrice) && Objects.equals(observation, that.observation) && Objects.equals(dispatchDateTime, that.dispatchDateTime) && Objects.equals(arrivalForecast, that.arrivalForecast) && Objects.equals(pizzas, that.pizzas) && Objects.equals(drinks, that.drinks) && Objects.equals(clientAccount, that.clientAccount) && Objects.equals(address, that.address) && Objects.equals(deliveryTax, that.deliveryTax) && Objects.equals(paymentMethod, that.paymentMethod) && Objects.equals(deliveryType, that.deliveryType);
+        return id.equals(that.id) && Objects.equals(orderPrice, that.orderPrice) && Objects.equals(observation, that.observation) && Objects.equals(dispatchDateTime, that.dispatchDateTime) && Objects.equals(arrivalForecast, that.arrivalForecast) && Objects.equals(pizzas, that.pizzas) && Objects.equals(drinks, that.drinks) && Objects.equals(customerAccount, that.customerAccount) && Objects.equals(address, that.address) && Objects.equals(deliveryTax, that.deliveryTax) && Objects.equals(paymentMethod, that.paymentMethod) && Objects.equals(deliveryType, that.deliveryType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderPrice, observation, dispatchDateTime, arrivalForecast, pizzas, drinks, clientAccount, address, deliveryTax, paymentMethod, deliveryType);
+        return Objects.hash(id, orderPrice, observation, dispatchDateTime, arrivalForecast, pizzas, drinks, customerAccount, address, deliveryTax, paymentMethod, deliveryType);
     }
 }
