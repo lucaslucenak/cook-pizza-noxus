@@ -20,6 +20,10 @@ public class OrderModel {
     private LocalDateTime arrivalForecast;
 
     @OneToMany
+    @JoinTable(name = "order_pizza",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "pizza_id")
+    )
     private List<PizzaModel> pizzas;
 
     @ManyToMany

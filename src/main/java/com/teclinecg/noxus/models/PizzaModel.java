@@ -17,7 +17,6 @@ public class PizzaModel {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
     private OrderModel order;
 
     @ManyToOne
