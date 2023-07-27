@@ -1,4 +1,4 @@
-version: alpine
+version: "2.2"
 services:
   database:
     image: postgres:alpine
