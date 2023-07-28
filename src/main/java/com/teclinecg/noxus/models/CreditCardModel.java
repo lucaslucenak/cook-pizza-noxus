@@ -16,6 +16,7 @@ public class CreditCardModel {
     private String number;
     private String ccv;
     private String expirationDate;
+    private String ownerCPF;
 
     @ManyToOne
     @JoinColumn(name = "customer_account_id")
@@ -24,12 +25,13 @@ public class CreditCardModel {
     public CreditCardModel() {
     }
 
-    public CreditCardModel(Long id, String ownerName, String number, String ccv, String expirationDate, CustomerAccountModel customerAccount) {
+    public CreditCardModel(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount) {
         this.id = id;
         this.ownerName = ownerName;
         this.number = number;
         this.ccv = ccv;
         this.expirationDate = expirationDate;
+        this.ownerCPF = ownerCPF;
         this.customerAccount = customerAccount;
     }
 
@@ -81,16 +83,24 @@ public class CreditCardModel {
         this.customerAccount = customerAccount;
     }
 
+    public String getOwnerCPF() {
+        return ownerCPF;
+    }
+
+    public void setOwnerCPF(String ownerCPF) {
+        this.ownerCPF = ownerCPF;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreditCardModel that = (CreditCardModel) o;
-        return id.equals(that.id) && Objects.equals(ownerName, that.ownerName) && Objects.equals(number, that.number) && Objects.equals(ccv, that.ccv) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(customerAccount, that.customerAccount);
+        return id.equals(that.id) && Objects.equals(ownerName, that.ownerName) && Objects.equals(number, that.number) && Objects.equals(ccv, that.ccv) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(ownerCPF, that.ownerCPF) && Objects.equals(customerAccount, that.customerAccount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ownerName, number, ccv, expirationDate, customerAccount);
+        return Objects.hash(id, ownerName, number, ccv, expirationDate, ownerCPF, customerAccount);
     }
 }
