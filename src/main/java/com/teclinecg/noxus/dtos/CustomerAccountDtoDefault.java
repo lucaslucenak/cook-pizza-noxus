@@ -17,6 +17,7 @@ public class CustomerAccountDtoDefault {
     private String lastName;
     private String cpf;
     private String email;
+    private String cellphoneNumber;
     private List<AddressModel> addresses;
     private List<CreditCardModel> creditCards;
     private StatusModel status;
@@ -66,6 +67,14 @@ public class CustomerAccountDtoDefault {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCellphoneNumber() {
+        return cellphoneNumber;
+    }
+
+    public void setCellphoneNumber(String cellphoneNumber) {
+        this.cellphoneNumber = cellphoneNumber;
     }
 
     public List<AddressModel> getAddresses() {
