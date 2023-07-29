@@ -1,6 +1,8 @@
 package com.teclinecg.noxus.models;
 
+import com.teclinecg.noxus.dtos.EdgeDtoDefault;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +21,13 @@ public class EdgeModel {
     @ManyToMany(mappedBy = "edges")
     private List<PizzaModel> pizzas;
 
+    public EdgeModel() {
+    }
+
+    public EdgeModel(EdgeDtoDefault edgeDto) {
+        BeanUtils.copyProperties(edgeDto, this);
+    }
+
     public EdgeModel(Long id, String edge, Double price, List<PizzaModel> pizzas) {
         this.id = id;
         this.edge = edge;
@@ -26,8 +35,7 @@ public class EdgeModel {
         this.pizzas = pizzas;
     }
 
-    public EdgeModel() {
-    }
+
 
     public Long getId() {
         return id;

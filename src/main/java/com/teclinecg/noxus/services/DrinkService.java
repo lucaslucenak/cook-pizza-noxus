@@ -47,10 +47,10 @@ public class DrinkService {
         Page<DrinkModel> result = drinkRepository.findAll(pageRequest);
 
         // Converting Models to DTOs
-        List<DrinkModel> orderModels = result.stream().toList();
+        List<DrinkModel> drinkModels = result.stream().toList();
         List<DrinkDtoDefault> dtos = new ArrayList<>();
 
-        for (DrinkModel i : orderModels) {
+        for (DrinkModel i : drinkModels) {
             dtos.add(new DrinkDtoDefault(i));
         }
 
@@ -58,8 +58,8 @@ public class DrinkService {
     }
 
     public DrinkDtoDefault saveDrink(@Valid DrinkDtoDefault drinkDto) {
-        DrinkModel orderModel = new DrinkModel(drinkDto);
-        return new DrinkDtoDefault(drinkRepository.save(orderModel));
+        DrinkModel drinkModel = new DrinkModel(drinkDto);
+        return new DrinkDtoDefault(drinkRepository.save(drinkModel));
     }
 
     public DrinkDtoDefault updateDrink(Long id, @Valid DrinkDtoDefault drinkDto) {
