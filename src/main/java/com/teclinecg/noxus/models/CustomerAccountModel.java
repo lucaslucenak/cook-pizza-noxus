@@ -1,6 +1,8 @@
 package com.teclinecg.noxus.models;
 
+import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +41,10 @@ public class CustomerAccountModel {
     private StatusModel status;
 
     public CustomerAccountModel() {
+    }
+
+    public CustomerAccountModel(CustomerAccountDtoDefault customerAccountDto) {
+        BeanUtils.copyProperties(customerAccountDto, this);
     }
 
     public CustomerAccountModel(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
