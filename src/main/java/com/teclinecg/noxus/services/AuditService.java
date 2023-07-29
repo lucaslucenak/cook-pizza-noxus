@@ -1,9 +1,7 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.AuditDtoDefault;
-import com.teclinecg.noxus.dtos.OrderDtoDefault;
 import com.teclinecg.noxus.models.AuditModel;
-import com.teclinecg.noxus.models.OrderModel;
 import com.teclinecg.noxus.repositories.AuditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
