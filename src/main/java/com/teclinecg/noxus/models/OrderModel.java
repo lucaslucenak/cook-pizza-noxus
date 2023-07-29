@@ -1,6 +1,8 @@
 package com.teclinecg.noxus.models;
 
+import com.teclinecg.noxus.dtos.OrderDtoDefault;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,6 +57,10 @@ public class OrderModel {
     private DeliveryTypeModel deliveryType;
 
     public OrderModel() {
+    }
+
+    public OrderModel(OrderDtoDefault orderDto) {
+        BeanUtils.copyProperties(orderDto, this);
     }
 
     public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, List<DrinkModel> drinks, CustomerAccountModel customerAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType) {
