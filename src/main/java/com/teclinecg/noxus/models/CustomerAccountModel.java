@@ -25,6 +25,9 @@ public class CustomerAccountModel {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private String cellphoneNumber;
+
     @OneToMany(mappedBy = "customerAccount", cascade = CascadeType.ALL)
     private List<AddressModel> addresses;
 
@@ -38,12 +41,13 @@ public class CustomerAccountModel {
     public CustomerAccountModel() {
     }
 
-    public CustomerAccountModel(Long id, String firstName, String lastName, String cpf, String email, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
+    public CustomerAccountModel(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.cpf = cpf;
         this.email = email;
+        this.cellphoneNumber = cellphoneNumber;
         this.addresses = addresses;
         this.creditCards = creditCards;
         this.status = status;
@@ -113,16 +117,24 @@ public class CustomerAccountModel {
         this.status = status;
     }
 
+    public String getCellphoneNumber() {
+        return cellphoneNumber;
+    }
+
+    public void setCellphoneNumber(String cellphoneNumber) {
+        this.cellphoneNumber = cellphoneNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CustomerAccountModel that = (CustomerAccountModel) o;
-        return id.equals(that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(cpf, that.cpf) && Objects.equals(email, that.email) && Objects.equals(addresses, that.addresses) && Objects.equals(creditCards, that.creditCards) && Objects.equals(status, that.status);
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(cpf, that.cpf) && Objects.equals(email, that.email) && Objects.equals(cellphoneNumber, that.cellphoneNumber) && Objects.equals(addresses, that.addresses) && Objects.equals(creditCards, that.creditCards) && Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, cpf, email, addresses, creditCards, status);
+        return Objects.hash(id, firstName, lastName, cpf, email, cellphoneNumber, addresses, creditCards, status);
     }
 }
