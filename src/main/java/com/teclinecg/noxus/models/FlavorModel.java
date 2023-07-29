@@ -1,6 +1,8 @@
 package com.teclinecg.noxus.models;
 
+import com.teclinecg.noxus.dtos.FlavorDtoDefault;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +22,10 @@ public class FlavorModel {
     private List<PizzaModel> pizzas;
 
     public FlavorModel() {
+    }
+
+    public FlavorModel(FlavorDtoDefault flavorDto) {
+        BeanUtils.copyProperties(flavorDto, this);
     }
 
     public FlavorModel(Long id, String flavor, Double price, List<PizzaModel> pizzas) {

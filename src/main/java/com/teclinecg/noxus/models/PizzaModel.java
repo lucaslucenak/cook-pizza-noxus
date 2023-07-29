@@ -1,6 +1,8 @@
 package com.teclinecg.noxus.models;
 
+import com.teclinecg.noxus.dtos.PizzaDtoDefault;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +42,10 @@ public class PizzaModel {
     private List<EdgeModel> edges;
 
     public PizzaModel() {
+    }
+
+    public PizzaModel(PizzaDtoDefault pizzaDto) {
+        BeanUtils.copyProperties(pizzaDto, this);
     }
 
     public PizzaModel(Long id, Double price, OrderModel order, SizeModel pizzaSize, List<FlavorModel> flavors, List<EdgeModel> edges) {

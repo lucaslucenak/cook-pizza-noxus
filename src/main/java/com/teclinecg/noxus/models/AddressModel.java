@@ -1,6 +1,8 @@
 package com.teclinecg.noxus.models;
 
+import com.teclinecg.noxus.dtos.AddressDtoDefault;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
@@ -38,6 +40,10 @@ public class AddressModel {
     private CustomerAccountModel customerAccount;
 
     public AddressModel() {
+    }
+
+    public AddressModel(AddressDtoDefault addressDto) {
+        BeanUtils.copyProperties(addressDto, this);
     }
 
     public AddressModel(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount) {

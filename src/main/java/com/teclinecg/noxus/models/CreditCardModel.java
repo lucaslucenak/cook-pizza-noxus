@@ -1,6 +1,8 @@
 package com.teclinecg.noxus.models;
 
+import com.teclinecg.noxus.dtos.CreditCardDtoDefault;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
@@ -23,6 +25,10 @@ public class CreditCardModel {
     private CustomerAccountModel customerAccount;
 
     public CreditCardModel() {
+    }
+
+    public CreditCardModel(CreditCardDtoDefault creditCardDto) {
+        BeanUtils.copyProperties(creditCardDto, this);
     }
 
     public CreditCardModel(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount) {
