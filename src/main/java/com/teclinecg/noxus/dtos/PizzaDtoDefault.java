@@ -7,13 +7,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class PizzaDtoDefault {
 
+    @NotNull
     private Long id;
+
+    @NotNull
     private Double price;
+
+    @Valid
     private OrderModel order;
+
+    @Valid
     private SizeModel pizzaSize;
 
     public PizzaDtoDefault() {

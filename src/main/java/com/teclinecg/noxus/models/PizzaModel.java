@@ -16,6 +16,7 @@ public class PizzaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Double price;
 
     @ManyToOne

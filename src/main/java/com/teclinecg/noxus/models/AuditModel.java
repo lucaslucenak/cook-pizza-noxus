@@ -15,6 +15,8 @@ public class AuditModel {
     private Long id;
 
     private String client;
+
+    @Column(nullable = false)
     private String body;
 
     public AuditModel() {

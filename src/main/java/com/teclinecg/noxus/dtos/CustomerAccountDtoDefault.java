@@ -7,19 +7,38 @@ import com.teclinecg.noxus.models.StatusModel;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
 public class CustomerAccountDtoDefault {
 
+    @NotNull
     private Long id;
+
+    @NotNull
     private String firstName;
+
+    @NotNull
     private String lastName;
+
+    @NotNull
     private String cpf;
+
+    @NotNull
     private String email;
+
+    @NotNull
     private String cellphoneNumber;
+
+    @Valid
     private List<AddressModel> addresses;
+
+    @Valid
     private List<CreditCardModel> creditCards;
+
+    @Valid
     private StatusModel status;
 
     public CustomerAccountDtoDefault() {

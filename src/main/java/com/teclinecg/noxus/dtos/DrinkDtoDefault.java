@@ -5,14 +5,23 @@ import com.teclinecg.noxus.models.OrderModel;
 import jakarta.persistence.ManyToMany;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
 public class DrinkDtoDefault {
 
+    @NotNull
     private Long id;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private Double price;
+
+    @Valid
     private List<OrderModel> orders;
 
     public DrinkDtoDefault() {

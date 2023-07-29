@@ -14,14 +14,24 @@ public class CreditCardModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String ownerName;
+
+    @Column(nullable = false)
     private String number;
+
+    @Column(nullable = false)
     private String ccv;
+
+    @Column(nullable = false)
     private String expirationDate;
+
+    @Column(nullable = false)
     private String ownerCPF;
 
     @ManyToOne
     @JoinColumn(name = "customer_account_id")
+    @Column(nullable = false)
     private CustomerAccountModel customerAccount;
 
     public CreditCardModel() {

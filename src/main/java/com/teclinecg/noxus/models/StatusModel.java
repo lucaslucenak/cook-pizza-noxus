@@ -14,6 +14,7 @@ public class StatusModel {
     private Long id;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private StatusEnum status;
 
     public StatusModel() {

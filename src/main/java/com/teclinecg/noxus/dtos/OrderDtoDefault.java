@@ -4,23 +4,43 @@ import com.teclinecg.noxus.models.*;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 public class OrderDtoDefault {
 
+    @NotNull
     private Long id;
+
+    @NotNull
     private Double orderPrice;
+
     private String observation;
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
+
+    @Valid
     private List<PizzaModel> pizzas;
+
+    @Valid
     private List<DrinkModel> drinks;
+
+    @Valid
     private CustomerAccountModel customerAccount;
+
+    @Valid
     private AddressModel address;
+
+    @Valid
     private DeliveryTaxModel deliveryTax;
+
+    @Valid
     private PaymentMethodModel paymentMethod;
+
+    @Valid
     private DeliveryTypeModel deliveryType;
 
     public OrderDtoDefault() {

@@ -37,6 +37,7 @@ public class AddressModel {
 
     @ManyToOne
     @JoinColumn(name = "customer_account_id")
+    @Column(nullable = false)
     private CustomerAccountModel customerAccount;
 
     public AddressModel() {

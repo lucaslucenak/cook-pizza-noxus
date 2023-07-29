@@ -6,16 +6,31 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class CreditCardDtoDefault {
 
+    @NotNull
     private Long id;
+
+    @NotNull
     private String ownerName;
+
+    @NotNull
     private String number;
+
+    @NotNull
     private String ccv;
+
+    @NotNull
     private String expirationDate;
+
+    @NotNull
     private String ownerCPF;
+
+    @Valid
     private CustomerAccountModel customerAccount;
 
     public CreditCardDtoDefault() {

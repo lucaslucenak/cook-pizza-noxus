@@ -38,6 +38,7 @@ public class CustomerAccountModel {
 
     @ManyToOne
     @JoinColumn(name = "status_id")
+    @Column(nullable = false)
     private StatusModel status;
 
     public CustomerAccountModel() {

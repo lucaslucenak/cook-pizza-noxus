@@ -14,6 +14,7 @@ public class DeliveryTypeModel {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private DeliveryTypeEnum deliveryType;
 
     public DeliveryTypeModel() {

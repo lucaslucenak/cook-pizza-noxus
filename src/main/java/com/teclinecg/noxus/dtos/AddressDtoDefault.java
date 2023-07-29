@@ -7,18 +7,37 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class AddressDtoDefault {
 
+    @NotNull
     private Long id;
+
+    @NotNull
     private String streetName;
+
+    @NotNull
     private String streetNumber;
+
+    @NotNull
     private String neighbourhood;
+
+    @NotNull
     private String city;
+
+    @NotNull
     private String cep;
+
+    @NotNull
     private String complement;
+
+    @NotNull
     private String referencePoint;
+
+    @Valid
     private CustomerAccountModel customerAccount;
 
     public AddressDtoDefault() {

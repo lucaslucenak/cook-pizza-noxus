@@ -14,6 +14,7 @@ public class SizeModel {
     private Long id;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private PizzaSizeEnum size;
 
     public SizeModel() {

@@ -13,7 +13,10 @@ public class DeliveryTaxModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Double tax;
+
+    @Column(nullable = false)
     private String neighbourhood;
 
     public DeliveryTaxModel(Long id, Double tax, String neighbourhood) {

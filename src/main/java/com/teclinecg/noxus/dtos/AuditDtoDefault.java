@@ -3,12 +3,16 @@ package com.teclinecg.noxus.dtos;
 import com.teclinecg.noxus.models.AuditModel;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class AuditDtoDefault {
 
+    @NotNull
     private Long id;
     private String client;
+
+    @NotNull
     private String body;
 
     public AuditDtoDefault() {
