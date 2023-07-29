@@ -1,6 +1,8 @@
 package com.teclinecg.noxus.models;
 
+import com.teclinecg.noxus.dtos.AuditDtoDefault;
 import jakarta.persistence.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
@@ -16,6 +18,10 @@ public class AuditModel {
     private String body;
 
     public AuditModel() {
+    }
+
+    public AuditModel(AuditDtoDefault auditDto) {
+        BeanUtils.copyProperties(auditDto, this);
     }
 
     public AuditModel(Long id, String client, String body) {
