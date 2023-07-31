@@ -44,7 +44,7 @@ public class CreditCardService {
         return pagedCreditCards.map(CreditCardDtoDefault::new);
     }
 
-    public CreditCardDtoDefault saveCreditCart(@Valid CreditCardDtoDefault creditCardDto) {
+    public CreditCardDtoDefault saveCreditCard(@Valid CreditCardDtoDefault creditCardDto) {
         CreditCardModel creditCardModel = new CreditCardModel(creditCardDto);
         return new CreditCardDtoDefault(creditCardRepository.save(creditCardModel));
     }
