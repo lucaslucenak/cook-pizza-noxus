@@ -1,20 +1,17 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
-import com.teclinecg.noxus.exceptions.InvalidPageQuantityException;
-import com.teclinecg.noxus.exceptions.InvalidRegisterQuantityException;
+import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
+import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import com.teclinecg.noxus.repositories.CustomerAccountRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class CustomerAccountService {
@@ -32,27 +29,18 @@ public class CustomerAccountService {
         }
     }
 
-    public List<CustomerAccountDtoDefault> findAllCustomerAccountsPaginated(Integer pagQtt, Integer registerQtt) {
-        if (pagQtt < 1) {
-            throw new InvalidPageQuantityException("Invalid Page Quantity. Must be greater than one");
+    public Page<CustomerAccountDtoDefault> findAllCustomerAccountsPaginated(Pageable pageable) {
+        if (pageable.getPageNumber() < 0) {
+            throw new InvalidPageNumberException("Invalid Page Number. Must be greater than zero");
         }
-        if (registerQtt < 1) {
-            throw new InvalidRegisterQuantityException("Invalid Register Quantity. Must be greater than one");
+        if (pageable.getPageSize() < 1) {
+            throw new InvalidPageRegisterSizeException("Invalid Register Size. Must be greater than zero");
         }
 
         // Paginated JPA query
-        Pageable pageRequest = PageRequest.of(pagQtt, registerQtt);
-        Page<CustomerAccountModel> result = customerAccountRepository.findAll(pageRequest);
+        Page<CustomerAccountModel> pagedCustomerAccounts = customerAccountRepository.findAll(pageable);
 
-        // Converting Models to DTOs
-        List<CustomerAccountModel> customerAccountModels = result.stream().toList();
-        List<CustomerAccountDtoDefault> dtos = new ArrayList<>();
-
-        for (CustomerAccountModel i : customerAccountModels) {
-            dtos.add(new CustomerAccountDtoDefault(i));
-        }
-
-        return dtos;
+        return pagedCustomerAccounts.map(CustomerAccountDtoDefault::new);
     }
 
     public CustomerAccountDtoDefault saveCustomerAccount(@Valid CustomerAccountDtoDefault customerAccountDto) {

@@ -13,7 +13,6 @@ public class DrinkDtoDefault {
     private Long id;
     private String name;
     private Double price;
-    private List<OrderModel> orders;
 
     public DrinkDtoDefault() {
     }
@@ -46,24 +45,16 @@ public class DrinkDtoDefault {
         this.price = price;
     }
 
-    public List<OrderModel> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<OrderModel> orders) {
-        this.orders = orders;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DrinkDtoDefault that = (DrinkDtoDefault) o;
-        return id.equals(that.id) && Objects.equals(name, that.name) && Objects.equals(price, that.price) && Objects.equals(orders, that.orders);
+        return id.equals(that.id) && Objects.equals(name, that.name) && Objects.equals(price, that.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, orders);
+        return Objects.hash(id, name, price);
     }
 }

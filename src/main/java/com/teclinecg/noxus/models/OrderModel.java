@@ -28,7 +28,7 @@ public class OrderModel {
     )
     private List<PizzaModel> pizzas;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name = "order_drink",
             joinColumns = @JoinColumn(name = "order_id"),
