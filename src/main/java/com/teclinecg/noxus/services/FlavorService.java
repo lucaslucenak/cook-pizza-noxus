@@ -1,9 +1,11 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.FlavorDtoDefault;
-import com.teclinecg.noxus.exceptions.InvalidPageQuantityException;
-import com.teclinecg.noxus.exceptions.InvalidRegisterQuantityException;
+import com.teclinecg.noxus.dtos.FlavorDtoDefault;
+import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
+import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
+import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.repositories.FlavorRepository;
 import org.springframework.beans.BeanUtils;
@@ -34,27 +36,18 @@ public class FlavorService {
         }
     }
 
-    public List<FlavorDtoDefault> findAllFlavorsPaginated(Integer pagQtt, Integer registerQtt) {
-        if (pagQtt < 1) {
-            throw new InvalidPageQuantityException("Invalid Page Quantity. Must be greater than one");
+    public Page<FlavorDtoDefault> findAllFlavorsPaginated(Pageable pageable) {
+        if (pageable.getPageNumber() < 0) {
+            throw new InvalidPageNumberException("Invalid Page Number. Must be greater than zero");
         }
-        if (registerQtt < 1) {
-            throw new InvalidRegisterQuantityException("Invalid Register Quantity. Must be greater than one");
+        if (pageable.getPageSize() < 1) {
+            throw new InvalidPageRegisterSizeException("Invalid Register Size. Must be greater than zero");
         }
 
         // Paginated JPA query
-        Pageable pageRequest = PageRequest.of(pagQtt, registerQtt);
-        Page<FlavorModel> result = flavorRepository.findAll(pageRequest);
+        Page<FlavorModel> pagedFlavors = flavorRepository.findAll(pageable);
 
-        // Converting Models to DTOs
-        List<FlavorModel> flavorModels = result.stream().toList();
-        List<FlavorDtoDefault> dtos = new ArrayList<>();
-
-        for (FlavorModel i : flavorModels) {
-            dtos.add(new FlavorDtoDefault(i));
-        }
-
-        return dtos;
+        return pagedFlavors.map(FlavorDtoDefault::new);
     }
 
     public FlavorDtoDefault saveFlavor(@Valid FlavorDtoDefault flavorDto) {

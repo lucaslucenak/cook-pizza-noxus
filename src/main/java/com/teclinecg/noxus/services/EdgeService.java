@@ -1,9 +1,11 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.EdgeDtoDefault;
-import com.teclinecg.noxus.exceptions.InvalidPageQuantityException;
-import com.teclinecg.noxus.exceptions.InvalidRegisterQuantityException;
+import com.teclinecg.noxus.dtos.EdgeDtoDefault;
+import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
+import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
+import com.teclinecg.noxus.models.EdgeModel;
 import com.teclinecg.noxus.models.EdgeModel;
 import com.teclinecg.noxus.repositories.EdgeRepository;
 import org.springframework.beans.BeanUtils;
@@ -34,39 +36,30 @@ public class EdgeService {
         }
     }
 
-    public List<EdgeDtoDefault> findAllEdgesPaginated(Integer pagQtt, Integer registerQtt) {
-        if (pagQtt < 1) {
-            throw new InvalidPageQuantityException("Invalid Page Quantity. Must be greater than one");
+    public Page<EdgeDtoDefault> findAllEdgesPaginated(Pageable pageable) {
+        if (pageable.getPageNumber() < 0) {
+            throw new InvalidPageNumberException("Invalid Page Number. Must be greater than zero");
         }
-        if (registerQtt < 1) {
-            throw new InvalidRegisterQuantityException("Invalid Register Quantity. Must be greater than one");
+        if (pageable.getPageSize() < 1) {
+            throw new InvalidPageRegisterSizeException("Invalid Register Size. Must be greater than zero");
         }
 
         // Paginated JPA query
-        Pageable pageRequest = PageRequest.of(pagQtt, registerQtt);
-        Page<EdgeModel> result = edgeRepository.findAll(pageRequest);
+        Page<EdgeModel> pagedEdges = edgeRepository.findAll(pageable);
 
-        // Converting Models to DTOs
-        List<EdgeModel> edgeModels = result.stream().toList();
-        List<EdgeDtoDefault> dtos = new ArrayList<>();
-
-        for (EdgeModel i : edgeModels) {
-            dtos.add(new EdgeDtoDefault(i));
-        }
-
-        return dtos;
+        return pagedEdges.map(EdgeDtoDefault::new);
     }
 
-    public EdgeDtoDefault saveEdge(@Valid EdgeDtoDefault drinkDto) {
-        EdgeModel edgeModel = new EdgeModel(drinkDto);
+    public EdgeDtoDefault saveEdge(@Valid EdgeDtoDefault edgeDto) {
+        EdgeModel edgeModel = new EdgeModel(edgeDto);
         return new EdgeDtoDefault(edgeRepository.save(edgeModel));
     }
 
-    public EdgeDtoDefault updateEdge(Long id, @Valid EdgeDtoDefault drinkDto) {
+    public EdgeDtoDefault updateEdge(Long id, @Valid EdgeDtoDefault edgeDto) {
         Optional<EdgeModel> existentEdgeModelOptional = edgeRepository.findById(id);
 
         if (existentEdgeModelOptional.isPresent()) {
-            EdgeModel updatedEdgeModel = new EdgeModel(drinkDto);
+            EdgeModel updatedEdgeModel = new EdgeModel(edgeDto);
             BeanUtils.copyProperties(existentEdgeModelOptional, updatedEdgeModel);
             return new EdgeDtoDefault(edgeRepository.save(updatedEdgeModel));
         } else {

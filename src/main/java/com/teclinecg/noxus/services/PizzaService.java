@@ -1,9 +1,11 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.PizzaDtoDefault;
-import com.teclinecg.noxus.exceptions.InvalidPageQuantityException;
-import com.teclinecg.noxus.exceptions.InvalidRegisterQuantityException;
+import com.teclinecg.noxus.dtos.PizzaDtoDefault;
+import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
+import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
+import com.teclinecg.noxus.models.PizzaModel;
 import com.teclinecg.noxus.models.PizzaModel;
 import com.teclinecg.noxus.repositories.PizzaRepository;
 import org.springframework.beans.BeanUtils;
@@ -34,27 +36,18 @@ public class PizzaService {
         }
     }
 
-    public List<PizzaDtoDefault> findAllPizzasPaginated(Integer pagQtt, Integer registerQtt) {
-        if (pagQtt < 1) {
-            throw new InvalidPageQuantityException("Invalid Page Quantity. Must be greater than one");
+    public Page<PizzaDtoDefault> findAllPizzasPaginated(Pageable pageable) {
+        if (pageable.getPageNumber() < 0) {
+            throw new InvalidPageNumberException("Invalid Page Number. Must be greater than zero");
         }
-        if (registerQtt < 1) {
-            throw new InvalidRegisterQuantityException("Invalid Register Quantity. Must be greater than one");
+        if (pageable.getPageSize() < 1) {
+            throw new InvalidPageRegisterSizeException("Invalid Register Size. Must be greater than zero");
         }
 
         // Paginated JPA query
-        Pageable pageRequest = PageRequest.of(pagQtt, registerQtt);
-        Page<PizzaModel> result = pizzaRepository.findAll(pageRequest);
+        Page<PizzaModel> pagedPizzas = pizzaRepository.findAll(pageable);
 
-        // Converting Models to DTOs
-        List<PizzaModel> pizzaModels = result.stream().toList();
-        List<PizzaDtoDefault> dtos = new ArrayList<>();
-
-        for (PizzaModel i : pizzaModels) {
-            dtos.add(new PizzaDtoDefault(i));
-        }
-
-        return dtos;
+        return pagedPizzas.map(PizzaDtoDefault::new);
     }
 
     public PizzaDtoDefault savePizza(@Valid PizzaDtoDefault pizzaDto) {

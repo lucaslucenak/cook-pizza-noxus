@@ -3,12 +3,12 @@ package com.teclinecg.noxus.controllers;
 import com.teclinecg.noxus.dtos.DrinkDtoDefault;
 import com.teclinecg.noxus.services.DrinkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "drink")
@@ -18,14 +18,14 @@ public class DrinkController {
     private DrinkService drinkService;
 
     @GetMapping
-    public ResponseEntity<List<DrinkDtoDefault>> findAllDrinksPaginated(
-            @RequestParam(value = "pagQtt", defaultValue = "1") Integer pagQtt,
-            @RequestParam(value = "registerQtt", defaultValue = "") Integer registerQtt
-    ) {
-        List<DrinkDtoDefault> drinks = drinkService.findAllDrinksPaginated(pagQtt, registerQtt);
+    // Example: http://localhost:8080/drink?page=0&size=2
+    public ResponseEntity<Page<DrinkDtoDefault>> findAllDrinksPaginated(Pageable pageable) {
+        Page<DrinkDtoDefault> drinks = drinkService.findAllDrinksPaginated(pageable);
+
+        // Headers
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Requested-Pag-Qtt", pagQtt.toString());
-        headers.add("Requested-Register-Qtt", registerQtt.toString());
+        headers.add("Requested-Pag-Qtt", Integer.toString(pageable.getPageNumber()));
+        headers.add("Requested-Register-Qtt", Integer.toString(pageable.getPageSize()));
 
         return ResponseEntity.ok().headers(headers).body(drinks);
     }

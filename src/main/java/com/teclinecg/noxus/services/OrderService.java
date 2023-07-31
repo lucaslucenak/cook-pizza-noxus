@@ -1,9 +1,11 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.OrderDtoDefault;
-import com.teclinecg.noxus.exceptions.InvalidPageQuantityException;
-import com.teclinecg.noxus.exceptions.InvalidRegisterQuantityException;
+import com.teclinecg.noxus.dtos.OrderDtoDefault;
+import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
+import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
+import com.teclinecg.noxus.models.OrderModel;
 import com.teclinecg.noxus.models.OrderModel;
 import com.teclinecg.noxus.repositories.OrderRepository;
 import org.springframework.beans.BeanUtils;
@@ -35,27 +37,18 @@ public class OrderService {
         }
     }
 
-    public List<OrderDtoDefault> findAllOrdersPaginated(Integer pagQtt, Integer registerQtt) {
-        if (pagQtt < 1) {
-            throw new InvalidPageQuantityException("Invalid Page Quantity. Must be greater than one");
+    public Page<OrderDtoDefault> findAllOrdersPaginated(Pageable pageable) {
+        if (pageable.getPageNumber() < 0) {
+            throw new InvalidPageNumberException("Invalid Page Number. Must be greater than zero");
         }
-        if (registerQtt < 1) {
-            throw new InvalidRegisterQuantityException("Invalid Register Quantity. Must be greater than one");
+        if (pageable.getPageSize() < 1) {
+            throw new InvalidPageRegisterSizeException("Invalid Register Size. Must be greater than zero");
         }
 
         // Paginated JPA query
-        Pageable pageRequest = PageRequest.of(pagQtt, registerQtt);
-        Page<OrderModel> result = orderRepository.findAll(pageRequest);
+        Page<OrderModel> pagedOrders = orderRepository.findAll(pageable);
 
-        // Converting Models to DTOs
-        List<OrderModel> orderModels = result.stream().toList();
-        List<OrderDtoDefault> dtos = new ArrayList<>();
-
-        for (OrderModel i : orderModels) {
-            dtos.add(new OrderDtoDefault(i));
-        }
-
-        return dtos;
+        return pagedOrders.map(OrderDtoDefault::new);
     }
 
     public OrderDtoDefault saveOrder(@Valid OrderDtoDefault orderDto) {
