@@ -4,7 +4,6 @@ import com.teclinecg.noxus.dtos.AddressDtoDefault;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
