@@ -2,6 +2,7 @@ package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.CreditCardDtoDefault;
 import com.teclinecg.noxus.services.CreditCardService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ public class CreditCardController {
     private CreditCardService creditCardService;
 
     @GetMapping
-    // Example: http://localhost:8080/creditCard?page=0&size=2
+    @ApiOperation(value = "http://localhost:8080/credit-card?page=0&size=2", notes = "Returns Credit Cards Paginated")
     public ResponseEntity<Page<CreditCardDtoDefault>> findAllCreditCardsPaginated(Pageable pageable) {
         Page<CreditCardDtoDefault> creditCards = creditCardService.findAllCreditCardsPaginated(pageable);
 
@@ -31,24 +32,28 @@ public class CreditCardController {
     }
 
     @GetMapping(value = "/{id}")
+    @ApiOperation(value = "http://localhost:8080/credit-card/{creditCardId}", notes = "Returns Credit Card Selected By Id")
     public ResponseEntity<CreditCardDtoDefault> findCreditCardById(@PathVariable Long id) {
         CreditCardDtoDefault creditCard = creditCardService.findCreditCardById(id);
         return ResponseEntity.ok().body(creditCard);
     }
 
     @PostMapping
+    @ApiOperation(value = "http://localhost:8080/credit-card", notes = "Save a new Credit Card")
     public ResponseEntity<CreditCardDtoDefault> saveCreditCard(@Validated @RequestBody CreditCardDtoDefault creditCardDto) {
         creditCardDto = creditCardService.saveCreditCard(creditCardDto);
         return ResponseEntity.ok().body(creditCardDto);
     }
 
     @PutMapping
+    @ApiOperation(value = "http://localhost:8080/credit-card/{creditCardId}", notes = "Update an existing Credit Card")
     public ResponseEntity<CreditCardDtoDefault> updateCreditCardById(@PathVariable Long id, @Validated @RequestBody CreditCardDtoDefault creditCardDto) {
         creditCardDto = creditCardService.updateCreditCard(id, creditCardDto);
         return ResponseEntity.ok().body(creditCardDto);
     }
 
     @DeleteMapping(value = "{id}")
+    @ApiOperation(value = "http://localhost:8080/credit-card/{creditCardId}", notes = "Delete an existing Credit Card")
     public ResponseEntity<CreditCardDtoDefault> deleteCreditCardById(@PathVariable Long id) {
         creditCardService.deleteCreditCardById(id);
         return ResponseEntity.noContent().build();

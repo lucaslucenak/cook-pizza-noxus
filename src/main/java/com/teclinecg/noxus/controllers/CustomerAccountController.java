@@ -2,6 +2,7 @@ package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
 import com.teclinecg.noxus.services.CustomerAccountService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ public class CustomerAccountController {
     private CustomerAccountService customerAccountService;
 
     @GetMapping
-    // Example: http://localhost:8080/customerAccount?page=0&size=2
+    @ApiOperation(value = "http://localhost:8080/customer-account?page=0&size=2", notes = "Returns Customer Accounts Paginated")
     public ResponseEntity<Page<CustomerAccountDtoDefault>> findAllCustomerAccountsPaginated(Pageable pageable) {
         Page<CustomerAccountDtoDefault> customerAccounts = customerAccountService.findAllCustomerAccountsPaginated(pageable);
 
@@ -31,24 +32,28 @@ public class CustomerAccountController {
     }
 
     @GetMapping(value = "/{id}")
+    @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Returns Customer Account Selected By Id")
     public ResponseEntity<CustomerAccountDtoDefault> findCustomerAccountById(@PathVariable Long id) {
         CustomerAccountDtoDefault customerAccount = customerAccountService.findCustomerAccountById(id);
         return ResponseEntity.ok().body(customerAccount);
     }
 
     @PostMapping
+    @ApiOperation(value = "http://localhost:8080/customer-account", notes = "Save a new customer-account")
     public ResponseEntity<CustomerAccountDtoDefault> saveCustomerAccount(@Validated @RequestBody CustomerAccountDtoDefault customerAccountDto) {
         customerAccountDto = customerAccountService.saveCustomerAccount(customerAccountDto);
         return ResponseEntity.ok().body(customerAccountDto);
     }
 
     @PutMapping
+    @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Update an existing Customer Account")
     public ResponseEntity<CustomerAccountDtoDefault> updateCustomerAccountById(@PathVariable Long id, @Validated @RequestBody CustomerAccountDtoDefault customerAccountDto) {
         customerAccountDto = customerAccountService.updateCustomerAccount(id, customerAccountDto);
         return ResponseEntity.ok().body(customerAccountDto);
     }
 
     @DeleteMapping(value = "{id}")
+    @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Delete an existing Customer Account")
     public ResponseEntity<CustomerAccountDtoDefault> deleteCustomerAccountById(@PathVariable Long id) {
         customerAccountService.deleteCustomerAccountById(id);
         return ResponseEntity.noContent().build();
