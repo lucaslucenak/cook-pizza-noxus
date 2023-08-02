@@ -37,7 +37,7 @@ public class CustomerAccountModel {
     private List<CreditCardModel> creditCards;
 
     @ManyToOne
-    @JoinColumn(name = "status_id")
+    @JoinColumn(name = "status_id", nullable = false)
     private StatusModel status;
 
     public CustomerAccountModel() {

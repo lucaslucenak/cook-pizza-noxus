@@ -37,23 +37,23 @@ public class OrderModel {
     private List<DrinkModel> drinks;
 
     @ManyToOne
-    @JoinColumn(name = "customer_account_id")
+    @JoinColumn(name = "customer_account_id", nullable = false)
     private CustomerAccountModel customerAccount;
 
     @ManyToOne
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", nullable = false)
     private AddressModel address;
 
     @ManyToOne
-    @JoinColumn(name = "delivery_tax_id")
+    @JoinColumn(name = "delivery_tax_id", nullable = false)
     private DeliveryTaxModel deliveryTax;
 
     @ManyToOne
-    @JoinColumn(name = "payment_method_id")
+    @JoinColumn(name = "payment_method_id", nullable = false)
     private PaymentMethodModel paymentMethod;
 
     @ManyToOne
-    @JoinColumn(name = "delivery_type_id")
+    @JoinColumn(name = "delivery_type_id", nullable = false)
     private DeliveryTypeModel deliveryType;
 
     public OrderModel() {

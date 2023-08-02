@@ -36,7 +36,7 @@ public class AddressModel {
     private String referencePoint;
 
     @ManyToOne
-    @JoinColumn(name = "customer_account_id")
+    @JoinColumn(name = "customer_account_id", nullable = false)
     private CustomerAccountModel customerAccount;
 
     public AddressModel() {

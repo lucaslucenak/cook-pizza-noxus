@@ -21,7 +21,7 @@ public class CreditCardModel {
     private String ownerCPF;
 
     @ManyToOne
-    @JoinColumn(name = "customer_account_id")
+    @JoinColumn(name = "customer_account_id", nullable = false)
     private CustomerAccountModel customerAccount;
 
     public CreditCardModel() {
