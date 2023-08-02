@@ -22,7 +22,7 @@ public class PizzaModel {
     private OrderModel order;
 
     @ManyToOne
-    @JoinColumn(name = "pizza_size_id")
+    @JoinColumn(name = "pizza_size_id", nullable = false)
     private SizeModel pizzaSize;
 
     @ManyToMany
