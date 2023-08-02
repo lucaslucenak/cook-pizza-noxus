@@ -2,6 +2,7 @@ package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.DrinkDtoDefault;
 import com.teclinecg.noxus.services.DrinkService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ public class DrinkController {
     private DrinkService drinkService;
 
     @GetMapping
-    // Example: http://localhost:8080/drink?page=0&size=2
+    @ApiOperation(value = "http://localhost:8080/drink?page=0&size=2", notes = "Returns Drink Paginated")
     public ResponseEntity<Page<DrinkDtoDefault>> findAllDrinksPaginated(Pageable pageable) {
         Page<DrinkDtoDefault> drinks = drinkService.findAllDrinksPaginated(pageable);
 
@@ -31,24 +32,28 @@ public class DrinkController {
     }
 
     @GetMapping(value = "/{id}")
+    @ApiOperation(value = "http://localhost:8080/drink/{drinkId}", notes = "Returns Drink Selected By Id")
     public ResponseEntity<DrinkDtoDefault> findDrinkById(@PathVariable Long id) {
         DrinkDtoDefault drink = drinkService.findDrinkById(id);
         return ResponseEntity.ok().body(drink);
     }
 
     @PostMapping
+    @ApiOperation(value = "http://localhost:8080/drink", notes = "Save a new drink")
     public ResponseEntity<DrinkDtoDefault> saveDrink(@Validated @RequestBody DrinkDtoDefault drinkDto) {
         drinkDto = drinkService.saveDrink(drinkDto);
         return ResponseEntity.ok().body(drinkDto);
     }
 
     @PutMapping
+    @ApiOperation(value = "http://localhost:8080/drink/{drinkId}", notes = "Update an existing drink")
     public ResponseEntity<DrinkDtoDefault> updateDrinkById(@PathVariable Long id, @Validated @RequestBody DrinkDtoDefault drinkDto) {
         drinkDto = drinkService.updateDrink(id, drinkDto);
         return ResponseEntity.ok().body(drinkDto);
     }
 
     @DeleteMapping(value = "{id}")
+    @ApiOperation(value = "http://localhost:8080/drinks/{drinksId}", notes = "Delete an existing drinks")
     public ResponseEntity<DrinkDtoDefault> deleteDrinkById(@PathVariable Long id) {
         drinkService.deleteDrinkById(id);
         return ResponseEntity.noContent().build();

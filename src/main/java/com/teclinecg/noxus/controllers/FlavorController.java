@@ -2,6 +2,7 @@ package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.FlavorDtoDefault;
 import com.teclinecg.noxus.services.FlavorService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ public class FlavorController {
     private FlavorService flavorService;
 
     @GetMapping
-    // Example: http://localhost:8080/flavor?page=0&size=2
+    @ApiOperation(value = "http://localhost:8080/flavor?page=0&size=2", notes = "Returns Flavors Paginated")
     public ResponseEntity<Page<FlavorDtoDefault>> findAllFlavorsPaginated(Pageable pageable) {
         Page<FlavorDtoDefault> flavors = flavorService.findAllFlavorsPaginated(pageable);
 
@@ -31,24 +32,28 @@ public class FlavorController {
     }
 
     @GetMapping(value = "/{id}")
+    @ApiOperation(value = "http://localhost:8080/flavor/{flavorId}", notes = "Returns flavor Selected By Id")
     public ResponseEntity<FlavorDtoDefault> findFlavorById(@PathVariable Long id) {
         FlavorDtoDefault flavor = flavorService.findFlavorById(id);
         return ResponseEntity.ok().body(flavor);
     }
 
     @PostMapping
+    @ApiOperation(value = "http://localhost:8080/flavor", notes = "Save a new flavor")
     public ResponseEntity<FlavorDtoDefault> saveFlavor(@Validated @RequestBody FlavorDtoDefault flavorDto) {
         flavorDto = flavorService.saveFlavor(flavorDto);
         return ResponseEntity.ok().body(flavorDto);
     }
 
     @PutMapping
+    @ApiOperation(value = "http://localhost:8080/flavor/{flavorId}", notes = "Update an existing flavor")
     public ResponseEntity<FlavorDtoDefault> updateFlavorById(@PathVariable Long id, @Validated @RequestBody FlavorDtoDefault flavorDto) {
         flavorDto = flavorService.updateFlavor(id, flavorDto);
         return ResponseEntity.ok().body(flavorDto);
     }
 
     @DeleteMapping(value = "{id}")
+    @ApiOperation(value = "http://localhost:8080/flavor/{flavorId}", notes = "Delete an existing flavor")
     public ResponseEntity<FlavorDtoDefault> deleteFlavorById(@PathVariable Long id) {
         flavorService.deleteFlavorById(id);
         return ResponseEntity.noContent().build();

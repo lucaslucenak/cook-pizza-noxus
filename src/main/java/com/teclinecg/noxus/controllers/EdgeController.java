@@ -2,6 +2,7 @@ package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.EdgeDtoDefault;
 import com.teclinecg.noxus.services.EdgeService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ public class EdgeController {
     private EdgeService edgeService;
 
     @GetMapping
-    // Example: http://localhost:8080/edge?page=0&size=2
+    @ApiOperation(value = "http://localhost:8080/edge?page=0&size=2", notes = "Returns Edge Paginated")
     public ResponseEntity<Page<EdgeDtoDefault>> findAllEdgesPaginated(Pageable pageable) {
         Page<EdgeDtoDefault> edges = edgeService.findAllEdgesPaginated(pageable);
 
@@ -31,24 +32,28 @@ public class EdgeController {
     }
 
     @GetMapping(value = "/{id}")
+    @ApiOperation(value = "http://localhost:8080/edge/{edgeId}", notes = "Returns edge Selected By Id")
     public ResponseEntity<EdgeDtoDefault> findEdgeById(@PathVariable Long id) {
         EdgeDtoDefault edge = edgeService.findEdgeById(id);
         return ResponseEntity.ok().body(edge);
     }
 
     @PostMapping
+    @ApiOperation(value = "http://localhost:8080/edge", notes = "Save a new edge")
     public ResponseEntity<EdgeDtoDefault> saveEdge(@Validated @RequestBody EdgeDtoDefault edgeDto) {
         edgeDto = edgeService.saveEdge(edgeDto);
         return ResponseEntity.ok().body(edgeDto);
     }
 
     @PutMapping
+    @ApiOperation(value = "http://localhost:8080/edge/{edgeId}", notes = "Update an existing edge")
     public ResponseEntity<EdgeDtoDefault> updateEdgeById(@PathVariable Long id, @Validated @RequestBody EdgeDtoDefault edgeDto) {
         edgeDto = edgeService.updateEdge(id, edgeDto);
         return ResponseEntity.ok().body(edgeDto);
     }
 
     @DeleteMapping(value = "{id}")
+    @ApiOperation(value = "http://localhost:8080/edge/{edgeId}", notes = "Delete an existing edge")
     public ResponseEntity<EdgeDtoDefault> deleteEdgeById(@PathVariable Long id) {
         edgeService.deleteEdgeById(id);
         return ResponseEntity.noContent().build();
