@@ -3,6 +3,9 @@ package com.teclinecg.noxus.dtos;
 import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.models.PizzaModel;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -11,7 +14,11 @@ import java.util.Objects;
 public class FlavorDtoDefault {
 
     private Long id;
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String flavor;
+    @NotNull @NotEmpty @NotBlank
     private Double price;
     private List<PizzaModel> pizzas;
 

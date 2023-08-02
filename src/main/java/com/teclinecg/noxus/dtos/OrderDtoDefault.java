@@ -2,6 +2,9 @@ package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
@@ -11,16 +14,24 @@ import java.util.Objects;
 public class OrderDtoDefault {
 
     private Long id;
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private Double orderPrice;
     private String observation;
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
     private List<PizzaModel> pizzas;
     private List<DrinkModel> drinks;
+    @NotNull @NotEmpty @NotBlank
     private CustomerAccountModel customerAccount;
+    @NotNull @NotEmpty @NotBlank
     private AddressModel address;
+    @NotNull @NotEmpty @NotBlank
     private DeliveryTaxModel deliveryTax;
+    @NotNull @NotEmpty @NotBlank
     private PaymentMethodModel paymentMethod;
+    @NotNull @NotEmpty @NotBlank
     private DeliveryTypeModel deliveryType;
 
     public OrderDtoDefault() {

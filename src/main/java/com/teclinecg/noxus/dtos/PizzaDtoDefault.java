@@ -5,6 +5,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -13,10 +16,17 @@ import java.util.Objects;
 public class PizzaDtoDefault {
 
     private Long id;
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private Double price;
+    @NotNull @NotEmpty @NotBlank
     private OrderModel order;
+    @NotNull @NotEmpty @NotBlank
     private SizeModel pizzaSize;
+    @NotNull @NotEmpty @NotBlank
     private List<FlavorModel> flavors;
+    @NotNull @NotEmpty @NotBlank
     private List<EdgeModel> edges;
 
     public PizzaDtoDefault() {

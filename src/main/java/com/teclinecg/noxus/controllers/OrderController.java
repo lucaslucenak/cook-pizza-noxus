@@ -3,12 +3,12 @@ package com.teclinecg.noxus.controllers;
 import com.teclinecg.noxus.dtos.OrderDtoDefault;
 import com.teclinecg.noxus.services.OrderService;
 import io.swagger.annotations.ApiOperation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,14 +40,14 @@ public class OrderController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/order", notes = "Save a new order")
-    public ResponseEntity<OrderDtoDefault> saveOrder( @RequestBody OrderDtoDefault orderDto) {
+    public ResponseEntity<OrderDtoDefault> saveOrder(@Valid @RequestBody OrderDtoDefault orderDto) {
         orderDto = orderService.saveOrder(orderDto);
         return ResponseEntity.ok().body(orderDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Update an existing order")
-    public ResponseEntity<OrderDtoDefault> updateOrderById(@PathVariable Long id,  @RequestBody OrderDtoDefault orderDto) {
+    public ResponseEntity<OrderDtoDefault> updateOrderById(@PathVariable Long id, @Valid @RequestBody OrderDtoDefault orderDto) {
         orderDto = orderService.updateOrder(id, orderDto);
         return ResponseEntity.ok().body(orderDto);
     }

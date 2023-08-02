@@ -3,12 +3,12 @@ package com.teclinecg.noxus.controllers;
 import com.teclinecg.noxus.dtos.AddressDtoDefault;
 import com.teclinecg.noxus.services.AddressService;
 import io.swagger.annotations.ApiOperation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,14 +40,14 @@ public class AddressController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/address", notes = "Save a new Address")
-    public ResponseEntity<AddressDtoDefault> saveAddress( @RequestBody AddressDtoDefault addressDto) {
+    public ResponseEntity<AddressDtoDefault> saveAddress(@Valid @RequestBody AddressDtoDefault addressDto) {
         addressDto = addressService.saveAddress(addressDto);
         return ResponseEntity.ok().body(addressDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/address/{addressId}", notes = "Update an existing Address")
-    public ResponseEntity<AddressDtoDefault> updateAddressById(@PathVariable Long id,  @RequestBody AddressDtoDefault addressDto) {
+    public ResponseEntity<AddressDtoDefault> updateAddressById(@PathVariable Long id,  @Valid @RequestBody AddressDtoDefault addressDto) {
         addressDto = addressService.updateAddress(id, addressDto);
         return ResponseEntity.ok().body(addressDto);
     }

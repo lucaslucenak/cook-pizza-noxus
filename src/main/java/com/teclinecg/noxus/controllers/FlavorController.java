@@ -3,12 +3,12 @@ package com.teclinecg.noxus.controllers;
 import com.teclinecg.noxus.dtos.FlavorDtoDefault;
 import com.teclinecg.noxus.services.FlavorService;
 import io.swagger.annotations.ApiOperation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,14 +40,14 @@ public class FlavorController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/flavor", notes = "Save a new flavor")
-    public ResponseEntity<FlavorDtoDefault> saveFlavor( @RequestBody FlavorDtoDefault flavorDto) {
+    public ResponseEntity<FlavorDtoDefault> saveFlavor(@Valid @RequestBody FlavorDtoDefault flavorDto) {
         flavorDto = flavorService.saveFlavor(flavorDto);
         return ResponseEntity.ok().body(flavorDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/flavor/{flavorId}", notes = "Update an existing flavor")
-    public ResponseEntity<FlavorDtoDefault> updateFlavorById(@PathVariable Long id,  @RequestBody FlavorDtoDefault flavorDto) {
+    public ResponseEntity<FlavorDtoDefault> updateFlavorById(@PathVariable Long id, @Valid @RequestBody FlavorDtoDefault flavorDto) {
         flavorDto = flavorService.updateFlavor(id, flavorDto);
         return ResponseEntity.ok().body(flavorDto);
     }

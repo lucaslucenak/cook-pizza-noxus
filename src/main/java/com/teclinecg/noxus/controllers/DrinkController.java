@@ -3,12 +3,12 @@ package com.teclinecg.noxus.controllers;
 import com.teclinecg.noxus.dtos.DrinkDtoDefault;
 import com.teclinecg.noxus.services.DrinkService;
 import io.swagger.annotations.ApiOperation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,14 +40,14 @@ public class DrinkController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/drink", notes = "Save a new drink")
-    public ResponseEntity<DrinkDtoDefault> saveDrink( @RequestBody DrinkDtoDefault drinkDto) {
+    public ResponseEntity<DrinkDtoDefault> saveDrink(@Valid @RequestBody DrinkDtoDefault drinkDto) {
         drinkDto = drinkService.saveDrink(drinkDto);
         return ResponseEntity.ok().body(drinkDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/drink/{drinkId}", notes = "Update an existing drink")
-    public ResponseEntity<DrinkDtoDefault> updateDrinkById(@PathVariable Long id,  @RequestBody DrinkDtoDefault drinkDto) {
+    public ResponseEntity<DrinkDtoDefault> updateDrinkById(@PathVariable Long id, @Valid @RequestBody DrinkDtoDefault drinkDto) {
         drinkDto = drinkService.updateDrink(id, drinkDto);
         return ResponseEntity.ok().body(drinkDto);
     }
