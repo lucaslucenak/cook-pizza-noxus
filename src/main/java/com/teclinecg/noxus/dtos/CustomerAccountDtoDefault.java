@@ -18,21 +18,32 @@ import java.util.Objects;
 public class CustomerAccountDtoDefault {
 
     private Long id;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Field firstName shouldn't be null")
+    @NotEmpty(message = "Field firstName shouldn't be empty")
+    @NotBlank(message = "Field firstName shouldn't be blank")
     private String firstName;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field lastName shouldn't be null")
+    @NotEmpty(message = "Field lastName shouldn't be empty")
+    @NotBlank(message = "Field lastName shouldn't be blank")
     private String lastName;
-    @NotNull @NotEmpty @NotBlank @CPF
+    @NotNull(message = "Field cpf shouldn't be null")
+    @NotEmpty(message = "Field cpf shouldn't be empty")
+    @NotBlank(message = "Field cpf shouldn't be blank")
+    @CPF
     private String cpf;
-    @NotNull @NotEmpty @NotBlank @Email
+    @NotNull(message = "Field email shouldn't be null")
+    @NotEmpty(message = "Field email shouldn't be empty")
+    @NotBlank(message = "Field email shouldn't be blank")
+    @Email
     private String email;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field cellphoneNumber shouldn't be null")
+    @NotEmpty(message = "Field cellphoneNumber shouldn't be empty")
+    @NotBlank(message = "Field cellphoneNumber shouldn't be blank")
     private String cellphoneNumber;
     private List<AddressModel> addresses;
     private List<CreditCardModel> creditCards;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field status shouldn't be null")
+    @NotEmpty(message = "Field status shouldn't be empty")
     private StatusModel status;
 
     public CustomerAccountDtoDefault() {

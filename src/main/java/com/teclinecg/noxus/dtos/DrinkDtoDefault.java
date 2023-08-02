@@ -3,6 +3,7 @@ package com.teclinecg.noxus.dtos;
 import com.teclinecg.noxus.models.DrinkModel;
 import com.teclinecg.noxus.models.OrderModel;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -14,13 +15,12 @@ import java.util.Objects;
 public class DrinkDtoDefault {
 
     private Long id;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Field name shouldn't be null")
+    @NotEmpty(message = "Field name shouldn't be empty")
+    @NotBlank(message = "Field name shouldn't be blank")
     private String name;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Field price shouldn't be null")
+    @DecimalMin(value = "0.0", inclusive = true)
     private Double price;
 
     public DrinkDtoDefault() {

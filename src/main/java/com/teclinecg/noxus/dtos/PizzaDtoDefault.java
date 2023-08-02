@@ -5,6 +5,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,16 +18,19 @@ public class PizzaDtoDefault {
 
     private Long id;
     @NotNull
-    @NotEmpty
-    @NotBlank
+    @DecimalMin(value = "0.0", inclusive = true)
     private Double price;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field order shouldn't be null")
+    @NotEmpty(message = "Field order shouldn't be empty")
     private OrderModel order;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field pizzaSize shouldn't be null")
+    @NotEmpty(message = "Field pizzaSize shouldn't be empty")
     private SizeModel pizzaSize;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field flavors shouldn't be null")
+    @NotEmpty(message = "Field flavors shouldn't be empty")
     private List<FlavorModel> flavors;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field edges shouldn't be null")
+    @NotEmpty(message = "Field edges shouldn't be empty")
     private List<EdgeModel> edges;
 
     public PizzaDtoDefault() {

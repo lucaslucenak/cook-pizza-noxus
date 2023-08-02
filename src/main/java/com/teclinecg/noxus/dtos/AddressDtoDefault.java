@@ -15,22 +15,33 @@ import java.util.Objects;
 public class AddressDtoDefault {
 
     private Long id;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Field streetName shouldn't be null")
+    @NotEmpty(message = "Field streetName shouldn't be empty")
+    @NotBlank(message = "Field streetName shouldn't be blank")
     private String streetName;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field streetNumber shouldn't be null")
+    @NotEmpty(message = "Field streetNumber shouldn't be empty")
+    @NotBlank(message = "Field streetNumber shouldn't be blank")
     private String streetNumber;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field neighbourhood shouldn't be null")
+    @NotEmpty(message = "Field neighbourhood shouldn't be empty")
+    @NotBlank(message = "Field neighbourhood shouldn't be blank")
     private String neighbourhood;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field city shouldn't be null")
+    @NotEmpty(message = "Field city shouldn't be empty")
+    @NotBlank(message = "Field city shouldn't be blank")
     private String city;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field cep shouldn't be null")
+    @NotEmpty(message = "Field cep shouldn't be empty")
+    @NotBlank(message = "Field cep shouldn't be blank")
     private String cep;
     private String complement;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field referencePoint shouldn't be null")
+    @NotEmpty(message = "Field referencePoint shouldn't be empty")
+    @NotBlank(message = "Field referencePoint shouldn't be blank")
     private String referencePoint;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field customerAccount shouldn't be null")
+    @NotEmpty(message = "Field customerAccount shouldn't be empty")
     private CustomerAccountModel customerAccount;
 
     public AddressDtoDefault() {

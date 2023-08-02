@@ -11,19 +11,32 @@ import java.util.Objects;
 public class CreditCardDtoDefault {
 
     private Long id;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Field ownerName shouldn't be null")
+    @NotEmpty(message = "Field ownerName shouldn't be empty")
+    @NotBlank(message = "Field ownerName shouldn't be blank")
     private String ownerName;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field number shouldn't be null")
+    @NotEmpty(message = "Field number shouldn't be empty")
+    @NotBlank(message = "Field number shouldn't be blank")
     private String number;
-    @NotNull @NotEmpty @NotBlank @Min(value = 3) @Max(value = 4)
+    @NotNull(message = "Field ccv shouldn't be null")
+    @NotEmpty(message = "Field ccv shouldn't be empty")
+    @NotBlank(message = "Field ccv shouldn't be blank")
+    @Min(value = 3)
+    @Max(value = 4)
     private String ccv;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field expirationDate shouldn't be null")
+    @NotEmpty(message = "Field expirationDate shouldn't be empty")
+    @NotBlank(message = "Field expirationDate shouldn't be blank")
     private String expirationDate;
-    @NotNull @NotEmpty @NotBlank @CPF
+    @NotNull(message = "Field ownerCPF shouldn't be null")
+    @NotEmpty(message = "Field ownerCPF shouldn't be empty")
+    @NotBlank(message = "Field ownerCPF shouldn't be blank")
+    @CPF
     private String ownerCPF;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field customerAccount shouldn't be null")
+    @NotEmpty(message = "Field customerAccount shouldn't be empty")
+    @NotBlank(message = "Field customerAccount shouldn't be blank")
     private CustomerAccountModel customerAccount;
 
     public CreditCardDtoDefault() {
