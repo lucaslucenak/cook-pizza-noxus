@@ -40,14 +40,14 @@ public class DrinkController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/drink", notes = "Save a new drink")
-    public ResponseEntity<DrinkDtoDefault> saveDrink(@Validated @RequestBody DrinkDtoDefault drinkDto) {
+    public ResponseEntity<DrinkDtoDefault> saveDrink( @RequestBody DrinkDtoDefault drinkDto) {
         drinkDto = drinkService.saveDrink(drinkDto);
         return ResponseEntity.ok().body(drinkDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/drink/{drinkId}", notes = "Update an existing drink")
-    public ResponseEntity<DrinkDtoDefault> updateDrinkById(@PathVariable Long id, @Validated @RequestBody DrinkDtoDefault drinkDto) {
+    public ResponseEntity<DrinkDtoDefault> updateDrinkById(@PathVariable Long id,  @RequestBody DrinkDtoDefault drinkDto) {
         drinkDto = drinkService.updateDrink(id, drinkDto);
         return ResponseEntity.ok().body(drinkDto);
     }

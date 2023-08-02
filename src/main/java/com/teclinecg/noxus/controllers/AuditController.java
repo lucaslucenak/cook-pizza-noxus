@@ -20,7 +20,7 @@ public class AuditController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/audit", notes = "Save new Audit")
-    public ResponseEntity<AuditDtoDefault> saveAudit(@Validated @RequestBody AuditDtoDefault auditDto) {
+    public ResponseEntity<AuditDtoDefault> saveAudit( @RequestBody AuditDtoDefault auditDto) {
         auditDto = auditService.saveAudit(auditDto);
         return ResponseEntity.ok().body(auditDto);
     }

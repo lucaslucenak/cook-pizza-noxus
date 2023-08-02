@@ -40,14 +40,14 @@ public class PizzaController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/pizza", notes = "Save a new pizza")
-    public ResponseEntity<PizzaDtoDefault> savePizza(@Validated @RequestBody PizzaDtoDefault pizzaDto) {
+    public ResponseEntity<PizzaDtoDefault> savePizza( @RequestBody PizzaDtoDefault pizzaDto) {
         pizzaDto = pizzaService.savePizza(pizzaDto);
         return ResponseEntity.ok().body(pizzaDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/pizza/{pizzaId}", notes = "Update an existing pizza")
-    public ResponseEntity<PizzaDtoDefault> updatePizzaById(@PathVariable Long id, @Validated @RequestBody PizzaDtoDefault pizzaDto) {
+    public ResponseEntity<PizzaDtoDefault> updatePizzaById(@PathVariable Long id,  @RequestBody PizzaDtoDefault pizzaDto) {
         pizzaDto = pizzaService.updatePizza(id, pizzaDto);
         return ResponseEntity.ok().body(pizzaDto);
     }

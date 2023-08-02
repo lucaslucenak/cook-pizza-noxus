@@ -1,12 +1,9 @@
 package com.teclinecg.noxus.models;
 
-import jakarta.persistence.*;
 
-import javax.validation.constraints.Email;
 
 public class TestModel {
 
-    @Email
     private String email;
 
     public TestModel() {

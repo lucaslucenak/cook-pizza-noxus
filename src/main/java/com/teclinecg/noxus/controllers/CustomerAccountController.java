@@ -40,14 +40,14 @@ public class CustomerAccountController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/customer-account", notes = "Save a new customer-account")
-    public ResponseEntity<CustomerAccountDtoDefault> saveCustomerAccount(@Validated @RequestBody CustomerAccountDtoDefault customerAccountDto) {
+    public ResponseEntity<CustomerAccountDtoDefault> saveCustomerAccount( @RequestBody CustomerAccountDtoDefault customerAccountDto) {
         customerAccountDto = customerAccountService.saveCustomerAccount(customerAccountDto);
         return ResponseEntity.ok().body(customerAccountDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Update an existing Customer Account")
-    public ResponseEntity<CustomerAccountDtoDefault> updateCustomerAccountById(@PathVariable Long id, @Validated @RequestBody CustomerAccountDtoDefault customerAccountDto) {
+    public ResponseEntity<CustomerAccountDtoDefault> updateCustomerAccountById(@PathVariable Long id,  @RequestBody CustomerAccountDtoDefault customerAccountDto) {
         customerAccountDto = customerAccountService.updateCustomerAccount(id, customerAccountDto);
         return ResponseEntity.ok().body(customerAccountDto);
     }

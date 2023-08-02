@@ -15,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,12 +50,12 @@ public class FlavorService {
         return pagedFlavors.map(FlavorDtoDefault::new);
     }
 
-    public FlavorDtoDefault saveFlavor(@Valid FlavorDtoDefault flavorDto) {
+    public FlavorDtoDefault saveFlavor( FlavorDtoDefault flavorDto) {
         FlavorModel flavorModel = new FlavorModel(flavorDto);
         return new FlavorDtoDefault(flavorRepository.save(flavorModel));
     }
 
-    public FlavorDtoDefault updateFlavor(Long id, @Valid FlavorDtoDefault flavorDto) {
+    public FlavorDtoDefault updateFlavor(Long id,  FlavorDtoDefault flavorDto) {
         Optional<FlavorModel> existentFlavorModelOptional = flavorRepository.findById(id);
 
         if (existentFlavorModelOptional.isPresent()) {

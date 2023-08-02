@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+
 
 
 @RestController
@@ -17,7 +17,7 @@ import javax.validation.Valid;
 public class TestController {
 
     @PostMapping
-    private ResponseEntity<String> save(@Valid @RequestBody TestModel testModel) {
+    private ResponseEntity<String> save( @RequestBody TestModel testModel) {
         return ResponseEntity.ok("ok");
     }
 }

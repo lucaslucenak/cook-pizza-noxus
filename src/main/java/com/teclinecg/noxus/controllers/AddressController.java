@@ -40,14 +40,14 @@ public class AddressController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/address", notes = "Save a new Address")
-    public ResponseEntity<AddressDtoDefault> saveAddress(@Validated @RequestBody AddressDtoDefault addressDto) {
+    public ResponseEntity<AddressDtoDefault> saveAddress( @RequestBody AddressDtoDefault addressDto) {
         addressDto = addressService.saveAddress(addressDto);
         return ResponseEntity.ok().body(addressDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/address/{addressId}", notes = "Update an existing Address")
-    public ResponseEntity<AddressDtoDefault> updateAddressById(@PathVariable Long id, @Validated @RequestBody AddressDtoDefault addressDto) {
+    public ResponseEntity<AddressDtoDefault> updateAddressById(@PathVariable Long id,  @RequestBody AddressDtoDefault addressDto) {
         addressDto = addressService.updateAddress(id, addressDto);
         return ResponseEntity.ok().body(addressDto);
     }

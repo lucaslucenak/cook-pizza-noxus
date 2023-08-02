@@ -40,14 +40,14 @@ public class OrderController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/order", notes = "Save a new order")
-    public ResponseEntity<OrderDtoDefault> saveOrder(@Validated @RequestBody OrderDtoDefault orderDto) {
+    public ResponseEntity<OrderDtoDefault> saveOrder( @RequestBody OrderDtoDefault orderDto) {
         orderDto = orderService.saveOrder(orderDto);
         return ResponseEntity.ok().body(orderDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Update an existing order")
-    public ResponseEntity<OrderDtoDefault> updateOrderById(@PathVariable Long id, @Validated @RequestBody OrderDtoDefault orderDto) {
+    public ResponseEntity<OrderDtoDefault> updateOrderById(@PathVariable Long id,  @RequestBody OrderDtoDefault orderDto) {
         orderDto = orderService.updateOrder(id, orderDto);
         return ResponseEntity.ok().body(orderDto);
     }

@@ -40,14 +40,14 @@ public class FlavorController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/flavor", notes = "Save a new flavor")
-    public ResponseEntity<FlavorDtoDefault> saveFlavor(@Validated @RequestBody FlavorDtoDefault flavorDto) {
+    public ResponseEntity<FlavorDtoDefault> saveFlavor( @RequestBody FlavorDtoDefault flavorDto) {
         flavorDto = flavorService.saveFlavor(flavorDto);
         return ResponseEntity.ok().body(flavorDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/flavor/{flavorId}", notes = "Update an existing flavor")
-    public ResponseEntity<FlavorDtoDefault> updateFlavorById(@PathVariable Long id, @Validated @RequestBody FlavorDtoDefault flavorDto) {
+    public ResponseEntity<FlavorDtoDefault> updateFlavorById(@PathVariable Long id,  @RequestBody FlavorDtoDefault flavorDto) {
         flavorDto = flavorService.updateFlavor(id, flavorDto);
         return ResponseEntity.ok().body(flavorDto);
     }

@@ -40,14 +40,14 @@ public class EdgeController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/edge", notes = "Save a new edge")
-    public ResponseEntity<EdgeDtoDefault> saveEdge(@Validated @RequestBody EdgeDtoDefault edgeDto) {
+    public ResponseEntity<EdgeDtoDefault> saveEdge( @RequestBody EdgeDtoDefault edgeDto) {
         edgeDto = edgeService.saveEdge(edgeDto);
         return ResponseEntity.ok().body(edgeDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/edge/{edgeId}", notes = "Update an existing edge")
-    public ResponseEntity<EdgeDtoDefault> updateEdgeById(@PathVariable Long id, @Validated @RequestBody EdgeDtoDefault edgeDto) {
+    public ResponseEntity<EdgeDtoDefault> updateEdgeById(@PathVariable Long id,  @RequestBody EdgeDtoDefault edgeDto) {
         edgeDto = edgeService.updateEdge(id, edgeDto);
         return ResponseEntity.ok().body(edgeDto);
     }
