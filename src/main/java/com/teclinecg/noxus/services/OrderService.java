@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
+
 
 @Service
 public class OrderService {
@@ -51,12 +51,12 @@ public class OrderService {
         return pagedOrders.map(OrderDtoDefault::new);
     }
 
-    public OrderDtoDefault saveOrder(@Valid OrderDtoDefault orderDto) {
+    public OrderDtoDefault saveOrder( OrderDtoDefault orderDto) {
         OrderModel orderModel = new OrderModel(orderDto);
         return new OrderDtoDefault(orderRepository.save(orderModel));
     }
 
-    public OrderDtoDefault updateOrder(Long id, @Valid OrderDtoDefault orderDto) {
+    public OrderDtoDefault updateOrder(Long id,  OrderDtoDefault orderDto) {
         Optional<OrderModel> existentOrderModelOptional = orderRepository.findById(id);
 
         if (existentOrderModelOptional.isPresent()) {

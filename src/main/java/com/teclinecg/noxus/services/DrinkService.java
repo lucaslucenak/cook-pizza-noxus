@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
+
 import java.util.Optional;
 
 @Service
@@ -45,12 +45,12 @@ public class DrinkService {
         return pagedDrinks.map(DrinkDtoDefault::new);
     }
 
-    public DrinkDtoDefault saveDrink(@Valid DrinkDtoDefault drinkDto) {
+    public DrinkDtoDefault saveDrink( DrinkDtoDefault drinkDto) {
         DrinkModel drinkModel = new DrinkModel(drinkDto);
         return new DrinkDtoDefault(drinkRepository.save(drinkModel));
     }
 
-    public DrinkDtoDefault updateDrink(Long id, @Valid DrinkDtoDefault drinkDto) {
+    public DrinkDtoDefault updateDrink(Long id,  DrinkDtoDefault drinkDto) {
         Optional<DrinkModel> existentDrinkModelOptional = drinkRepository.findById(id);
 
         if (existentDrinkModelOptional.isPresent()) {

@@ -15,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,12 +50,12 @@ public class EdgeService {
         return pagedEdges.map(EdgeDtoDefault::new);
     }
 
-    public EdgeDtoDefault saveEdge(@Valid EdgeDtoDefault edgeDto) {
+    public EdgeDtoDefault saveEdge( EdgeDtoDefault edgeDto) {
         EdgeModel edgeModel = new EdgeModel(edgeDto);
         return new EdgeDtoDefault(edgeRepository.save(edgeModel));
     }
 
-    public EdgeDtoDefault updateEdge(Long id, @Valid EdgeDtoDefault edgeDto) {
+    public EdgeDtoDefault updateEdge(Long id,  EdgeDtoDefault edgeDto) {
         Optional<EdgeModel> existentEdgeModelOptional = edgeRepository.findById(id);
 
         if (existentEdgeModelOptional.isPresent()) {

@@ -3,12 +3,12 @@ package com.teclinecg.noxus.controllers;
 import com.teclinecg.noxus.dtos.PizzaDtoDefault;
 import com.teclinecg.noxus.services.PizzaService;
 import io.swagger.annotations.ApiOperation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,14 +40,14 @@ public class PizzaController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/pizza", notes = "Save a new pizza")
-    public ResponseEntity<PizzaDtoDefault> savePizza(@Validated @RequestBody PizzaDtoDefault pizzaDto) {
+    public ResponseEntity<PizzaDtoDefault> savePizza(@Valid @RequestBody PizzaDtoDefault pizzaDto) {
         pizzaDto = pizzaService.savePizza(pizzaDto);
         return ResponseEntity.ok().body(pizzaDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/pizza/{pizzaId}", notes = "Update an existing pizza")
-    public ResponseEntity<PizzaDtoDefault> updatePizzaById(@PathVariable Long id, @Validated @RequestBody PizzaDtoDefault pizzaDto) {
+    public ResponseEntity<PizzaDtoDefault> updatePizzaById(@PathVariable Long id, @Valid @RequestBody PizzaDtoDefault pizzaDto) {
         pizzaDto = pizzaService.updatePizza(id, pizzaDto);
         return ResponseEntity.ok().body(pizzaDto);
     }

@@ -3,6 +3,9 @@ package com.teclinecg.noxus.dtos;
 import com.teclinecg.noxus.models.DrinkModel;
 import com.teclinecg.noxus.models.OrderModel;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -11,7 +14,13 @@ import java.util.Objects;
 public class DrinkDtoDefault {
 
     private Long id;
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String name;
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private Double price;
 
     public DrinkDtoDefault() {

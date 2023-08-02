@@ -3,12 +3,12 @@ package com.teclinecg.noxus.controllers;
 import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
 import com.teclinecg.noxus.services.CustomerAccountService;
 import io.swagger.annotations.ApiOperation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,14 +40,14 @@ public class CustomerAccountController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/customer-account", notes = "Save a new customer-account")
-    public ResponseEntity<CustomerAccountDtoDefault> saveCustomerAccount(@Validated @RequestBody CustomerAccountDtoDefault customerAccountDto) {
+    public ResponseEntity<CustomerAccountDtoDefault> saveCustomerAccount(@Valid @RequestBody CustomerAccountDtoDefault customerAccountDto) {
         customerAccountDto = customerAccountService.saveCustomerAccount(customerAccountDto);
         return ResponseEntity.ok().body(customerAccountDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Update an existing Customer Account")
-    public ResponseEntity<CustomerAccountDtoDefault> updateCustomerAccountById(@PathVariable Long id, @Validated @RequestBody CustomerAccountDtoDefault customerAccountDto) {
+    public ResponseEntity<CustomerAccountDtoDefault> updateCustomerAccountById(@PathVariable Long id, @Valid @RequestBody CustomerAccountDtoDefault customerAccountDto) {
         customerAccountDto = customerAccountService.updateCustomerAccount(id, customerAccountDto);
         return ResponseEntity.ok().body(customerAccountDto);
     }

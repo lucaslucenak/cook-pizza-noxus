@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 @Service
@@ -45,12 +44,12 @@ public class CustomerAccountService {
         return pagedCustomerAccounts.map(CustomerAccountDtoDefault::new);
     }
 
-    public CustomerAccountDtoDefault saveCustomerAccount(@Valid CustomerAccountDtoDefault customerAccountDto) {
+    public CustomerAccountDtoDefault saveCustomerAccount( CustomerAccountDtoDefault customerAccountDto) {
         CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDto);
         return new CustomerAccountDtoDefault(customerAccountRepository.save(customerAccountModel));
     }
 
-    public CustomerAccountDtoDefault updateCustomerAccount(Long id, @Valid CustomerAccountDtoDefault customerAccountDto) {
+    public CustomerAccountDtoDefault updateCustomerAccount(Long id,  CustomerAccountDtoDefault customerAccountDto) {
         Optional<CustomerAccountModel> existentCustomerAccountModelOptional = customerAccountRepository.findById(id);
 
         if (existentCustomerAccountModelOptional.isPresent()) {

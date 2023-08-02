@@ -5,6 +5,9 @@ import com.teclinecg.noxus.models.CustomerAccountModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
@@ -12,13 +15,22 @@ import java.util.Objects;
 public class AddressDtoDefault {
 
     private Long id;
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String streetName;
+    @NotNull @NotEmpty @NotBlank
     private String streetNumber;
+    @NotNull @NotEmpty @NotBlank
     private String neighbourhood;
+    @NotNull @NotEmpty @NotBlank
     private String city;
+    @NotNull @NotEmpty @NotBlank
     private String cep;
     private String complement;
+    @NotNull @NotEmpty @NotBlank
     private String referencePoint;
+    @NotNull @NotEmpty @NotBlank
     private CustomerAccountModel customerAccount;
 
     public AddressDtoDefault() {

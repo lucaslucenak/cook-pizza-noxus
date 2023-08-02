@@ -15,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,12 +50,12 @@ public class PizzaService {
         return pagedPizzas.map(PizzaDtoDefault::new);
     }
 
-    public PizzaDtoDefault savePizza(@Valid PizzaDtoDefault pizzaDto) {
+    public PizzaDtoDefault savePizza( PizzaDtoDefault pizzaDto) {
         PizzaModel pizzaModel = new PizzaModel(pizzaDto);
         return new PizzaDtoDefault(pizzaRepository.save(pizzaModel));
     }
 
-    public PizzaDtoDefault updatePizza(Long id, @Valid PizzaDtoDefault pizzaDto) {
+    public PizzaDtoDefault updatePizza(Long id,  PizzaDtoDefault pizzaDto) {
         Optional<PizzaModel> existentPizzaModelOptional = pizzaRepository.findById(id);
 
         if (existentPizzaModelOptional.isPresent()) {

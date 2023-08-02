@@ -2,8 +2,8 @@ package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
@@ -11,11 +11,19 @@ import java.util.Objects;
 public class CreditCardDtoDefault {
 
     private Long id;
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String ownerName;
+    @NotNull @NotEmpty @NotBlank
     private String number;
+    @NotNull @NotEmpty @NotBlank @Min(value = 3) @Max(value = 4)
     private String ccv;
+    @NotNull @NotEmpty @NotBlank
     private String expirationDate;
+    @NotNull @NotEmpty @NotBlank @CPF
     private String ownerCPF;
+    @NotNull @NotEmpty @NotBlank
     private CustomerAccountModel customerAccount;
 
     public CreditCardDtoDefault() {

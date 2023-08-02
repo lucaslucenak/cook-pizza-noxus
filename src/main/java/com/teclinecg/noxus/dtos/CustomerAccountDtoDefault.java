@@ -5,6 +5,11 @@ import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import com.teclinecg.noxus.models.StatusModel;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -13,13 +18,21 @@ import java.util.Objects;
 public class CustomerAccountDtoDefault {
 
     private Long id;
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String firstName;
+    @NotNull @NotEmpty @NotBlank
     private String lastName;
+    @NotNull @NotEmpty @NotBlank @CPF
     private String cpf;
+    @NotNull @NotEmpty @NotBlank @Email
     private String email;
+    @NotNull @NotEmpty @NotBlank
     private String cellphoneNumber;
     private List<AddressModel> addresses;
     private List<CreditCardModel> creditCards;
+    @NotNull @NotEmpty @NotBlank
     private StatusModel status;
 
     public CustomerAccountDtoDefault() {

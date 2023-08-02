@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 @Service
@@ -45,12 +44,12 @@ public class AddressService {
         return pagedAddresses.map(AddressDtoDefault::new);
     }
 
-    public AddressDtoDefault saveAddress(@Valid AddressDtoDefault addressDto) {
+    public AddressDtoDefault saveAddress(AddressDtoDefault addressDto) {
         AddressModel addressModel = new AddressModel(addressDto);
         return new AddressDtoDefault(addressRepository.save(addressModel));
     }
 
-    public AddressDtoDefault updateAddress(Long id, @Valid AddressDtoDefault addressDto) {
+    public AddressDtoDefault updateAddress(Long id, AddressDtoDefault addressDto) {
         Optional<AddressModel> existentAddressModelOptional = addressRepository.findById(id);
 
         if (existentAddressModelOptional.isPresent()) {
