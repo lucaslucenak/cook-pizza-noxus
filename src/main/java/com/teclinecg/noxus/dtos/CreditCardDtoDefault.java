@@ -3,6 +3,7 @@ package com.teclinecg.noxus.dtos;
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.BeanUtils;
 
@@ -18,6 +19,7 @@ public class CreditCardDtoDefault {
     @NotNull(message = "Field number shouldn't be null")
     @NotEmpty(message = "Field number shouldn't be empty")
     @NotBlank(message = "Field number shouldn't be blank")
+    @CreditCardNumber
     private String number;
     @NotNull(message = "Field ccv shouldn't be null")
     @NotEmpty(message = "Field ccv shouldn't be empty")

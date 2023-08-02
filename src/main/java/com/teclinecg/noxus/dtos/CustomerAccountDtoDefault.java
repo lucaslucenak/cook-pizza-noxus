@@ -53,6 +53,18 @@ public class CustomerAccountDtoDefault {
         BeanUtils.copyProperties(customerAccountModel, this);
     }
 
+    public CustomerAccountDtoDefault(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.cpf = cpf;
+        this.email = email;
+        this.cellphoneNumber = cellphoneNumber;
+        this.addresses = addresses;
+        this.creditCards = creditCards;
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

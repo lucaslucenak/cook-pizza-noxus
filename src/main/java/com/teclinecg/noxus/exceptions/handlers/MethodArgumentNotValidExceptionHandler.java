@@ -33,7 +33,6 @@ public class MethodArgumentNotValidExceptionHandler {
         handlerDto.setErrors(errors);
         handlerDto.setHttpStatus(HttpStatus.BAD_REQUEST);
         handlerDto.setZonedDateTime(ZonedDateTime.now(ZoneId.of("Z")));
-        handlerDto.setException(ex);
 
         return ResponseEntity.badRequest().body(handlerDto);
     }

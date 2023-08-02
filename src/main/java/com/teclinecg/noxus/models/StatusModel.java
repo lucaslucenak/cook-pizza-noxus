@@ -19,9 +19,9 @@ public class StatusModel {
     public StatusModel() {
     }
 
-    public StatusModel(Long id, StatusEnum status) {
+    public StatusModel(Long id, int statusCode) {
         this.id = id;
-        this.status = status;
+        this.status = StatusEnum.fromStatusCode(statusCode);
     }
 
     public Long getId() {
