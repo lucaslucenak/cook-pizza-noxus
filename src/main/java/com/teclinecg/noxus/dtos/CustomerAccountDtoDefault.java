@@ -42,9 +42,9 @@ public class CustomerAccountDtoDefault {
     private String cellphoneNumber;
     private List<AddressModel> addresses;
     private List<CreditCardModel> creditCards;
-    @NotNull(message = "Field status shouldn't be null")
-    @NotEmpty(message = "Field status shouldn't be empty")
-    private StatusModel status;
+//    @NotNull(message = "Field status shouldn't be null")
+//    @NotEmpty(message = "Field status shouldn't be empty")
+    private Long status;
 
     public CustomerAccountDtoDefault() {
     }
@@ -53,7 +53,7 @@ public class CustomerAccountDtoDefault {
         BeanUtils.copyProperties(customerAccountModel, this);
     }
 
-    public CustomerAccountDtoDefault(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
+    public CustomerAccountDtoDefault(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, Long status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -129,24 +129,11 @@ public class CustomerAccountDtoDefault {
         this.creditCards = creditCards;
     }
 
-    public StatusModel getStatus() {
+    public Long getStatus() {
         return status;
     }
 
-    public void setStatus(StatusModel status) {
+    public void setStatus(Long status) {
         this.status = status;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CustomerAccountDtoDefault that = (CustomerAccountDtoDefault) o;
-        return id.equals(that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(cpf, that.cpf) && Objects.equals(email, that.email) && Objects.equals(addresses, that.addresses) && Objects.equals(creditCards, that.creditCards) && Objects.equals(status, that.status);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, cpf, email, addresses, creditCards, status);
     }
 }

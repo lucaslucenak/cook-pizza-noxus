@@ -6,7 +6,9 @@ import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.CustomerAccountModel;
+import com.teclinecg.noxus.models.StatusModel;
 import com.teclinecg.noxus.repositories.CustomerAccountRepository;
+import com.teclinecg.noxus.repositories.StatusRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,8 @@ public class CustomerAccountService {
 
     @Autowired
     private CustomerAccountRepository customerAccountRepository;
+    @Autowired
+    private StatusRepository statusRepository;
 
     public CustomerAccountDtoDefault findCustomerAccountById(Long id) {
         Optional<CustomerAccountModel> customerAccountOptional = customerAccountRepository.findById(id);
@@ -47,6 +51,9 @@ public class CustomerAccountService {
 
     public CustomerAccountDtoDefault saveCustomerAccount( CustomerAccountDtoDefault customerAccountDto) {
         CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDto);
+        StatusModel status = statusRepository.findById(customerAccountDto.getStatus()).get();
+        customerAccountModel.setStatus(status);
+
         return new CustomerAccountDtoDefault(customerAccountRepository.save(customerAccountModel));
     }
 
