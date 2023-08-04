@@ -42,7 +42,7 @@ public class CustomerAccountDtoDefault {
     private String cellphoneNumber;
     private List<AddressModel> addresses;
     private List<CreditCardModel> creditCards;
-    @NotNull(message = "Field status shouldn't be null")
+//    @NotNull(message = "Field status shouldn't be null")
     private Long status;
 
     public CustomerAccountDtoDefault() {

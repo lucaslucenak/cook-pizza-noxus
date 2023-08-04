@@ -52,10 +52,15 @@ public class CustomerAccountService {
 
     public CustomerAccountDtoSavedReturn saveCustomerAccount(CustomerAccountDtoDefault customerAccountDto) {
         CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDto);
-        StatusModel status = statusRepository.findById(customerAccountDto.getStatus()).get();
-        customerAccountModel.setStatus(status);
 
-        return new CustomerAccountDtoSavedReturn(customerAccountRepository.save(customerAccountModel));
+        Optional<StatusModel> optionalStatusModel = statusRepository.findById(customerAccountDto.getStatus());
+        if (optionalStatusModel.isPresent()) {
+            StatusModel statusModel = optionalStatusModel.get();
+            customerAccountModel.setStatus(statusModel);
+            return new CustomerAccountDtoSavedReturn(customerAccountRepository.save(customerAccountModel));
+        } else {
+            throw new ResourceNotFoundException("Resource: Status. Not found with id: " + customerAccountDto.getStatus());
+        }
     }
 
     public CustomerAccountDtoDefault updateCustomerAccount(Long id,  CustomerAccountDtoDefault customerAccountDto) {

@@ -1,6 +1,7 @@
 package com.teclinecg.noxus.exceptions.handlers;
 
 import com.teclinecg.noxus.dtos.ExceptionHandlerDto;
+import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -16,18 +17,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class MethodArgumentNotValidExceptionHandler {
+public class ResourceNotFoundExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionHandlerDto> handle(MethodArgumentNotValidException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ExceptionHandlerDto> handle(ResourceNotFoundException ex) {
         ExceptionHandlerDto handlerDto = new ExceptionHandlerDto();
 
         Map<String, String> errors = new HashMap<>();
-        for (FieldError i : ex.getBindingResult().getFieldErrors()) {
-            errors.put(i.getField(), i.getDefaultMessage());
-        }
+        errors.put("status", ex.getMessage());
 
         handlerDto.setErrors(errors);
         handlerDto.setHttpStatus(HttpStatus.BAD_REQUEST);

@@ -37,8 +37,6 @@ public class CreditCardDtoDefault {
     @CPF
     private String ownerCPF;
     @NotNull(message = "Field customerAccount shouldn't be null")
-    @NotEmpty(message = "Field customerAccount shouldn't be empty")
-    @NotBlank(message = "Field customerAccount shouldn't be blank")
     private CustomerAccountModel customerAccount;
 
     public CreditCardDtoDefault() {
