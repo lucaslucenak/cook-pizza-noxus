@@ -1,6 +1,7 @@
 package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
+import com.teclinecg.noxus.dtos.CustomerAccountDtoSavedReturn;
 import com.teclinecg.noxus.services.CustomerAccountService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -40,9 +41,9 @@ public class CustomerAccountController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/customer-account", notes = "Save a new customer-account")
-    public ResponseEntity<CustomerAccountDtoDefault> saveCustomerAccount(@Valid @RequestBody CustomerAccountDtoDefault customerAccountDto) {
-        customerAccountDto = customerAccountService.saveCustomerAccount(customerAccountDto);
-        return ResponseEntity.ok().body(customerAccountDto);
+    public ResponseEntity<CustomerAccountDtoSavedReturn> saveCustomerAccount(@Valid @RequestBody CustomerAccountDtoDefault customerAccountDto) {
+        CustomerAccountDtoSavedReturn returnDto = customerAccountService.saveCustomerAccount(customerAccountDto);
+        return ResponseEntity.ok().body(returnDto);
     }
 
     @PutMapping

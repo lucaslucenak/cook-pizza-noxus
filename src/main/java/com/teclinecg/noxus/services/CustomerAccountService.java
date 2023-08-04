@@ -1,6 +1,7 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
+import com.teclinecg.noxus.dtos.CustomerAccountDtoSavedReturn;
 import com.teclinecg.noxus.enums.StatusEnum;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
@@ -49,12 +50,12 @@ public class CustomerAccountService {
         return pagedCustomerAccounts.map(CustomerAccountDtoDefault::new);
     }
 
-    public CustomerAccountDtoDefault saveCustomerAccount( CustomerAccountDtoDefault customerAccountDto) {
+    public CustomerAccountDtoSavedReturn saveCustomerAccount(CustomerAccountDtoDefault customerAccountDto) {
         CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDto);
         StatusModel status = statusRepository.findById(customerAccountDto.getStatus()).get();
         customerAccountModel.setStatus(status);
 
-        return new CustomerAccountDtoDefault(customerAccountRepository.save(customerAccountModel));
+        return new CustomerAccountDtoSavedReturn(customerAccountRepository.save(customerAccountModel));
     }
 
     public CustomerAccountDtoDefault updateCustomerAccount(Long id,  CustomerAccountDtoDefault customerAccountDto) {

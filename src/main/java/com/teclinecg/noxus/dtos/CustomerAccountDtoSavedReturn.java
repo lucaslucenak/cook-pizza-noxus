@@ -4,7 +4,6 @@ import com.teclinecg.noxus.models.AddressModel;
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import com.teclinecg.noxus.models.StatusModel;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,9 +12,9 @@ import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
-import java.util.Objects;
 
-public class CustomerAccountDtoDefault {
+public class CustomerAccountDtoSavedReturn {
+
 
     private Long id;
     @NotNull(message = "Field firstName shouldn't be null")
@@ -43,16 +42,17 @@ public class CustomerAccountDtoDefault {
     private List<AddressModel> addresses;
     private List<CreditCardModel> creditCards;
     @NotNull(message = "Field status shouldn't be null")
-    private Long status;
+    @NotEmpty(message = "Field status shouldn't be empty")
+    private StatusModel status;
 
-    public CustomerAccountDtoDefault() {
+    public CustomerAccountDtoSavedReturn() {
     }
 
-    public CustomerAccountDtoDefault(CustomerAccountModel customerAccountModel) {
+    public CustomerAccountDtoSavedReturn(CustomerAccountModel customerAccountModel) {
         BeanUtils.copyProperties(customerAccountModel, this);
     }
 
-    public CustomerAccountDtoDefault(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, Long status) {
+    public CustomerAccountDtoSavedReturn(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -128,11 +128,11 @@ public class CustomerAccountDtoDefault {
         this.creditCards = creditCards;
     }
 
-    public Long getStatus() {
+    public StatusModel getStatus() {
         return status;
     }
 
-    public void setStatus(Long status) {
+    public void setStatus(StatusModel status) {
         this.status = status;
     }
 }
