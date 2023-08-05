@@ -1,5 +1,6 @@
 package com.teclinecg.noxus.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
@@ -30,13 +31,13 @@ public class CustomerAccountModel {
     @Column(nullable = false)
     private String cellphoneNumber;
 
-    @OneToMany(mappedBy = "customerAccount", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
     private List<AddressModel> addresses;
 
-    @OneToMany(mappedBy = "customerAccount", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
     private List<CreditCardModel> creditCards;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id", nullable = false)
     private StatusModel status;
 

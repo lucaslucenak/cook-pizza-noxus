@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Transactional
     public AddressDtoDefault findAddressById(Long id) {
         Optional<AddressModel> addressOptional = addressRepository.findById(id);
 
@@ -30,6 +32,7 @@ public class AddressService {
         }
     }
 
+    @Transactional
     public Page<AddressDtoDefault> findAllAddressesPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater than zero");
@@ -44,11 +47,13 @@ public class AddressService {
         return pagedAddresses.map(AddressDtoDefault::new);
     }
 
+    @Transactional
     public AddressDtoDefault saveAddress(AddressDtoDefault addressDto) {
         AddressModel addressModel = new AddressModel(addressDto);
         return new AddressDtoDefault(addressRepository.save(addressModel));
     }
 
+    @Transactional
     public AddressDtoDefault updateAddress(Long id, AddressDtoDefault addressDto) {
         Optional<AddressModel> existentAddressModelOptional = addressRepository.findById(id);
 
@@ -61,6 +66,7 @@ public class AddressService {
         }
     }
 
+    @Transactional
     public void deleteAddressById(Long id) {
         if (addressRepository.existsById(id)) {
             addressRepository.deleteById(id);

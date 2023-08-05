@@ -1,11 +1,19 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.CreditCardDtoDefault;
+import com.teclinecg.noxus.dtos.CreditCardDtoSavedReturn;
+import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
+import com.teclinecg.noxus.dtos.CustomerAccountDtoSavedReturn;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
+import com.teclinecg.noxus.models.AddressModel;
 import com.teclinecg.noxus.models.CreditCardModel;
+import com.teclinecg.noxus.models.CustomerAccountModel;
+import com.teclinecg.noxus.models.StatusModel;
 import com.teclinecg.noxus.repositories.CreditCardRepository;
+import com.teclinecg.noxus.repositories.CustomerAccountRepository;
+import org.hibernate.Hibernate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +27,9 @@ import java.util.Optional;
 public class CreditCardService {
     @Autowired
     private CreditCardRepository creditCardRepository;
+
+    @Autowired
+    private CustomerAccountService customerAccountService;
 
     public CreditCardDtoDefault findCreditCardById(Long id) {
         Optional<CreditCardModel> creditCardOptional = creditCardRepository.findById(id);
@@ -44,9 +55,15 @@ public class CreditCardService {
         return pagedCreditCards.map(CreditCardDtoDefault::new);
     }
 
-    public CreditCardDtoDefault saveCreditCard(CreditCardDtoDefault creditCardDto) {
+    public CreditCardDtoSavedReturn saveCreditCard(CreditCardDtoDefault creditCardDto) {
         CreditCardModel creditCardModel = new CreditCardModel(creditCardDto);
-        return new CreditCardDtoDefault(creditCardRepository.save(creditCardModel));
+
+        // Catching the customer account to return to the Credit Card body
+        CustomerAccountDtoDefault customerAccountDtoDefault = customerAccountService.findCustomerAccountById(creditCardDto.getCustomerAccount());
+        CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDtoDefault);
+        creditCardModel.setCustomerAccount(customerAccountModel);
+
+        return new CreditCardDtoSavedReturn(creditCardRepository.save(creditCardModel));
     }
 
     public CreditCardDtoDefault updateCreditCard(Long id, CreditCardDtoDefault creditCardDto) {
