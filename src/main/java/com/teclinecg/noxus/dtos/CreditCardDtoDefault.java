@@ -3,6 +3,7 @@ package com.teclinecg.noxus.dtos;
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.BeanUtils;
 
@@ -11,26 +12,47 @@ import java.util.Objects;
 public class CreditCardDtoDefault {
 
     private Long id;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Field ownerName shouldn't be null")
+    @NotEmpty(message = "Field ownerName shouldn't be empty")
+    @NotBlank(message = "Field ownerName shouldn't be blank")
     private String ownerName;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field number shouldn't be null")
+    @NotEmpty(message = "Field number shouldn't be empty")
+    @NotBlank(message = "Field number shouldn't be blank")
+    @CreditCardNumber
     private String number;
-    @NotNull @NotEmpty @NotBlank @Min(value = 3) @Max(value = 4)
+    @NotNull(message = "Field ccv shouldn't be null")
+    @NotEmpty(message = "Field ccv shouldn't be empty")
+    @NotBlank(message = "Field ccv shouldn't be blank")
+    @Pattern(regexp = "\\d{3,4}", message = "Field ccv must have 3 or 4 digits")
     private String ccv;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field expirationDate shouldn't be null")
+    @NotEmpty(message = "Field expirationDate shouldn't be empty")
+    @NotBlank(message = "Field expirationDate shouldn't be blank")
     private String expirationDate;
-    @NotNull @NotEmpty @NotBlank @CPF
+    @NotNull(message = "Field ownerCPF shouldn't be null")
+    @NotEmpty(message = "Field ownerCPF shouldn't be empty")
+    @NotBlank(message = "Field ownerCPF shouldn't be blank")
+    @CPF
     private String ownerCPF;
-    @NotNull @NotEmpty @NotBlank
-    private CustomerAccountModel customerAccount;
+//    @NotNull(message = "Field customerAccount shouldn't be null")
+    private Long customerAccount;
 
     public CreditCardDtoDefault() {
     }
 
     public CreditCardDtoDefault(CreditCardModel creditCardModel) {
         BeanUtils.copyProperties(creditCardModel, this);
+    }
+
+    public CreditCardDtoDefault(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, Long customerAccount) {
+        this.id = id;
+        this.ownerName = ownerName;
+        this.number = number;
+        this.ccv = ccv;
+        this.expirationDate = expirationDate;
+        this.ownerCPF = ownerCPF;
+        this.customerAccount = customerAccount;
     }
 
     public Long getId() {
@@ -81,11 +103,11 @@ public class CreditCardDtoDefault {
         this.ownerCPF = ownerCPF;
     }
 
-    public CustomerAccountModel getCustomerAccount() {
+    public Long getCustomerAccount() {
         return customerAccount;
     }
 
-    public void setCustomerAccount(CustomerAccountModel customerAccount) {
+    public void setCustomerAccount(Long customerAccount) {
         this.customerAccount = customerAccount;
     }
 

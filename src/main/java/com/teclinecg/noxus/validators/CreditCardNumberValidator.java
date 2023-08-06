@@ -1,12 +1,21 @@
 package com.teclinecg.noxus.validators;
 
 import com.teclinecg.noxus.interfaces.ValidatorInterface;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
-public class CreditCardNumberValidator implements ValidatorInterface {
+public class CreditCardNumberValidator implements ConstraintValidator<CreditCardNumber, String> {
 
     @Override
-    public boolean isValid(String creditCardNumber) {
+    public void initialize(CreditCardNumber constraintAnnotation) {
+    }
+
+    @Override
+    // Credits:
+    // https://www.geeksforgeeks.org/program-credit-card-number-validation/
+    public boolean isValid(String creditCardNumber, ConstraintValidatorContext constraintValidatorContext) {
         long parsedCreditCardNumber = Long.parseLong(creditCardNumber);
+
         return (getSize(parsedCreditCardNumber) >= 13 &&
                 getSize(parsedCreditCardNumber) <= 16) &&
                 (prefixMatched(parsedCreditCardNumber, 4) ||
@@ -16,9 +25,6 @@ public class CreditCardNumberValidator implements ValidatorInterface {
                 ((sumOfDoubleEvenPlace(parsedCreditCardNumber) +
                         sumOfOddPlace(parsedCreditCardNumber)) % 10 == 0);
     }
-
-    // Credits:
-    // https://www.geeksforgeeks.org/program-credit-card-number-validation/
 
     public static int sumOfDoubleEvenPlace(long number) {
         int sum = 0;

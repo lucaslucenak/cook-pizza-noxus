@@ -1,11 +1,15 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
+import com.teclinecg.noxus.dtos.CustomerAccountDtoSavedReturn;
+import com.teclinecg.noxus.enums.StatusEnum;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.CustomerAccountModel;
+import com.teclinecg.noxus.models.StatusModel;
 import com.teclinecg.noxus.repositories.CustomerAccountRepository;
+import com.teclinecg.noxus.repositories.StatusRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,8 @@ public class CustomerAccountService {
 
     @Autowired
     private CustomerAccountRepository customerAccountRepository;
+    @Autowired
+    private StatusRepository statusRepository;
 
     public CustomerAccountDtoDefault findCustomerAccountById(Long id) {
         Optional<CustomerAccountModel> customerAccountOptional = customerAccountRepository.findById(id);
@@ -32,7 +38,7 @@ public class CustomerAccountService {
 
     public Page<CustomerAccountDtoDefault> findAllCustomerAccountsPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
-            throw new InvalidPageNumberException("Invalid Page Number. Must be greater than zero");
+            throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
         if (pageable.getPageSize() < 1) {
             throw new InvalidPageRegisterSizeException("Invalid Register Size. Must be greater than zero");
@@ -44,9 +50,17 @@ public class CustomerAccountService {
         return pagedCustomerAccounts.map(CustomerAccountDtoDefault::new);
     }
 
-    public CustomerAccountDtoDefault saveCustomerAccount( CustomerAccountDtoDefault customerAccountDto) {
+    public CustomerAccountDtoSavedReturn saveCustomerAccount(CustomerAccountDtoDefault customerAccountDto) {
         CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDto);
-        return new CustomerAccountDtoDefault(customerAccountRepository.save(customerAccountModel));
+
+        Optional<StatusModel> optionalStatusModel = statusRepository.findById(customerAccountDto.getStatus());
+        if (optionalStatusModel.isPresent()) {
+            StatusModel statusModel = optionalStatusModel.get();
+            customerAccountModel.setStatus(statusModel);
+            return new CustomerAccountDtoSavedReturn(customerAccountRepository.save(customerAccountModel));
+        } else {
+            throw new ResourceNotFoundException("Resource: Status. Not found with id: " + customerAccountDto.getStatus());
+        }
     }
 
     public CustomerAccountDtoDefault updateCustomerAccount(Long id,  CustomerAccountDtoDefault customerAccountDto) {

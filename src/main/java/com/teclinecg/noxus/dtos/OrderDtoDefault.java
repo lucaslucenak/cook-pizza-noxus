@@ -2,6 +2,7 @@ package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -14,24 +15,28 @@ import java.util.Objects;
 public class OrderDtoDefault {
 
     private Long id;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Field orderPrice shouldn't be null")
+    @DecimalMin(value = "0.0", inclusive = true)
     private Double orderPrice;
     private String observation;
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
     private List<PizzaModel> pizzas;
     private List<DrinkModel> drinks;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field customerAccount shouldn't be null")
+    @NotEmpty(message = "Field customerAccount shouldn't be empty")
     private CustomerAccountModel customerAccount;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field address shouldn't be null")
+    @NotEmpty(message = "Field address shouldn't be empty")
     private AddressModel address;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field deliveryTax shouldn't be null")
+    @NotEmpty(message = "Field deliveryTax shouldn't be empty")
     private DeliveryTaxModel deliveryTax;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field paymentMethod shouldn't be null")
+    @NotEmpty(message = "Field paymentMethod shouldn't be empty")
     private PaymentMethodModel paymentMethod;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field deliveryType shouldn't be null")
+    @NotEmpty(message = "Field deliveryType shouldn't be empty")
     private DeliveryTypeModel deliveryType;
 
     public OrderDtoDefault() {

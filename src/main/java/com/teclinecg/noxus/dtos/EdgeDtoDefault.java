@@ -3,6 +3,7 @@ package com.teclinecg.noxus.dtos;
 import com.teclinecg.noxus.models.EdgeModel;
 import com.teclinecg.noxus.models.PizzaModel;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -14,11 +15,12 @@ import java.util.Objects;
 public class EdgeDtoDefault {
 
     private Long id;
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Field edge shouldn't be null")
+    @NotEmpty(message = "Field edge shouldn't be empty")
+    @NotBlank(message = "Field edge shouldn't be blank")
     private String edge;
-    @NotNull @NotEmpty @NotBlank
+    @NotNull(message = "Field price shouldn't be null")
+    @DecimalMin(value = "0.0", inclusive = true)
     private Double price;
     private List<PizzaModel> pizzas;
 

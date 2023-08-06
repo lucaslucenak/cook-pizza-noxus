@@ -1,39 +1,32 @@
-package com.teclinecg.noxus.models;
+package com.teclinecg.noxus.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.teclinecg.noxus.dtos.CreditCardDtoDefault;
-import jakarta.persistence.*;
+import com.teclinecg.noxus.models.CreditCardModel;
+import com.teclinecg.noxus.models.CustomerAccountModel;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.CreditCardNumber;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
-@Entity
-@Table(name = "credit_card")
-public class CreditCardModel {
+public class CreditCardDtoSavedReturn {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String ownerName;
     private String number;
     private String ccv;
     private String expirationDate;
     private String ownerCPF;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "customer_account_id", nullable = false)
     private CustomerAccountModel customerAccount;
 
-    public CreditCardModel() {
+    public CreditCardDtoSavedReturn() {
     }
 
-    public CreditCardModel(CreditCardDtoDefault creditCardDto) {
-        BeanUtils.copyProperties(creditCardDto, this);
+    public CreditCardDtoSavedReturn(CreditCardModel creditCardModel) {
+        BeanUtils.copyProperties(creditCardModel, this);
     }
 
-    public CreditCardModel(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount) {
+    public CreditCardDtoSavedReturn(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount) {
         this.id = id;
         this.ownerName = ownerName;
         this.number = number;
@@ -83,14 +76,6 @@ public class CreditCardModel {
         this.expirationDate = expirationDate;
     }
 
-    public CustomerAccountModel getCustomerAccount() {
-        return customerAccount;
-    }
-
-    public void setCustomerAccount(CustomerAccountModel customerAccount) {
-        this.customerAccount = customerAccount;
-    }
-
     public String getOwnerCPF() {
         return ownerCPF;
     }
@@ -99,11 +84,19 @@ public class CreditCardModel {
         this.ownerCPF = ownerCPF;
     }
 
+    public CustomerAccountModel getCustomerAccount() {
+        return customerAccount;
+    }
+
+    public void setCustomerAccount(CustomerAccountModel customerAccount) {
+        this.customerAccount = customerAccount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CreditCardModel that = (CreditCardModel) o;
+        CreditCardDtoSavedReturn that = (CreditCardDtoSavedReturn) o;
         return id.equals(that.id) && Objects.equals(ownerName, that.ownerName) && Objects.equals(number, that.number) && Objects.equals(ccv, that.ccv) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(ownerCPF, that.ownerCPF) && Objects.equals(customerAccount, that.customerAccount);
     }
 

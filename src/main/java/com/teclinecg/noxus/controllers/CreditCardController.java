@@ -1,6 +1,8 @@
 package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.CreditCardDtoDefault;
+import com.teclinecg.noxus.dtos.CreditCardDtoSavedReturn;
+import com.teclinecg.noxus.dtos.CustomerAccountDtoSavedReturn;
 import com.teclinecg.noxus.services.CreditCardService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -40,9 +42,9 @@ public class CreditCardController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/credit-card", notes = "Save a new Credit Card")
-    public ResponseEntity<CreditCardDtoDefault> saveCreditCard(@Valid @RequestBody CreditCardDtoDefault creditCardDto) {
-        creditCardDto = creditCardService.saveCreditCard(creditCardDto);
-        return ResponseEntity.ok().body(creditCardDto);
+    public ResponseEntity<CreditCardDtoSavedReturn> saveCreditCard(@Valid @RequestBody CreditCardDtoDefault creditCardDto) {
+        CreditCardDtoSavedReturn returnDto = creditCardService.saveCreditCard(creditCardDto);
+        return ResponseEntity.ok().body(returnDto);
     }
 
     @PutMapping
