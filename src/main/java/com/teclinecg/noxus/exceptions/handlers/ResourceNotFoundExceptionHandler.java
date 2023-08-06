@@ -22,8 +22,8 @@ public class ResourceNotFoundExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ExceptionHandlerDto> handle(ResourceNotFoundException ex) {
-        ExceptionHandlerDto handlerDto = new ExceptionHandlerDto();
+    public ResponseEntity<ExceptionHandlerDto<?>> handle(ResourceNotFoundException ex) {
+        ExceptionHandlerDto<?> handlerDto = new ExceptionHandlerDto<>();
 
         Map<String, String> errors = new HashMap<>();
         errors.put("status", ex.getMessage());

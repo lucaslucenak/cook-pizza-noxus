@@ -24,8 +24,7 @@ public class CreditCardDtoDefault {
     @NotNull(message = "Field ccv shouldn't be null")
     @NotEmpty(message = "Field ccv shouldn't be empty")
     @NotBlank(message = "Field ccv shouldn't be blank")
-//    @Min(value = 3)
-//    @Max(value = 4)
+    @Pattern(regexp = "\\d{3,4}", message = "Field ccv must have 3 or 4 digits")
     private String ccv;
     @NotNull(message = "Field expirationDate shouldn't be null")
     @NotEmpty(message = "Field expirationDate shouldn't be empty")

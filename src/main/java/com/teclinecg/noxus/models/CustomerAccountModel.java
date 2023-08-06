@@ -34,6 +34,7 @@ public class CustomerAccountModel {
     @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
     private List<AddressModel> addresses;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
     private List<CreditCardModel> creditCards;
 

@@ -1,5 +1,6 @@
 package com.teclinecg.noxus.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.CreditCardDtoDefault;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
@@ -20,6 +21,7 @@ public class CreditCardModel {
     private String expirationDate;
     private String ownerCPF;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "customer_account_id", nullable = false)
     private CustomerAccountModel customerAccount;

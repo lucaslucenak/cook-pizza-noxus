@@ -38,7 +38,7 @@ public class CustomerAccountService {
 
     public Page<CustomerAccountDtoDefault> findAllCustomerAccountsPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
-            throw new InvalidPageNumberException("Invalid Page Number. Must be greater than zero");
+            throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
         if (pageable.getPageSize() < 1) {
             throw new InvalidPageRegisterSizeException("Invalid Register Size. Must be greater than zero");
