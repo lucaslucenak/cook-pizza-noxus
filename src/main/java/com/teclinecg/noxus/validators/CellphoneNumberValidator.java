@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class CellphoneNumberValidator implements ConstraintValidator<CellphoneNumber, String> {
 
-    private static final String CELLPHONE_NUMBER_REGEX = "^(\\(\\d{2}\\)|\\d{2})\\s9\\d{4}-\\d{4}$";
+    private static final String CELLPHONE_NUMBER_REGEX = "^\\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\\)? ?(?:[2-8]|9[1-9])[0-9]{3}\\-?[0-9]{4}$";
 
     @Override
     public void initialize(CellphoneNumber constraintAnnotation) {

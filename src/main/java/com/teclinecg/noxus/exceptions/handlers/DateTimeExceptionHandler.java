@@ -1,10 +1,8 @@
 package com.teclinecg.noxus.exceptions.handlers;
 
 import com.teclinecg.noxus.dtos.ExceptionHandlerDto;
-import com.teclinecg.noxus.exceptions.InvalidCellphoneNumberException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,7 +12,6 @@ import java.time.DateTimeException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @ControllerAdvice
