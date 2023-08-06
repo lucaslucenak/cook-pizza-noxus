@@ -8,6 +8,7 @@ public class CreditCardNumberValidator implements ConstraintValidator<CreditCard
 
     @Override
     public void initialize(CreditCardNumber constraintAnnotation) {
+        ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override
