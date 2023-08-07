@@ -31,7 +31,7 @@ public class InvalidCellphoneNumberExceptionHandler {
         handlerDto.setHttpStatus(HttpStatus.BAD_REQUEST);
         handlerDto.setZonedDateTime(ZonedDateTime.now(ZoneId.of("Z")));
 
-        handlerDto.setValidExamples(List.of("83123456789"));
+        handlerDto.setValidExamples(List.of("(00)12345-1234"));
 
         return ResponseEntity.badRequest().body(handlerDto);
     }
