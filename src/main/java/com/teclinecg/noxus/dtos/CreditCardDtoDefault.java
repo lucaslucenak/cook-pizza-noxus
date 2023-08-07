@@ -2,6 +2,7 @@ package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
+import com.teclinecg.noxus.validators.CreditCardExpirationDate;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.br.CPF;
@@ -29,6 +30,7 @@ public class CreditCardDtoDefault {
     @NotNull(message = "Field expirationDate shouldn't be null")
     @NotEmpty(message = "Field expirationDate shouldn't be empty")
     @NotBlank(message = "Field expirationDate shouldn't be blank")
+    @CreditCardExpirationDate
     private String expirationDate;
     @NotNull(message = "Field ownerCPF shouldn't be null")
     @NotEmpty(message = "Field ownerCPF shouldn't be empty")

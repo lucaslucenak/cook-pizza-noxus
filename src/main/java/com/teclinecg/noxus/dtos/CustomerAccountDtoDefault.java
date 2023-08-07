@@ -4,6 +4,7 @@ import com.teclinecg.noxus.models.AddressModel;
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import com.teclinecg.noxus.models.StatusModel;
+import com.teclinecg.noxus.validators.CellphoneNumber;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
@@ -36,6 +37,7 @@ public class CustomerAccountDtoDefault {
     @NotNull(message = "Field cellphoneNumber shouldn't be null")
     @NotEmpty(message = "Field cellphoneNumber shouldn't be empty")
     @NotBlank(message = "Field cellphoneNumber shouldn't be blank")
+    @CellphoneNumber
     private String cellphoneNumber;
     private List<AddressModel> addresses;
     private List<CreditCardModel> creditCards;

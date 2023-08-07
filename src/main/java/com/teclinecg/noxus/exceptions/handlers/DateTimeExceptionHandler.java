@@ -1,28 +1,27 @@
 package com.teclinecg.noxus.exceptions.handlers;
 
 import com.teclinecg.noxus.dtos.ExceptionHandlerDto;
-import com.teclinecg.noxus.exceptions.InvalidCellphoneNumberException;
-import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.time.DateTimeException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
-public class InvalidCellphoneNumberExceptionHandler {
+public class DateTimeExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    @ExceptionHandler(InvalidCellphoneNumberException.class)
-    public ResponseEntity<ExceptionHandlerDto<String>> handle(InvalidCellphoneNumberException ex) {
-        ExceptionHandlerDto<String> handlerDto = new ExceptionHandlerDto<>();
+    @ExceptionHandler(DateTimeException.class)
+    public ResponseEntity<ExceptionHandlerDto<?>> handle(DateTimeException ex) {
+        ExceptionHandlerDto<?> handlerDto = new ExceptionHandlerDto<>();
 
         Map<String, String> errors = new HashMap<>();
         errors.put("status", ex.getMessage());
@@ -30,8 +29,6 @@ public class InvalidCellphoneNumberExceptionHandler {
         handlerDto.setErrors(errors);
         handlerDto.setHttpStatus(HttpStatus.BAD_REQUEST);
         handlerDto.setZonedDateTime(ZonedDateTime.now(ZoneId.of("Z")));
-
-        handlerDto.setValidExamples(List.of("(00)12345-1234"));
 
         return ResponseEntity.badRequest().body(handlerDto);
     }
