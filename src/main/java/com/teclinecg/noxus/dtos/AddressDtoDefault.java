@@ -5,6 +5,7 @@ import com.teclinecg.noxus.models.CustomerAccountModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,7 @@ public class AddressDtoDefault {
     @NotNull(message = "Field streetName shouldn't be null")
     @NotEmpty(message = "Field streetName shouldn't be empty")
     @NotBlank(message = "Field streetName shouldn't be blank")
+    @Max(value = 100)
     private String streetName;
     @NotNull(message = "Field streetNumber shouldn't be null")
     @NotEmpty(message = "Field streetNumber shouldn't be empty")
