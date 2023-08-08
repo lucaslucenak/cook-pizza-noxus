@@ -41,9 +41,9 @@ public class CustomerAccountController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/customer-account", notes = "Save a new customer-account")
-    public ResponseEntity<CustomerAccountDto> saveCustomerAccount(@Valid @RequestBody CustomerAccountPostDto customerAccountDto) {
-        CustomerAccountDto returnDto = customerAccountService.saveCustomerAccount(customerAccountDto);
-        return ResponseEntity.ok().body(returnDto);
+    public ResponseEntity<CustomerAccountDto> saveCustomerAccount(@Valid @RequestBody CustomerAccountPostDto customerAccountPostDto) {
+        CustomerAccountDto customerAccountDto = customerAccountService.saveCustomerAccount(customerAccountPostDto);
+        return ResponseEntity.ok().body(customerAccountDto);
     }
 
     @PutMapping

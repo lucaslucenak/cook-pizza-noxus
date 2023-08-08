@@ -23,7 +23,7 @@ public class CustomerAccountService {
     @Autowired
     private CustomerAccountRepository customerAccountRepository;
     @Autowired
-    private StatusRepository statusRepository;
+    private StatusService statusService;
 
     public CustomerAccountDto findCustomerAccountById(Long id) {
         Optional<CustomerAccountModel> customerAccountOptional = customerAccountRepository.findById(id);
@@ -51,15 +51,8 @@ public class CustomerAccountService {
 
     public CustomerAccountDto saveCustomerAccount(CustomerAccountPostDto customerAccountDto) {
         CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDto);
-
-        Optional<StatusModel> optionalStatusModel = statusRepository.findById(customerAccountDto.getStatus());
-        if (optionalStatusModel.isPresent()) {
-            StatusModel statusModel = optionalStatusModel.get();
-            customerAccountModel.setStatus(statusModel);
-            return new CustomerAccountDto(customerAccountRepository.save(customerAccountModel));
-        } else {
-            throw new ResourceNotFoundException("Resource: Status. Not found with id: " + customerAccountDto.getStatus());
-        }
+        customerAccountModel.setStatus(statusService.findStatusById(customerAccountDto.getStatus()));
+        return new CustomerAccountDto(customerAccountModel);
     }
 
     public CustomerAccountPostDto updateCustomerAccount(Long id, CustomerAccountPostDto customerAccountDto) {
