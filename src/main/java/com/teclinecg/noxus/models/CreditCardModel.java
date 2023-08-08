@@ -29,8 +29,8 @@ public class CreditCardModel {
     public CreditCardModel() {
     }
 
-    public CreditCardModel(CreditCardPostDto creditCardDto) {
-        BeanUtils.copyProperties(creditCardDto, this);
+    public CreditCardModel(CreditCardPostDto creditCardPostDto) {
+        BeanUtils.copyProperties(creditCardPostDto, this);
     }
 
     public CreditCardModel(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount) {

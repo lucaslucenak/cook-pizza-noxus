@@ -50,16 +50,15 @@ public class CreditCardService {
         return pagedCreditCards.map(CreditCardPostDto::new);
     }
 
-//    public CreditCardDto saveCreditCard(CreditCardPostDto creditCardDto) {
-//        CreditCardModel creditCardModel = new CreditCardModel(creditCardDto);
-//
-//        // Catching the customer account to return to the Credit Card body
-//        CustomerAccountPostDto customerAccountPostDto = customerAccountService.findCustomerAccountById(creditCardDto.getCustomerAccount());
-//        CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountPostDto);
-//        creditCardModel.setCustomerAccount(customerAccountModel);
-//
-//        return new CreditCardDto(creditCardRepository.save(creditCardModel));
-//    }
+    public CreditCardDto saveCreditCard(CreditCardPostDto creditCardPostDto) {
+        CreditCardModel creditCardModel = new CreditCardModel(creditCardPostDto);
+
+        // Catching the customer account to return to the Credit Card body
+        CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountService.findCustomerAccountById(creditCardPostDto.getCustomerAccount()));
+        creditCardModel.setCustomerAccount(customerAccountModel);
+
+        return new CreditCardDto(creditCardRepository.save(creditCardModel));
+    }
 
     public CreditCardPostDto updateCreditCard(Long id, CreditCardPostDto creditCardDto) {
         Optional<CreditCardModel> existentCreditCardModelOptional = creditCardRepository.findById(id);

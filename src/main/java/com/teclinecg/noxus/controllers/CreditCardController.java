@@ -39,12 +39,12 @@ public class CreditCardController {
         return ResponseEntity.ok().body(creditCard);
     }
 
-//    @PostMapping
-//    @ApiOperation(value = "http://localhost:8080/credit-card", notes = "Save a new Credit Card")
-//    public ResponseEntity<CreditCardDto> saveCreditCard(@Valid @RequestBody CreditCardPostDto creditCardDto) {
-//        CreditCardDto returnDto = creditCardService.saveCreditCard(creditCardDto);
-//        return ResponseEntity.ok().body(returnDto);
-//    }
+    @PostMapping
+    @ApiOperation(value = "http://localhost:8080/credit-card", notes = "Save a new Credit Card")
+    public ResponseEntity<CreditCardDto> saveCreditCard(@Valid @RequestBody CreditCardPostDto creditCardPostDto) {
+        CreditCardDto creditCardDto = creditCardService.saveCreditCard(creditCardPostDto);
+        return ResponseEntity.ok().body(creditCardDto);
+    }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/credit-card/{creditCardId}", notes = "Update an existing Credit Card")
