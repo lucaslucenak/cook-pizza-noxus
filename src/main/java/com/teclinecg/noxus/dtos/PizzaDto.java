@@ -1,5 +1,6 @@
 package com.teclinecg.noxus.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.models.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;

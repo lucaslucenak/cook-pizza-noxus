@@ -1,5 +1,6 @@
 package com.teclinecg.noxus.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.FlavorDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +19,7 @@ public class FlavorModel {
     private String flavor;
     private Double price;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "flavors")
     private List<PizzaModel> pizzas;
 

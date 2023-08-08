@@ -1,5 +1,6 @@
 package com.teclinecg.noxus.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.models.PizzaModel;
 import jakarta.validation.constraints.DecimalMin;
@@ -21,6 +22,7 @@ public class FlavorDto {
     @NotNull(message = "Field price shouldn't be null")
     @DecimalMin(value = "0.0", inclusive = true)
     private Double price;
+    @JsonIgnore
     private List<PizzaModel> pizzas;
 
     public FlavorDto() {

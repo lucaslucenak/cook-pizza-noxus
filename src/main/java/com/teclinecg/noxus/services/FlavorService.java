@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +31,14 @@ public class FlavorService {
         } else {
             throw new ResourceNotFoundException("Resource: Flavor. Not found with id: " + id);
         }
+    }
+
+    public List<FlavorDto> findFlavorsByIds(List<Long> ids) {
+        List<FlavorDto> flavorDtos = new ArrayList<>();
+        for (FlavorModel i : flavorRepository.findAllById(ids)) {
+            flavorDtos.add(new FlavorDto(i));
+        }
+        return flavorDtos;
     }
 
     public Page<FlavorDto> findAllFlavorsPaginated(Pageable pageable) {

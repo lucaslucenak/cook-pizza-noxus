@@ -22,6 +22,5 @@ public class StatusService {
         } else {
             throw new ResourceNotFoundException("Resource: Status. Not found with id: " + id);
         }
-
     }
 }

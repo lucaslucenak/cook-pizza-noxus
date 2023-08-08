@@ -1,10 +1,14 @@
 package com.teclinecg.noxus.services;
 
+import com.teclinecg.noxus.dtos.FlavorDto;
 import com.teclinecg.noxus.dtos.PizzaDto;
+import com.teclinecg.noxus.dtos.PizzaPostDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
+import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.models.PizzaModel;
+import com.teclinecg.noxus.models.SizeModel;
 import com.teclinecg.noxus.repositories.PizzaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +26,10 @@ public class PizzaService {
 
     @Autowired
     private PizzaRepository pizzaRepository;
+    @Autowired
+    private SizeService sizeService;
+    @Autowired
+    private FlavorService flavorService;
 
     public PizzaDto findPizzaById(Long id) {
         Optional<PizzaModel> pizzaOptional = pizzaRepository.findById(id);
@@ -45,8 +55,17 @@ public class PizzaService {
         return pagedPizzas.map(PizzaDto::new);
     }
 
-    public PizzaDto savePizza(PizzaDto pizzaDto) {
-        PizzaModel pizzaModel = new PizzaModel(pizzaDto);
+    public PizzaDto savePizza(PizzaPostDto pizzaPostDto) {
+        PizzaModel pizzaModel = new PizzaModel(pizzaPostDto);
+        SizeModel sizeModel = sizeService.findSizeById(pizzaPostDto.getPizzaSize());
+        pizzaModel.setPizzaSize(sizeModel);
+
+        List<FlavorDto> flavorDtos = flavorService.findFlavorsByIds(pizzaPostDto.getFlavors());
+        List<FlavorModel> flavorModels = new ArrayList<>();
+        for (FlavorDto i : flavorDtos) {
+            flavorModels.add(new FlavorModel(i));
+        }
+        pizzaModel.setFlavors(flavorModels);
         return new PizzaDto(pizzaRepository.save(pizzaModel));
     }
 
