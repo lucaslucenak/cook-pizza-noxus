@@ -1,11 +1,13 @@
 package com.teclinecg.noxus.services;
 
+import com.teclinecg.noxus.dtos.EdgeDto;
 import com.teclinecg.noxus.dtos.FlavorDto;
 import com.teclinecg.noxus.dtos.PizzaDto;
 import com.teclinecg.noxus.dtos.PizzaPostDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
+import com.teclinecg.noxus.models.EdgeModel;
 import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.models.PizzaModel;
 import com.teclinecg.noxus.models.SizeModel;
@@ -30,6 +32,8 @@ public class PizzaService {
     private SizeService sizeService;
     @Autowired
     private FlavorService flavorService;
+    @Autowired
+    private EdgeService edgeService;
 
     public PizzaDto findPizzaById(Long id) {
         Optional<PizzaModel> pizzaOptional = pizzaRepository.findById(id);
@@ -66,6 +70,14 @@ public class PizzaService {
             flavorModels.add(new FlavorModel(i));
         }
         pizzaModel.setFlavors(flavorModels);
+
+        List<EdgeDto> edgeDtos = edgeService.findEdgesByIds(pizzaPostDto.getEdges());
+        List<EdgeModel> edgeModels = new ArrayList<>();
+        for (EdgeDto i : edgeDtos) {
+            edgeModels.add(new EdgeModel(i));
+        }
+        pizzaModel.setEdges(edgeModels);
+
         return new PizzaDto(pizzaRepository.save(pizzaModel));
     }
 

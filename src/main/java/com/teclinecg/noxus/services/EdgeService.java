@@ -1,10 +1,12 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.EdgeDto;
+import com.teclinecg.noxus.dtos.FlavorDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.EdgeModel;
+import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.repositories.EdgeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +33,14 @@ public class EdgeService {
         } else {
             throw new ResourceNotFoundException("Resource: Edge. Not found with id: " + id);
         }
+    }
+
+    public List<EdgeDto> findEdgesByIds(List<Long> ids) {
+        List<EdgeDto> edgeDtos = new ArrayList<>();
+        for (EdgeModel i : edgeRepository.findAllById(ids)) {
+            edgeDtos.add(new EdgeDto(i));
+        }
+        return edgeDtos;
     }
 
     public Page<EdgeDto> findAllEdgesPaginated(Pageable pageable) {

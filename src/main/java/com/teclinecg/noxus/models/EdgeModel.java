@@ -1,5 +1,6 @@
 package com.teclinecg.noxus.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.EdgeDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +19,7 @@ public class EdgeModel {
     private String edge;
     private Double price;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "edges")
     private List<PizzaModel> pizzas;
 
