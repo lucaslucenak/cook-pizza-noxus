@@ -1,6 +1,6 @@
 package com.teclinecg.noxus.models;
 
-import com.teclinecg.noxus.dtos.OrderDtoDefault;
+import com.teclinecg.noxus.dtos.OrderDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
@@ -59,7 +59,7 @@ public class OrderModel {
     public OrderModel() {
     }
 
-    public OrderModel(OrderDtoDefault orderDto) {
+    public OrderModel(OrderDto orderDto) {
         BeanUtils.copyProperties(orderDto, this);
     }
 

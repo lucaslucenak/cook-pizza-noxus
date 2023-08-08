@@ -1,23 +1,18 @@
 package com.teclinecg.noxus.services;
 
-import com.teclinecg.noxus.dtos.FlavorDtoDefault;
-import com.teclinecg.noxus.dtos.FlavorDtoDefault;
+import com.teclinecg.noxus.dtos.FlavorDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
-import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.repositories.FlavorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,17 +21,17 @@ public class FlavorService {
     @Autowired
     private FlavorRepository flavorRepository;
 
-    public FlavorDtoDefault findFlavorById(Long id) {
+    public FlavorDto findFlavorById(Long id) {
         Optional<FlavorModel> flavorOptional = flavorRepository.findById(id);
 
         if (flavorOptional.isPresent()) {
-            return new FlavorDtoDefault(flavorOptional.get());
+            return new FlavorDto(flavorOptional.get());
         } else {
             throw new ResourceNotFoundException("Resource: Flavor. Not found with id: " + id);
         }
     }
 
-    public Page<FlavorDtoDefault> findAllFlavorsPaginated(Pageable pageable) {
+    public Page<FlavorDto> findAllFlavorsPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
@@ -47,21 +42,21 @@ public class FlavorService {
         // Paginated JPA query
         Page<FlavorModel> pagedFlavors = flavorRepository.findAll(pageable);
 
-        return pagedFlavors.map(FlavorDtoDefault::new);
+        return pagedFlavors.map(FlavorDto::new);
     }
 
-    public FlavorDtoDefault saveFlavor( FlavorDtoDefault flavorDto) {
+    public FlavorDto saveFlavor(FlavorDto flavorDto) {
         FlavorModel flavorModel = new FlavorModel(flavorDto);
-        return new FlavorDtoDefault(flavorRepository.save(flavorModel));
+        return new FlavorDto(flavorRepository.save(flavorModel));
     }
 
-    public FlavorDtoDefault updateFlavor(Long id,  FlavorDtoDefault flavorDto) {
+    public FlavorDto updateFlavor(Long id, FlavorDto flavorDto) {
         Optional<FlavorModel> existentFlavorModelOptional = flavorRepository.findById(id);
 
         if (existentFlavorModelOptional.isPresent()) {
             FlavorModel updatedFlavorModel = new FlavorModel(flavorDto);
             BeanUtils.copyProperties(existentFlavorModelOptional, updatedFlavorModel);
-            return new FlavorDtoDefault(flavorRepository.save(updatedFlavorModel));
+            return new FlavorDto(flavorRepository.save(updatedFlavorModel));
         } else {
             throw new ResourceNotFoundException("Resource: Flavor. Not found with id: " + id);
         }

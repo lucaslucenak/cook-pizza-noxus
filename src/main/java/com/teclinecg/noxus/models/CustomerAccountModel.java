@@ -1,7 +1,8 @@
 package com.teclinecg.noxus.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
+import com.teclinecg.noxus.dtos.CustomerAccountDto;
+import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
@@ -45,7 +46,11 @@ public class CustomerAccountModel {
     public CustomerAccountModel() {
     }
 
-    public CustomerAccountModel(CustomerAccountDtoDefault customerAccountDto) {
+    public CustomerAccountModel(CustomerAccountPostDto customerAccountDto) {
+        BeanUtils.copyProperties(customerAccountDto, this);
+    }
+
+    public CustomerAccountModel(CustomerAccountDto customerAccountDto) {
         BeanUtils.copyProperties(customerAccountDto, this);
     }
 

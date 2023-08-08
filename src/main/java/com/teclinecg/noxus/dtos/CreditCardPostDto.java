@@ -1,7 +1,7 @@
 package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.CreditCardModel;
-import com.teclinecg.noxus.models.CustomerAccountModel;
+import com.teclinecg.noxus.validators.CreditCardExpirationDate;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.br.CPF;
@@ -9,24 +9,44 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
-public class CreditCardDtoSavedReturn {
+public class CreditCardPostDto {
 
     private Long id;
+    @NotNull(message = "Field ownerName shouldn't be null")
+    @NotEmpty(message = "Field ownerName shouldn't be empty")
+    @NotBlank(message = "Field ownerName shouldn't be blank")
     private String ownerName;
+    @NotNull(message = "Field number shouldn't be null")
+    @NotEmpty(message = "Field number shouldn't be empty")
+    @NotBlank(message = "Field number shouldn't be blank")
+    @CreditCardNumber
     private String number;
+    @NotNull(message = "Field ccv shouldn't be null")
+    @NotEmpty(message = "Field ccv shouldn't be empty")
+    @NotBlank(message = "Field ccv shouldn't be blank")
+    @Pattern(regexp = "\\d{3,4}", message = "Field ccv must have 3 or 4 digits")
     private String ccv;
+    @NotNull(message = "Field expirationDate shouldn't be null")
+    @NotEmpty(message = "Field expirationDate shouldn't be empty")
+    @NotBlank(message = "Field expirationDate shouldn't be blank")
+    @CreditCardExpirationDate
     private String expirationDate;
+    @NotNull(message = "Field ownerCPF shouldn't be null")
+    @NotEmpty(message = "Field ownerCPF shouldn't be empty")
+    @NotBlank(message = "Field ownerCPF shouldn't be blank")
+    @CPF
     private String ownerCPF;
-    private CustomerAccountModel customerAccount;
+//    @NotNull(message = "Field customerAccount shouldn't be null")
+    private Long customerAccount;
 
-    public CreditCardDtoSavedReturn() {
+    public CreditCardPostDto() {
     }
 
-    public CreditCardDtoSavedReturn(CreditCardModel creditCardModel) {
+    public CreditCardPostDto(CreditCardModel creditCardModel) {
         BeanUtils.copyProperties(creditCardModel, this);
     }
 
-    public CreditCardDtoSavedReturn(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount) {
+    public CreditCardPostDto(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, Long customerAccount) {
         this.id = id;
         this.ownerName = ownerName;
         this.number = number;
@@ -84,11 +104,11 @@ public class CreditCardDtoSavedReturn {
         this.ownerCPF = ownerCPF;
     }
 
-    public CustomerAccountModel getCustomerAccount() {
+    public Long getCustomerAccount() {
         return customerAccount;
     }
 
-    public void setCustomerAccount(CustomerAccountModel customerAccount) {
+    public void setCustomerAccount(Long customerAccount) {
         this.customerAccount = customerAccount;
     }
 
@@ -96,7 +116,7 @@ public class CreditCardDtoSavedReturn {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CreditCardDtoSavedReturn that = (CreditCardDtoSavedReturn) o;
+        CreditCardPostDto that = (CreditCardPostDto) o;
         return id.equals(that.id) && Objects.equals(ownerName, that.ownerName) && Objects.equals(number, that.number) && Objects.equals(ccv, that.ccv) && Objects.equals(expirationDate, that.expirationDate) && Objects.equals(ownerCPF, that.ownerCPF) && Objects.equals(customerAccount, that.customerAccount);
     }
 

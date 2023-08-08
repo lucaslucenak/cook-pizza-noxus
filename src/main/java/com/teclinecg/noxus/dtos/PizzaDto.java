@@ -1,12 +1,7 @@
 package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.*;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
@@ -14,7 +9,7 @@ import org.springframework.beans.BeanUtils;
 import java.util.List;
 import java.util.Objects;
 
-public class PizzaDtoDefault {
+public class PizzaDto {
 
     private Long id;
     @NotNull
@@ -33,10 +28,10 @@ public class PizzaDtoDefault {
     @NotEmpty(message = "Field edges shouldn't be empty")
     private List<EdgeModel> edges;
 
-    public PizzaDtoDefault() {
+    public PizzaDto() {
     }
 
-    public PizzaDtoDefault(PizzaModel pizzaModel) {
+    public PizzaDto(PizzaModel pizzaModel) {
         BeanUtils.copyProperties(pizzaModel, this);
     }
 
@@ -92,7 +87,7 @@ public class PizzaDtoDefault {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PizzaDtoDefault that = (PizzaDtoDefault) o;
+        PizzaDto that = (PizzaDto) o;
         return id.equals(that.id) && Objects.equals(price, that.price) && Objects.equals(order, that.order) && Objects.equals(pizzaSize, that.pizzaSize) && Objects.equals(flavors, that.flavors) && Objects.equals(edges, that.edges);
     }
 

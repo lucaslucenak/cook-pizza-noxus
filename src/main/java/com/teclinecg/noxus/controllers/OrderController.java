@@ -1,6 +1,6 @@
 package com.teclinecg.noxus.controllers;
 
-import com.teclinecg.noxus.dtos.OrderDtoDefault;
+import com.teclinecg.noxus.dtos.OrderDto;
 import com.teclinecg.noxus.services.OrderService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -20,8 +20,8 @@ public class OrderController {
 
     @GetMapping
     @ApiOperation(value = "http://localhost:8080/order?page=0&size=2", notes = "Returns Orders Paginated")
-    public ResponseEntity<Page<OrderDtoDefault>> findAllOrdersPaginated(Pageable pageable) {
-        Page<OrderDtoDefault> orders = orderService.findAllOrdersPaginated(pageable);
+    public ResponseEntity<Page<OrderDto>> findAllOrdersPaginated(Pageable pageable) {
+        Page<OrderDto> orders = orderService.findAllOrdersPaginated(pageable);
 
         // Headers
         HttpHeaders headers = new HttpHeaders();
@@ -33,28 +33,28 @@ public class OrderController {
 
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Returns order Selected By Id")
-    public ResponseEntity<OrderDtoDefault> findOrderById(@PathVariable Long id) {
-        OrderDtoDefault order = orderService.findOrderById(id);
+    public ResponseEntity<OrderDto> findOrderById(@PathVariable Long id) {
+        OrderDto order = orderService.findOrderById(id);
         return ResponseEntity.ok().body(order);
     }
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/order", notes = "Save a new order")
-    public ResponseEntity<OrderDtoDefault> saveOrder(@Valid @RequestBody OrderDtoDefault orderDto) {
+    public ResponseEntity<OrderDto> saveOrder(@Valid @RequestBody OrderDto orderDto) {
         orderDto = orderService.saveOrder(orderDto);
         return ResponseEntity.ok().body(orderDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Update an existing order")
-    public ResponseEntity<OrderDtoDefault> updateOrderById(@PathVariable Long id, @Valid @RequestBody OrderDtoDefault orderDto) {
+    public ResponseEntity<OrderDto> updateOrderById(@PathVariable Long id, @Valid @RequestBody OrderDto orderDto) {
         orderDto = orderService.updateOrder(id, orderDto);
         return ResponseEntity.ok().body(orderDto);
     }
 
     @DeleteMapping(value = "{id}")
     @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Delete an existing order")
-    public ResponseEntity<OrderDtoDefault> deleteOrderById(@PathVariable Long id) {
+    public ResponseEntity<OrderDto> deleteOrderById(@PathVariable Long id) {
         orderService.deleteOrderById(id);
         return ResponseEntity.noContent().build();
     }

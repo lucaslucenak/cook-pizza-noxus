@@ -1,7 +1,7 @@
 package com.teclinecg.noxus.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.teclinecg.noxus.dtos.CreditCardDtoDefault;
+import com.teclinecg.noxus.dtos.CreditCardPostDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
@@ -29,7 +29,7 @@ public class CreditCardModel {
     public CreditCardModel() {
     }
 
-    public CreditCardModel(CreditCardDtoDefault creditCardDto) {
+    public CreditCardModel(CreditCardPostDto creditCardDto) {
         BeanUtils.copyProperties(creditCardDto, this);
     }
 

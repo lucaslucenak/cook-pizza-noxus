@@ -1,6 +1,7 @@
 package com.teclinecg.noxus.controllers;
 
-import com.teclinecg.noxus.dtos.AddressDtoDefault;
+import com.teclinecg.noxus.dtos.AddressDto;
+import com.teclinecg.noxus.dtos.AddressPostDto;
 import com.teclinecg.noxus.services.AddressService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -20,8 +21,8 @@ public class AddressController {
 
     @GetMapping
     @ApiOperation(value = "http://localhost:8080/address?page=0&size=2", notes = "Returns Addresses Paginated")
-    public ResponseEntity<Page<AddressDtoDefault>> findAllAddressesPaginated(Pageable pageable) {
-        Page<AddressDtoDefault> addresses = addressService.findAllAddressesPaginated(pageable);
+    public ResponseEntity<Page<AddressPostDto>> findAllAddressesPaginated(Pageable pageable) {
+        Page<AddressPostDto> addresses = addressService.findAllAddressesPaginated(pageable);
 
         // Headers
         HttpHeaders headers = new HttpHeaders();
@@ -33,28 +34,27 @@ public class AddressController {
 
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/address/{addressId}", notes = "Returns Address Selected By Id")
-    public ResponseEntity<AddressDtoDefault> findAddressById(@PathVariable Long id) {
-        AddressDtoDefault address = addressService.findAddressById(id);
+    public ResponseEntity<AddressPostDto> findAddressById(@PathVariable Long id) {
+        AddressPostDto address = addressService.findAddressById(id);
         return ResponseEntity.ok().body(address);
     }
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/address", notes = "Save a new Address")
-    public ResponseEntity<AddressDtoDefault> saveAddress(@Valid @RequestBody AddressDtoDefault addressDto) {
-        addressDto = addressService.saveAddress(addressDto);
-        return ResponseEntity.ok().body(addressDto);
+    public ResponseEntity<AddressDto> saveAddress(@Valid @RequestBody AddressPostDto addressPostDto) {
+        return ResponseEntity.ok().body(addressService.saveAddress(addressPostDto));
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/address/{addressId}", notes = "Update an existing Address")
-    public ResponseEntity<AddressDtoDefault> updateAddressById(@PathVariable Long id,  @Valid @RequestBody AddressDtoDefault addressDto) {
+    public ResponseEntity<AddressPostDto> updateAddressById(@PathVariable Long id, @Valid @RequestBody AddressPostDto addressDto) {
         addressDto = addressService.updateAddress(id, addressDto);
         return ResponseEntity.ok().body(addressDto);
     }
 
     @DeleteMapping(value = "{id}")
     @ApiOperation(value = "http://localhost:8080/address/{addressId}", notes = "Delete an existing Address")
-    public ResponseEntity<AddressDtoDefault> deleteAddressById(@PathVariable Long id) {
+    public ResponseEntity<AddressPostDto> deleteAddressById(@PathVariable Long id) {
         addressService.deleteAddressById(id);
         return ResponseEntity.noContent().build();
     }

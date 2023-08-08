@@ -2,7 +2,6 @@ package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.models.PizzaModel;
-import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -12,7 +11,7 @@ import org.springframework.beans.BeanUtils;
 import java.util.List;
 import java.util.Objects;
 
-public class FlavorDtoDefault {
+public class FlavorDto {
 
     private Long id;
     @NotNull(message = "Field flavor shouldn't be null")
@@ -24,10 +23,10 @@ public class FlavorDtoDefault {
     private Double price;
     private List<PizzaModel> pizzas;
 
-    public FlavorDtoDefault() {
+    public FlavorDto() {
     }
 
-    public FlavorDtoDefault(FlavorModel flavorModel) {
+    public FlavorDto(FlavorModel flavorModel) {
         BeanUtils.copyProperties(flavorModel, this);
     }
 
@@ -67,7 +66,7 @@ public class FlavorDtoDefault {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FlavorDtoDefault that = (FlavorDtoDefault) o;
+        FlavorDto that = (FlavorDto) o;
         return id.equals(that.id) && Objects.equals(flavor, that.flavor) && Objects.equals(price, that.price) && Objects.equals(pizzas, that.pizzas);
     }
 

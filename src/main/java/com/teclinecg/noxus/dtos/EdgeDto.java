@@ -2,7 +2,6 @@ package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.EdgeModel;
 import com.teclinecg.noxus.models.PizzaModel;
-import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -12,7 +11,7 @@ import org.springframework.beans.BeanUtils;
 import java.util.List;
 import java.util.Objects;
 
-public class EdgeDtoDefault {
+public class EdgeDto {
 
     private Long id;
     @NotNull(message = "Field edge shouldn't be null")
@@ -24,10 +23,10 @@ public class EdgeDtoDefault {
     private Double price;
     private List<PizzaModel> pizzas;
 
-    public EdgeDtoDefault() {
+    public EdgeDto() {
     }
 
-    public EdgeDtoDefault(EdgeModel edgeModel) {
+    public EdgeDto(EdgeModel edgeModel) {
         BeanUtils.copyProperties(edgeModel, this);
     }
 
@@ -67,7 +66,7 @@ public class EdgeDtoDefault {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EdgeDtoDefault that = (EdgeDtoDefault) o;
+        EdgeDto that = (EdgeDto) o;
         return id.equals(that.id) && Objects.equals(edge, that.edge) && Objects.equals(price, that.price) && Objects.equals(pizzas, that.pizzas);
     }
 

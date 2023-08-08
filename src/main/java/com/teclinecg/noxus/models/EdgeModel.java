@@ -1,6 +1,6 @@
 package com.teclinecg.noxus.models;
 
-import com.teclinecg.noxus.dtos.EdgeDtoDefault;
+import com.teclinecg.noxus.dtos.EdgeDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
@@ -24,7 +24,7 @@ public class EdgeModel {
     public EdgeModel() {
     }
 
-    public EdgeModel(EdgeDtoDefault edgeDto) {
+    public EdgeModel(EdgeDto edgeDto) {
         BeanUtils.copyProperties(edgeDto, this);
     }
 

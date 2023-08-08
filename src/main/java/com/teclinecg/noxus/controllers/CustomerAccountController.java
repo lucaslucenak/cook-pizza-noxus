@@ -1,7 +1,7 @@
 package com.teclinecg.noxus.controllers;
 
-import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
-import com.teclinecg.noxus.dtos.CustomerAccountDtoSavedReturn;
+import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
+import com.teclinecg.noxus.dtos.CustomerAccountDto;
 import com.teclinecg.noxus.services.CustomerAccountService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -21,8 +21,8 @@ public class CustomerAccountController {
 
     @GetMapping
     @ApiOperation(value = "http://localhost:8080/customer-account?page=0&size=2", notes = "Returns Customer Accounts Paginated")
-    public ResponseEntity<Page<CustomerAccountDtoDefault>> findAllCustomerAccountsPaginated(Pageable pageable) {
-        Page<CustomerAccountDtoDefault> customerAccounts = customerAccountService.findAllCustomerAccountsPaginated(pageable);
+    public ResponseEntity<Page<CustomerAccountPostDto>> findAllCustomerAccountsPaginated(Pageable pageable) {
+        Page<CustomerAccountPostDto> customerAccounts = customerAccountService.findAllCustomerAccountsPaginated(pageable);
 
         // Headers
         HttpHeaders headers = new HttpHeaders();
@@ -32,30 +32,30 @@ public class CustomerAccountController {
         return ResponseEntity.ok().headers(headers).body(customerAccounts);
     }
 
-    @GetMapping(value = "/{id}")
-    @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Returns Customer Account Selected By Id")
-    public ResponseEntity<CustomerAccountDtoDefault> findCustomerAccountById(@PathVariable Long id) {
-        CustomerAccountDtoDefault customerAccount = customerAccountService.findCustomerAccountById(id);
-        return ResponseEntity.ok().body(customerAccount);
-    }
+//    @GetMapping(value = "/{id}")
+//    @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Returns Customer Account Selected By Id")
+//    public ResponseEntity<CustomerAccountPostDto> findCustomerAccountById(@PathVariable Long id) {
+//        CustomerAccountPostDto customerAccount = customerAccountService.findCustomerAccountById(id);
+//        return ResponseEntity.ok().body(customerAccount);
+//    }
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/customer-account", notes = "Save a new customer-account")
-    public ResponseEntity<CustomerAccountDtoSavedReturn> saveCustomerAccount(@Valid @RequestBody CustomerAccountDtoDefault customerAccountDto) {
-        CustomerAccountDtoSavedReturn returnDto = customerAccountService.saveCustomerAccount(customerAccountDto);
+    public ResponseEntity<CustomerAccountDto> saveCustomerAccount(@Valid @RequestBody CustomerAccountPostDto customerAccountDto) {
+        CustomerAccountDto returnDto = customerAccountService.saveCustomerAccount(customerAccountDto);
         return ResponseEntity.ok().body(returnDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Update an existing Customer Account")
-    public ResponseEntity<CustomerAccountDtoDefault> updateCustomerAccountById(@PathVariable Long id, @Valid @RequestBody CustomerAccountDtoDefault customerAccountDto) {
+    public ResponseEntity<CustomerAccountPostDto> updateCustomerAccountById(@PathVariable Long id, @Valid @RequestBody CustomerAccountPostDto customerAccountDto) {
         customerAccountDto = customerAccountService.updateCustomerAccount(id, customerAccountDto);
         return ResponseEntity.ok().body(customerAccountDto);
     }
 
     @DeleteMapping(value = "{id}")
     @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Delete an existing Customer Account")
-    public ResponseEntity<CustomerAccountDtoDefault> deleteCustomerAccountById(@PathVariable Long id) {
+    public ResponseEntity<CustomerAccountPostDto> deleteCustomerAccountById(@PathVariable Long id) {
         customerAccountService.deleteCustomerAccountById(id);
         return ResponseEntity.noContent().build();
     }

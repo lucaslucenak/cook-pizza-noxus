@@ -1,9 +1,7 @@
 package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.*;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
@@ -12,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-public class OrderDtoDefault {
+public class OrderDto {
 
     private Long id;
     @NotNull(message = "Field orderPrice shouldn't be null")
@@ -39,10 +37,10 @@ public class OrderDtoDefault {
     @NotEmpty(message = "Field deliveryType shouldn't be empty")
     private DeliveryTypeModel deliveryType;
 
-    public OrderDtoDefault() {
+    public OrderDto() {
     }
 
-    public OrderDtoDefault(OrderModel orderModel) {
+    public OrderDto(OrderModel orderModel) {
         BeanUtils.copyProperties(orderModel, this);
     }
 
@@ -146,7 +144,7 @@ public class OrderDtoDefault {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderDtoDefault that = (OrderDtoDefault) o;
+        OrderDto that = (OrderDto) o;
         return id.equals(that.id) && Objects.equals(orderPrice, that.orderPrice) && Objects.equals(observation, that.observation) && Objects.equals(dispatchDateTime, that.dispatchDateTime) && Objects.equals(arrivalForecast, that.arrivalForecast) && Objects.equals(pizzas, that.pizzas) && Objects.equals(drinks, that.drinks) && Objects.equals(customerAccount, that.customerAccount) && Objects.equals(address, that.address) && Objects.equals(deliveryTax, that.deliveryTax) && Objects.equals(paymentMethod, that.paymentMethod) && Objects.equals(deliveryType, that.deliveryType);
     }
 

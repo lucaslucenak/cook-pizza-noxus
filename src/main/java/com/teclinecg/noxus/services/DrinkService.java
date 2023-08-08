@@ -1,6 +1,6 @@
 package com.teclinecg.noxus.services;
 
-import com.teclinecg.noxus.dtos.DrinkDtoDefault;
+import com.teclinecg.noxus.dtos.DrinkDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
@@ -21,17 +21,17 @@ public class DrinkService {
     @Autowired
     private DrinkRepository drinkRepository;
 
-    public DrinkDtoDefault findDrinkById(Long id) {
+    public DrinkDto findDrinkById(Long id) {
         Optional<DrinkModel> drinkOptional = drinkRepository.findById(id);
 
         if (drinkOptional.isPresent()) {
-            return new DrinkDtoDefault(drinkOptional.get());
+            return new DrinkDto(drinkOptional.get());
         } else {
             throw new ResourceNotFoundException("Resource: Drink. Not found with id: " + id);
         }
     }
 
-    public Page<DrinkDtoDefault> findAllDrinksPaginated(Pageable pageable) {
+    public Page<DrinkDto> findAllDrinksPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
@@ -42,21 +42,21 @@ public class DrinkService {
         // Paginated JPA query
         Page<DrinkModel> pagedDrinks = drinkRepository.findAll(pageable);
 
-        return pagedDrinks.map(DrinkDtoDefault::new);
+        return pagedDrinks.map(DrinkDto::new);
     }
 
-    public DrinkDtoDefault saveDrink( DrinkDtoDefault drinkDto) {
+    public DrinkDto saveDrink(DrinkDto drinkDto) {
         DrinkModel drinkModel = new DrinkModel(drinkDto);
-        return new DrinkDtoDefault(drinkRepository.save(drinkModel));
+        return new DrinkDto(drinkRepository.save(drinkModel));
     }
 
-    public DrinkDtoDefault updateDrink(Long id,  DrinkDtoDefault drinkDto) {
+    public DrinkDto updateDrink(Long id, DrinkDto drinkDto) {
         Optional<DrinkModel> existentDrinkModelOptional = drinkRepository.findById(id);
 
         if (existentDrinkModelOptional.isPresent()) {
             DrinkModel updatedDrinkModel = new DrinkModel(drinkDto);
             BeanUtils.copyProperties(existentDrinkModelOptional, updatedDrinkModel);
-            return new DrinkDtoDefault(drinkRepository.save(updatedDrinkModel));
+            return new DrinkDto(drinkRepository.save(updatedDrinkModel));
         } else {
             throw new ResourceNotFoundException("Resource: Drink. Not found with id: " + id);
         }

@@ -1,6 +1,6 @@
 package com.teclinecg.noxus.models;
 
-import com.teclinecg.noxus.dtos.FlavorDtoDefault;
+import com.teclinecg.noxus.dtos.FlavorDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
@@ -24,7 +24,7 @@ public class FlavorModel {
     public FlavorModel() {
     }
 
-    public FlavorModel(FlavorDtoDefault flavorDto) {
+    public FlavorModel(FlavorDto flavorDto) {
         BeanUtils.copyProperties(flavorDto, this);
     }
 
