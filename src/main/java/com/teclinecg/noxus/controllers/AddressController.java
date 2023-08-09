@@ -21,8 +21,8 @@ public class AddressController {
 
     @GetMapping
     @ApiOperation(value = "http://localhost:8080/address?page=0&size=2", notes = "Returns Addresses Paginated")
-    public ResponseEntity<Page<AddressPostDto>> findAllAddressesPaginated(Pageable pageable) {
-        Page<AddressPostDto> addresses = addressService.findAllAddressesPaginated(pageable);
+    public ResponseEntity<Page<AddressDto>> findAllAddressesPaginated(Pageable pageable) {
+        Page<AddressDto> addresses = addressService.findAllAddressesPaginated(pageable);
 
         // Headers
         HttpHeaders headers = new HttpHeaders();
@@ -34,8 +34,8 @@ public class AddressController {
 
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/address/{addressId}", notes = "Returns Address Selected By Id")
-    public ResponseEntity<AddressPostDto> findAddressById(@PathVariable Long id) {
-        AddressPostDto address = addressService.findAddressById(id);
+    public ResponseEntity<AddressDto> findAddressById(@PathVariable Long id) {
+        AddressDto address = addressService.findAddressById(id);
         return ResponseEntity.ok().body(address);
     }
 

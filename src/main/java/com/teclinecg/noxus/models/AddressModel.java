@@ -1,6 +1,7 @@
 package com.teclinecg.noxus.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teclinecg.noxus.dtos.AddressDto;
 import com.teclinecg.noxus.dtos.AddressPostDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
@@ -44,8 +45,12 @@ public class AddressModel {
     public AddressModel() {
     }
 
-    public AddressModel(AddressPostDto addressDto) {
+    public AddressModel(AddressDto addressDto) {
         BeanUtils.copyProperties(addressDto, this);
+    }
+
+    public AddressModel(AddressPostDto addressPostDto) {
+        BeanUtils.copyProperties(addressPostDto, this);
     }
 
     public AddressModel(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount) {
