@@ -33,6 +33,7 @@ public class CustomerAccountModel {
     private String cellphoneNumber;
 
     @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<AddressModel> addresses;
 
     @JsonIgnore
@@ -40,6 +41,7 @@ public class CustomerAccountModel {
     private List<CreditCardModel> creditCards;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinColumn(name = "status_id", nullable = false)
     private StatusModel status;
 

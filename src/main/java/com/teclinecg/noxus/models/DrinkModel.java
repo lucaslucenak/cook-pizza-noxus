@@ -1,5 +1,6 @@
 package com.teclinecg.noxus.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.DrinkDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
@@ -65,6 +66,10 @@ public class DrinkModel {
 
     public void setOrders(List<OrderModel> orders) {
         this.orders = orders;
+    }
+
+    public void addOrder(OrderModel orderModel) {
+        orders.add(orderModel);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class PizzaPostDto {
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)
     private Double price;
-    private Long order;
+    private OrderModel order;
     private Long pizzaSize;
     private List<Long> flavors;
     private List<Long> edges;
@@ -26,7 +26,7 @@ public class PizzaPostDto {
         BeanUtils.copyProperties(pizzaModel, this);
     }
 
-    public PizzaPostDto(Long id, Double price, Long order, Long pizzaSize, List<Long> flavors, List<Long> edges) {
+    public PizzaPostDto(Long id, Double price, OrderModel order, Long pizzaSize, List<Long> flavors, List<Long> edges) {
         this.id = id;
         this.price = price;
         this.order = order;
@@ -51,11 +51,11 @@ public class PizzaPostDto {
         this.price = price;
     }
 
-    public Long getOrder() {
+    public OrderModel getOrder() {
         return order;
     }
 
-    public void setOrder(Long order) {
+    public void setOrder(OrderModel order) {
         this.order = order;
     }
 

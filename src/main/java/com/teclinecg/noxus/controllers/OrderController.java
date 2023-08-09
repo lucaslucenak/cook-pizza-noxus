@@ -1,6 +1,7 @@
 package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.OrderDto;
+import com.teclinecg.noxus.dtos.OrderPostDto;
 import com.teclinecg.noxus.services.OrderService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -40,9 +41,8 @@ public class OrderController {
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/order", notes = "Save a new order")
-    public ResponseEntity<OrderDto> saveOrder(@Valid @RequestBody OrderDto orderDto) {
-        orderDto = orderService.saveOrder(orderDto);
-        return ResponseEntity.ok().body(orderDto);
+    public ResponseEntity<OrderDto> saveOrder(@Valid @RequestBody OrderPostDto orderPostDto) {
+        return ResponseEntity.ok().body(orderService.saveOrder(orderPostDto));
     }
 
     @PutMapping

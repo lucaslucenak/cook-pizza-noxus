@@ -13,12 +13,12 @@ public class OrderPostDto {
 
     private Long id;
     @NotNull(message = "Field orderPrice shouldn't be null")
-    @DecimalMin(value = "0.0", inclusive = true)
+    @DecimalMin(value = "0.0", inclusive = true, message = "Decimal min value: 0.0")
     private Double orderPrice;
     private String observation;
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
-    private List<Long> pizzas;
+    private List<PizzaPostDto> pizzas;
     private List<Long> drinks;
     private Long customerAccount;
     private Long address;
@@ -33,7 +33,7 @@ public class OrderPostDto {
         BeanUtils.copyProperties(orderModel, this);
     }
 
-    public OrderPostDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<Long> pizzas, List<Long> drinks, Long customerAccount, Long address, Long deliveryTax, Long paymentMethod, Long deliveryType) {
+    public OrderPostDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaPostDto> pizzas, List<Long> drinks, Long customerAccount, Long address, Long deliveryTax, Long paymentMethod, Long deliveryType) {
         this.id = id;
         this.orderPrice = orderPrice;
         this.observation = observation;
@@ -88,11 +88,11 @@ public class OrderPostDto {
         this.arrivalForecast = arrivalForecast;
     }
 
-    public List<Long> getPizzas() {
+    public List<PizzaPostDto> getPizzas() {
         return pizzas;
     }
 
-    public void setPizzas(List<Long> pizzas) {
+    public void setPizzas(List<PizzaPostDto> pizzas) {
         this.pizzas = pizzas;
     }
 

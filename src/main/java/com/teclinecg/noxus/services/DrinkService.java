@@ -1,10 +1,12 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.DrinkDto;
+import com.teclinecg.noxus.dtos.FlavorDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.DrinkModel;
+import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.repositories.DrinkRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +33,14 @@ public class DrinkService {
         } else {
             throw new ResourceNotFoundException("Resource: Drink. Not found with id: " + id);
         }
+    }
+
+    public List<DrinkDto> findDrinksByIds(List<Long> ids) {
+        List<DrinkDto> drinkDtos = new ArrayList<>();
+        for (DrinkModel i : drinkRepository.findAllById(ids)) {
+            drinkDtos.add(new DrinkDto(i));
+        }
+        return drinkDtos;
     }
 
     public Page<DrinkDto> findAllDrinksPaginated(Pageable pageable) {

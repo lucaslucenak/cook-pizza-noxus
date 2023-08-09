@@ -1,5 +1,6 @@
 package com.teclinecg.noxus.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.AddressPostDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
@@ -36,6 +37,7 @@ public class AddressModel {
     private String referencePoint;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "customer_account_id", nullable = false)
     private CustomerAccountModel customerAccount;
 

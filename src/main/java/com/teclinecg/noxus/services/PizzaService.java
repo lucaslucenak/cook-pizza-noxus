@@ -45,6 +45,14 @@ public class PizzaService {
         }
     }
 
+    public List<PizzaDto> findPizzasByOrderId(Long orderId) {
+        List<PizzaDto> pizzaDtos = new ArrayList<>();
+        for (PizzaModel i : pizzaRepository.findByOrderId(orderId)) {
+            pizzaDtos.add(new PizzaDto(i));
+        }
+        return pizzaDtos;
+    }
+
     public Page<PizzaDto> findAllPizzasPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
