@@ -19,7 +19,7 @@ public class DrinkModel {
     private String name;
     private Double price;
 
-    @ManyToMany(mappedBy = "drinks")
+    @ManyToMany(mappedBy = "drinks", fetch = FetchType.EAGER)
     private List<OrderModel> orders;
 
     public DrinkModel() {

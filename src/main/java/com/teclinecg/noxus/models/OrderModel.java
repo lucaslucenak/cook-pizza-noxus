@@ -25,7 +25,7 @@ public class OrderModel {
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(name = "order_pizza",
             joinColumns = @JoinColumn(name = "order_id"),
@@ -33,7 +33,7 @@ public class OrderModel {
     )
     private List<PizzaModel> pizzas = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(
             name = "order_drink",

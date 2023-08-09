@@ -35,7 +35,7 @@ public class CustomerAccountService {
         }
     }
 
-    public Page<CustomerAccountPostDto> findAllCustomerAccountsPaginated(Pageable pageable) {
+    public Page<CustomerAccountDto> findAllCustomerAccountsPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
@@ -46,7 +46,7 @@ public class CustomerAccountService {
         // Paginated JPA query
         Page<CustomerAccountModel> pagedCustomerAccounts = customerAccountRepository.findAll(pageable);
 
-        return pagedCustomerAccounts.map(CustomerAccountPostDto::new);
+        return pagedCustomerAccounts.map(CustomerAccountDto::new);
     }
 
     public CustomerAccountDto saveCustomerAccount(CustomerAccountPostDto customerAccountDto) {

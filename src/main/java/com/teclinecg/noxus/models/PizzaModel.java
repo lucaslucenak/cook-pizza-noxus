@@ -28,7 +28,7 @@ public class PizzaModel {
     @JoinColumn(name = "pizza_size_id", nullable = false)
     private SizeModel pizzaSize;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "pizza_flavor",
             joinColumns = @JoinColumn(name = "pizza_id"),
@@ -36,7 +36,7 @@ public class PizzaModel {
     )
     private List<FlavorModel> flavors;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "pizza_edge",
             joinColumns = @JoinColumn(name = "pizza_id"),
