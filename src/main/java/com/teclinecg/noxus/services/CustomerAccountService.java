@@ -52,7 +52,7 @@ public class CustomerAccountService {
     public CustomerAccountDto saveCustomerAccount(CustomerAccountPostDto customerAccountDto) {
         CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDto);
         customerAccountModel.setStatus(statusService.findStatusById(customerAccountDto.getStatus()));
-        return new CustomerAccountDto(customerAccountModel);
+        return new CustomerAccountDto(customerAccountRepository.save(customerAccountModel));
     }
 
     public CustomerAccountPostDto updateCustomerAccount(Long id, CustomerAccountPostDto customerAccountDto) {
