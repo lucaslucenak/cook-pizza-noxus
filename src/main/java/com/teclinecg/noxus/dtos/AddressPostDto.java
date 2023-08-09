@@ -1,11 +1,6 @@
 package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.AddressModel;
-import com.teclinecg.noxus.models.CustomerAccountModel;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -13,13 +8,12 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
-public class AddressDtoDefault {
+public class AddressPostDto {
 
     private Long id;
     @NotNull(message = "Field streetName shouldn't be null")
     @NotEmpty(message = "Field streetName shouldn't be empty")
     @NotBlank(message = "Field streetName shouldn't be blank")
-    @Max(value = 100)
     private String streetName;
     @NotNull(message = "Field streetNumber shouldn't be null")
     @NotEmpty(message = "Field streetNumber shouldn't be empty")
@@ -43,14 +37,26 @@ public class AddressDtoDefault {
     @NotBlank(message = "Field referencePoint shouldn't be blank")
     private String referencePoint;
     @NotNull(message = "Field customerAccount shouldn't be null")
-    @NotEmpty(message = "Field customerAccount shouldn't be empty")
-    private CustomerAccountModel customerAccount;
+//    @NotEmpty(message = "Field customerAccount shouldn't be empty")
+    private Long customerAccount;
 
-    public AddressDtoDefault() {
+    public AddressPostDto() {
     }
 
-    public AddressDtoDefault(AddressModel addressModel) {
+    public AddressPostDto(AddressModel addressModel) {
         BeanUtils.copyProperties(addressModel, this);
+    }
+
+    public AddressPostDto(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, Long customerAccount) {
+        this.id = id;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.neighbourhood = neighbourhood;
+        this.city = city;
+        this.cep = cep;
+        this.complement = complement;
+        this.referencePoint = referencePoint;
+        this.customerAccount = customerAccount;
     }
 
     public Long getId() {
@@ -117,11 +123,11 @@ public class AddressDtoDefault {
         this.referencePoint = referencePoint;
     }
 
-    public CustomerAccountModel getCustomerAccount() {
+    public Long getCustomerAccount() {
         return customerAccount;
     }
 
-    public void setCustomerAccount(CustomerAccountModel customerAccount) {
+    public void setCustomerAccount(Long customerAccount) {
         this.customerAccount = customerAccount;
     }
 
@@ -129,7 +135,7 @@ public class AddressDtoDefault {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AddressDtoDefault that = (AddressDtoDefault) o;
+        AddressPostDto that = (AddressPostDto) o;
         return id.equals(that.id) && Objects.equals(streetName, that.streetName) && Objects.equals(streetNumber, that.streetNumber) && Objects.equals(neighbourhood, that.neighbourhood) && Objects.equals(city, that.city) && Objects.equals(cep, that.cep) && Objects.equals(complement, that.complement) && Objects.equals(referencePoint, that.referencePoint) && Objects.equals(customerAccount, that.customerAccount);
     }
 

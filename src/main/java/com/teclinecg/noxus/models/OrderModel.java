@@ -1,10 +1,14 @@
 package com.teclinecg.noxus.models;
 
-import com.teclinecg.noxus.dtos.OrderDtoDefault;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teclinecg.noxus.dtos.OrderDto;
+import com.teclinecg.noxus.dtos.OrderPostDto;
+import com.teclinecg.noxus.dtos.PizzaPostDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,14 +25,16 @@ public class OrderModel {
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinTable(name = "order_pizza",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "pizza_id")
     )
-    private List<PizzaModel> pizzas;
+    private List<PizzaModel> pizzas = new ArrayList<>();
 
-    @OneToMany
+    @ManyToMany
+    @JsonIgnore
     @JoinTable(
             name = "order_drink",
             joinColumns = @JoinColumn(name = "order_id"),
@@ -37,30 +43,39 @@ public class OrderModel {
     private List<DrinkModel> drinks;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "customer_account_id", nullable = false)
     private CustomerAccountModel customerAccount;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "address_id", nullable = false)
     private AddressModel address;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "delivery_tax_id", nullable = false)
     private DeliveryTaxModel deliveryTax;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "payment_method_id", nullable = false)
     private PaymentMethodModel paymentMethod;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "delivery_type_id", nullable = false)
     private DeliveryTypeModel deliveryType;
 
     public OrderModel() {
     }
 
-    public OrderModel(OrderDtoDefault orderDto) {
+    public OrderModel(OrderDto orderDto) {
         BeanUtils.copyProperties(orderDto, this);
+    }
+
+    public OrderModel(OrderPostDto orderPostDto) {
+        BeanUtils.copyProperties(orderPostDto, this);
     }
 
     public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, List<DrinkModel> drinks, CustomerAccountModel customerAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType) {
@@ -172,6 +187,10 @@ public class OrderModel {
 
     public void setDeliveryType(DeliveryTypeModel deliveryType) {
         this.deliveryType = deliveryType;
+    }
+
+    public void addPizza(PizzaModel pizzaModel) {
+        pizzas.add(pizzaModel);
     }
 
     @Override

@@ -19,6 +19,11 @@ public class SizeModel {
     public SizeModel() {
     }
 
+    public SizeModel(Long id, PizzaSizeEnum size) {
+        this.id = id;
+        this.size = size;
+    }
+
     public Long getId() {
         return id;
     }

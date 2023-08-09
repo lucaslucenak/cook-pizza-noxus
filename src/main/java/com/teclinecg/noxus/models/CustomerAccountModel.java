@@ -1,7 +1,8 @@
 package com.teclinecg.noxus.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
+import com.teclinecg.noxus.dtos.CustomerAccountDto;
+import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 
@@ -32,6 +33,7 @@ public class CustomerAccountModel {
     private String cellphoneNumber;
 
     @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<AddressModel> addresses;
 
     @JsonIgnore
@@ -39,13 +41,18 @@ public class CustomerAccountModel {
     private List<CreditCardModel> creditCards;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinColumn(name = "status_id", nullable = false)
     private StatusModel status;
 
     public CustomerAccountModel() {
     }
 
-    public CustomerAccountModel(CustomerAccountDtoDefault customerAccountDto) {
+    public CustomerAccountModel(CustomerAccountPostDto customerAccountDto) {
+        BeanUtils.copyProperties(customerAccountDto, this);
+    }
+
+    public CustomerAccountModel(CustomerAccountDto customerAccountDto) {
         BeanUtils.copyProperties(customerAccountDto, this);
     }
 

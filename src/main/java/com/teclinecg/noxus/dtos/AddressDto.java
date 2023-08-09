@@ -1,54 +1,52 @@
-package com.teclinecg.noxus.models;
+package com.teclinecg.noxus.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.teclinecg.noxus.dtos.AddressPostDto;
-import jakarta.persistence.*;
+import com.teclinecg.noxus.models.AddressModel;
+import com.teclinecg.noxus.models.CustomerAccountModel;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 
-import java.util.Objects;
+public class AddressDto {
 
-@Entity
-@Table(name = "address")
-public class AddressModel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
+    @NotNull(message = "Field streetName shouldn't be null")
+    @NotEmpty(message = "Field streetName shouldn't be empty")
+    @NotBlank(message = "Field streetName shouldn't be blank")
     private String streetName;
-
-    @Column(nullable = false)
+    @NotNull(message = "Field streetNumber shouldn't be null")
+    @NotEmpty(message = "Field streetNumber shouldn't be empty")
+    @NotBlank(message = "Field streetNumber shouldn't be blank")
     private String streetNumber;
-
-    @Column(nullable = false)
+    @NotNull(message = "Field neighbourhood shouldn't be null")
+    @NotEmpty(message = "Field neighbourhood shouldn't be empty")
+    @NotBlank(message = "Field neighbourhood shouldn't be blank")
     private String neighbourhood;
-
-    @Column(nullable = false)
+    @NotNull(message = "Field city shouldn't be null")
+    @NotEmpty(message = "Field city shouldn't be empty")
+    @NotBlank(message = "Field city shouldn't be blank")
     private String city;
-
-    @Column(nullable = false)
+    @NotNull(message = "Field cep shouldn't be null")
+    @NotEmpty(message = "Field cep shouldn't be empty")
+    @NotBlank(message = "Field cep shouldn't be blank")
     private String cep;
-
-    @Column(nullable = false)
     private String complement;
-
-    @Column(nullable = false)
+    @NotNull(message = "Field referencePoint shouldn't be null")
+    @NotEmpty(message = "Field referencePoint shouldn't be empty")
+    @NotBlank(message = "Field referencePoint shouldn't be blank")
     private String referencePoint;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "customer_account_id", nullable = false)
+    @NotNull(message = "Field customerAccount shouldn't be null")
+//    @NotEmpty(message = "Field customerAccount shouldn't be empty")
     private CustomerAccountModel customerAccount;
 
-    public AddressModel() {
+    public AddressDto() {
     }
 
-    public AddressModel(AddressPostDto addressDto) {
-        BeanUtils.copyProperties(addressDto, this);
+    public AddressDto(AddressModel addressModel) {
+        BeanUtils.copyProperties(addressModel, this);
     }
 
-    public AddressModel(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount) {
+    public AddressDto(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount) {
         this.id = id;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
@@ -59,7 +57,6 @@ public class AddressModel {
         this.referencePoint = referencePoint;
         this.customerAccount = customerAccount;
     }
-
 
     public Long getId() {
         return id;
@@ -131,18 +128,5 @@ public class AddressModel {
 
     public void setCustomerAccount(CustomerAccountModel customerAccount) {
         this.customerAccount = customerAccount;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AddressModel that = (AddressModel) o;
-        return id.equals(that.id) && Objects.equals(streetName, that.streetName) && Objects.equals(streetNumber, that.streetNumber) && Objects.equals(neighbourhood, that.neighbourhood) && Objects.equals(city, that.city) && Objects.equals(cep, that.cep) && Objects.equals(complement, that.complement) && Objects.equals(referencePoint, that.referencePoint);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, streetName, streetNumber, neighbourhood, city, cep, complement, referencePoint);
     }
 }

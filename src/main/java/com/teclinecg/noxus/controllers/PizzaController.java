@@ -1,6 +1,7 @@
 package com.teclinecg.noxus.controllers;
 
-import com.teclinecg.noxus.dtos.PizzaDtoDefault;
+import com.teclinecg.noxus.dtos.PizzaDto;
+import com.teclinecg.noxus.dtos.PizzaPostDto;
 import com.teclinecg.noxus.services.PizzaService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -20,8 +21,8 @@ public class PizzaController {
 
     @GetMapping
     @ApiOperation(value = "http://localhost:8080/pizza?page=0&size=2", notes = "Returns Pizzas Paginated")
-    public ResponseEntity<Page<PizzaDtoDefault>> findAllPizzasPaginated(Pageable pageable) {
-        Page<PizzaDtoDefault> pizzas = pizzaService.findAllPizzasPaginated(pageable);
+    public ResponseEntity<Page<PizzaDto>> findAllPizzasPaginated(Pageable pageable) {
+        Page<PizzaDto> pizzas = pizzaService.findAllPizzasPaginated(pageable);
 
         // Headers
         HttpHeaders headers = new HttpHeaders();
@@ -33,28 +34,27 @@ public class PizzaController {
 
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/pizza/{pizzaId}", notes = "Returns pizza Selected By Id")
-    public ResponseEntity<PizzaDtoDefault> findPizzaById(@PathVariable Long id) {
-        PizzaDtoDefault pizza = pizzaService.findPizzaById(id);
+    public ResponseEntity<PizzaDto> findPizzaById(@PathVariable Long id) {
+        PizzaDto pizza = pizzaService.findPizzaById(id);
         return ResponseEntity.ok().body(pizza);
     }
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/pizza", notes = "Save a new pizza")
-    public ResponseEntity<PizzaDtoDefault> savePizza(@Valid @RequestBody PizzaDtoDefault pizzaDto) {
-        pizzaDto = pizzaService.savePizza(pizzaDto);
-        return ResponseEntity.ok().body(pizzaDto);
+    public ResponseEntity<PizzaDto> savePizza(@Valid @RequestBody PizzaPostDto pizzaPostDto) {
+        return ResponseEntity.ok().body(pizzaService.savePizza(pizzaPostDto));
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/pizza/{pizzaId}", notes = "Update an existing pizza")
-    public ResponseEntity<PizzaDtoDefault> updatePizzaById(@PathVariable Long id, @Valid @RequestBody PizzaDtoDefault pizzaDto) {
+    public ResponseEntity<PizzaDto> updatePizzaById(@PathVariable Long id, @Valid @RequestBody PizzaDto pizzaDto) {
         pizzaDto = pizzaService.updatePizza(id, pizzaDto);
         return ResponseEntity.ok().body(pizzaDto);
     }
 
     @DeleteMapping(value = "{id}")
     @ApiOperation(value = "http://localhost:8080/pizza/{pizzaId}", notes = "Delete an existing pizza")
-    public ResponseEntity<PizzaDtoDefault> deletePizzaById(@PathVariable Long id) {
+    public ResponseEntity<PizzaDto> deletePizzaById(@PathVariable Long id) {
         pizzaService.deletePizzaById(id);
         return ResponseEntity.noContent().build();
     }

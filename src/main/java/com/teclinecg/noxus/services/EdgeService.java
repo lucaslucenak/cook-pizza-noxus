@@ -1,17 +1,16 @@
 package com.teclinecg.noxus.services;
 
-import com.teclinecg.noxus.dtos.EdgeDtoDefault;
-import com.teclinecg.noxus.dtos.EdgeDtoDefault;
+import com.teclinecg.noxus.dtos.EdgeDto;
+import com.teclinecg.noxus.dtos.FlavorDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.EdgeModel;
-import com.teclinecg.noxus.models.EdgeModel;
+import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.repositories.EdgeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,17 +25,25 @@ public class EdgeService {
     @Autowired
     private EdgeRepository edgeRepository;
 
-    public EdgeDtoDefault findEdgeById(Long id) {
+    public EdgeDto findEdgeById(Long id) {
         Optional<EdgeModel> edgeOptional = edgeRepository.findById(id);
 
         if (edgeOptional.isPresent()) {
-            return new EdgeDtoDefault(edgeOptional.get());
+            return new EdgeDto(edgeOptional.get());
         } else {
             throw new ResourceNotFoundException("Resource: Edge. Not found with id: " + id);
         }
     }
 
-    public Page<EdgeDtoDefault> findAllEdgesPaginated(Pageable pageable) {
+    public List<EdgeDto> findEdgesByIds(List<Long> ids) {
+        List<EdgeDto> edgeDtos = new ArrayList<>();
+        for (EdgeModel i : edgeRepository.findAllById(ids)) {
+            edgeDtos.add(new EdgeDto(i));
+        }
+        return edgeDtos;
+    }
+
+    public Page<EdgeDto> findAllEdgesPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
@@ -47,21 +54,21 @@ public class EdgeService {
         // Paginated JPA query
         Page<EdgeModel> pagedEdges = edgeRepository.findAll(pageable);
 
-        return pagedEdges.map(EdgeDtoDefault::new);
+        return pagedEdges.map(EdgeDto::new);
     }
 
-    public EdgeDtoDefault saveEdge( EdgeDtoDefault edgeDto) {
+    public EdgeDto saveEdge(EdgeDto edgeDto) {
         EdgeModel edgeModel = new EdgeModel(edgeDto);
-        return new EdgeDtoDefault(edgeRepository.save(edgeModel));
+        return new EdgeDto(edgeRepository.save(edgeModel));
     }
 
-    public EdgeDtoDefault updateEdge(Long id,  EdgeDtoDefault edgeDto) {
+    public EdgeDto updateEdge(Long id, EdgeDto edgeDto) {
         Optional<EdgeModel> existentEdgeModelOptional = edgeRepository.findById(id);
 
         if (existentEdgeModelOptional.isPresent()) {
             EdgeModel updatedEdgeModel = new EdgeModel(edgeDto);
             BeanUtils.copyProperties(existentEdgeModelOptional, updatedEdgeModel);
-            return new EdgeDtoDefault(edgeRepository.save(updatedEdgeModel));
+            return new EdgeDto(edgeRepository.save(updatedEdgeModel));
         } else {
             throw new ResourceNotFoundException("Resource: Edge. Not found with id: " + id);
         }

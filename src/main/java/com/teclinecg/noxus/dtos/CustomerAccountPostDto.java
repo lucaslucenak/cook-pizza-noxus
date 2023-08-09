@@ -4,17 +4,16 @@ import com.teclinecg.noxus.models.AddressModel;
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import com.teclinecg.noxus.models.StatusModel;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import com.teclinecg.noxus.validators.CellphoneNumber;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
+import java.util.Objects;
 
-public class CustomerAccountDtoSavedReturn {
-
+public class CustomerAccountPostDto {
 
     private Long id;
     @NotNull(message = "Field firstName shouldn't be null")
@@ -38,21 +37,21 @@ public class CustomerAccountDtoSavedReturn {
     @NotNull(message = "Field cellphoneNumber shouldn't be null")
     @NotEmpty(message = "Field cellphoneNumber shouldn't be empty")
     @NotBlank(message = "Field cellphoneNumber shouldn't be blank")
+    @CellphoneNumber
     private String cellphoneNumber;
     private List<AddressModel> addresses;
     private List<CreditCardModel> creditCards;
-    @NotNull(message = "Field status shouldn't be null")
-    @NotEmpty(message = "Field status shouldn't be empty")
-    private StatusModel status;
+//    @NotNull(message = "Field status shouldn't be null")
+    private Long status;
 
-    public CustomerAccountDtoSavedReturn() {
+    public CustomerAccountPostDto() {
     }
 
-    public CustomerAccountDtoSavedReturn(CustomerAccountModel customerAccountModel) {
+    public CustomerAccountPostDto(CustomerAccountModel customerAccountModel) {
         BeanUtils.copyProperties(customerAccountModel, this);
     }
 
-    public CustomerAccountDtoSavedReturn(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
+    public CustomerAccountPostDto(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, Long status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -128,11 +127,11 @@ public class CustomerAccountDtoSavedReturn {
         this.creditCards = creditCards;
     }
 
-    public StatusModel getStatus() {
+    public Long getStatus() {
         return status;
     }
 
-    public void setStatus(StatusModel status) {
+    public void setStatus(Long status) {
         this.status = status;
     }
 }

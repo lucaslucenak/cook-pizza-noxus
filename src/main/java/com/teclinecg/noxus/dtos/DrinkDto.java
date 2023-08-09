@@ -1,18 +1,15 @@
 package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.DrinkModel;
-import com.teclinecg.noxus.models.OrderModel;
-import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 
-import java.util.List;
 import java.util.Objects;
 
-public class DrinkDtoDefault {
+public class DrinkDto {
 
     private Long id;
     @NotNull(message = "Field name shouldn't be null")
@@ -23,10 +20,10 @@ public class DrinkDtoDefault {
     @DecimalMin(value = "0.0", inclusive = true)
     private Double price;
 
-    public DrinkDtoDefault() {
+    public DrinkDto() {
     }
 
-    public DrinkDtoDefault(DrinkModel drinkModel) {
+    public DrinkDto(DrinkModel drinkModel) {
         BeanUtils.copyProperties(drinkModel, this);
     }
 
@@ -58,7 +55,7 @@ public class DrinkDtoDefault {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DrinkDtoDefault that = (DrinkDtoDefault) o;
+        DrinkDto that = (DrinkDto) o;
         return id.equals(that.id) && Objects.equals(name, that.name) && Objects.equals(price, that.price);
     }
 

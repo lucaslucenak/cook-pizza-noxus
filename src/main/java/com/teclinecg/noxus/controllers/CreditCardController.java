@@ -1,8 +1,7 @@
 package com.teclinecg.noxus.controllers;
 
-import com.teclinecg.noxus.dtos.CreditCardDtoDefault;
-import com.teclinecg.noxus.dtos.CreditCardDtoSavedReturn;
-import com.teclinecg.noxus.dtos.CustomerAccountDtoSavedReturn;
+import com.teclinecg.noxus.dtos.CreditCardPostDto;
+import com.teclinecg.noxus.dtos.CreditCardDto;
 import com.teclinecg.noxus.services.CreditCardService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -22,8 +21,8 @@ public class CreditCardController {
 
     @GetMapping
     @ApiOperation(value = "http://localhost:8080/credit-card?page=0&size=2", notes = "Returns Credit Cards Paginated")
-    public ResponseEntity<Page<CreditCardDtoDefault>> findAllCreditCardsPaginated(Pageable pageable) {
-        Page<CreditCardDtoDefault> creditCards = creditCardService.findAllCreditCardsPaginated(pageable);
+    public ResponseEntity<Page<CreditCardPostDto>> findAllCreditCardsPaginated(Pageable pageable) {
+        Page<CreditCardPostDto> creditCards = creditCardService.findAllCreditCardsPaginated(pageable);
 
         // Headers
         HttpHeaders headers = new HttpHeaders();
@@ -35,28 +34,28 @@ public class CreditCardController {
 
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/credit-card/{creditCardId}", notes = "Returns Credit Card Selected By Id")
-    public ResponseEntity<CreditCardDtoDefault> findCreditCardById(@PathVariable Long id) {
-        CreditCardDtoDefault creditCard = creditCardService.findCreditCardById(id);
+    public ResponseEntity<CreditCardPostDto> findCreditCardById(@PathVariable Long id) {
+        CreditCardPostDto creditCard = creditCardService.findCreditCardById(id);
         return ResponseEntity.ok().body(creditCard);
     }
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/credit-card", notes = "Save a new Credit Card")
-    public ResponseEntity<CreditCardDtoSavedReturn> saveCreditCard(@Valid @RequestBody CreditCardDtoDefault creditCardDto) {
-        CreditCardDtoSavedReturn returnDto = creditCardService.saveCreditCard(creditCardDto);
-        return ResponseEntity.ok().body(returnDto);
+    public ResponseEntity<CreditCardDto> saveCreditCard(@Valid @RequestBody CreditCardPostDto creditCardPostDto) {
+        CreditCardDto creditCardDto = creditCardService.saveCreditCard(creditCardPostDto);
+        return ResponseEntity.ok().body(creditCardDto);
     }
 
     @PutMapping
     @ApiOperation(value = "http://localhost:8080/credit-card/{creditCardId}", notes = "Update an existing Credit Card")
-    public ResponseEntity<CreditCardDtoDefault> updateCreditCardById(@PathVariable Long id, @Valid  @RequestBody CreditCardDtoDefault creditCardDto) {
+    public ResponseEntity<CreditCardPostDto> updateCreditCardById(@PathVariable Long id, @Valid  @RequestBody CreditCardPostDto creditCardDto) {
         creditCardDto = creditCardService.updateCreditCard(id, creditCardDto);
         return ResponseEntity.ok().body(creditCardDto);
     }
 
     @DeleteMapping(value = "{id}")
     @ApiOperation(value = "http://localhost:8080/credit-card/{creditCardId}", notes = "Delete an existing Credit Card")
-    public ResponseEntity<CreditCardDtoDefault> deleteCreditCardById(@PathVariable Long id) {
+    public ResponseEntity<CreditCardPostDto> deleteCreditCardById(@PathVariable Long id) {
         creditCardService.deleteCreditCardById(id);
         return ResponseEntity.noContent().build();
     }

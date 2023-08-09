@@ -1,19 +1,14 @@
 package com.teclinecg.noxus.services;
 
-import com.teclinecg.noxus.dtos.CreditCardDtoDefault;
-import com.teclinecg.noxus.dtos.CreditCardDtoSavedReturn;
-import com.teclinecg.noxus.dtos.CustomerAccountDtoDefault;
-import com.teclinecg.noxus.dtos.CustomerAccountDtoSavedReturn;
+import com.teclinecg.noxus.dtos.CreditCardPostDto;
+import com.teclinecg.noxus.dtos.CreditCardDto;
+import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
-import com.teclinecg.noxus.models.AddressModel;
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
-import com.teclinecg.noxus.models.StatusModel;
 import com.teclinecg.noxus.repositories.CreditCardRepository;
-import com.teclinecg.noxus.repositories.CustomerAccountRepository;
-import org.hibernate.Hibernate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,17 +26,17 @@ public class CreditCardService {
     @Autowired
     private CustomerAccountService customerAccountService;
 
-    public CreditCardDtoDefault findCreditCardById(Long id) {
+    public CreditCardPostDto findCreditCardById(Long id) {
         Optional<CreditCardModel> creditCardOptional = creditCardRepository.findById(id);
 
         if (creditCardOptional.isPresent()) {
-            return new CreditCardDtoDefault(creditCardOptional.get());
+            return new CreditCardPostDto(creditCardOptional.get());
         } else {
             throw new ResourceNotFoundException("Resource: Credit Card. Not found with id: " + id);
         }
     }
 
-    public Page<CreditCardDtoDefault> findAllCreditCardsPaginated(Pageable pageable) {
+    public Page<CreditCardPostDto> findAllCreditCardsPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
@@ -52,27 +47,26 @@ public class CreditCardService {
         // Paginated JPA query
         Page<CreditCardModel> pagedCreditCards = creditCardRepository.findAll(pageable);
 
-        return pagedCreditCards.map(CreditCardDtoDefault::new);
+        return pagedCreditCards.map(CreditCardPostDto::new);
     }
 
-    public CreditCardDtoSavedReturn saveCreditCard(CreditCardDtoDefault creditCardDto) {
-        CreditCardModel creditCardModel = new CreditCardModel(creditCardDto);
+    public CreditCardDto saveCreditCard(CreditCardPostDto creditCardPostDto) {
+        CreditCardModel creditCardModel = new CreditCardModel(creditCardPostDto);
 
         // Catching the customer account to return to the Credit Card body
-        CustomerAccountDtoDefault customerAccountDtoDefault = customerAccountService.findCustomerAccountById(creditCardDto.getCustomerAccount());
-        CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDtoDefault);
+        CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountService.findCustomerAccountById(creditCardPostDto.getCustomerAccount()));
         creditCardModel.setCustomerAccount(customerAccountModel);
 
-        return new CreditCardDtoSavedReturn(creditCardRepository.save(creditCardModel));
+        return new CreditCardDto(creditCardRepository.save(creditCardModel));
     }
 
-    public CreditCardDtoDefault updateCreditCard(Long id, CreditCardDtoDefault creditCardDto) {
+    public CreditCardPostDto updateCreditCard(Long id, CreditCardPostDto creditCardDto) {
         Optional<CreditCardModel> existentCreditCardModelOptional = creditCardRepository.findById(id);
 
         if (existentCreditCardModelOptional.isPresent()) {
             CreditCardModel updatedCreditCardModel = new CreditCardModel(creditCardDto);
             BeanUtils.copyProperties(existentCreditCardModelOptional, updatedCreditCardModel);
-            return new CreditCardDtoDefault(creditCardRepository.save(updatedCreditCardModel));
+            return new CreditCardPostDto(creditCardRepository.save(updatedCreditCardModel));
         } else {
             throw new ResourceNotFoundException("Resource: Credit Card. Not found with id: " + id);
         }

@@ -1,17 +1,20 @@
 package com.teclinecg.noxus.services;
 
-import com.teclinecg.noxus.dtos.PizzaDtoDefault;
-import com.teclinecg.noxus.dtos.PizzaDtoDefault;
+import com.teclinecg.noxus.dtos.EdgeDto;
+import com.teclinecg.noxus.dtos.FlavorDto;
+import com.teclinecg.noxus.dtos.PizzaDto;
+import com.teclinecg.noxus.dtos.PizzaPostDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
+import com.teclinecg.noxus.models.EdgeModel;
+import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.models.PizzaModel;
-import com.teclinecg.noxus.models.PizzaModel;
+import com.teclinecg.noxus.models.SizeModel;
 import com.teclinecg.noxus.repositories.PizzaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -25,18 +28,32 @@ public class PizzaService {
 
     @Autowired
     private PizzaRepository pizzaRepository;
+    @Autowired
+    private SizeService sizeService;
+    @Autowired
+    private FlavorService flavorService;
+    @Autowired
+    private EdgeService edgeService;
 
-    public PizzaDtoDefault findPizzaById(Long id) {
+    public PizzaDto findPizzaById(Long id) {
         Optional<PizzaModel> pizzaOptional = pizzaRepository.findById(id);
 
         if (pizzaOptional.isPresent()) {
-            return new PizzaDtoDefault(pizzaOptional.get());
+            return new PizzaDto(pizzaOptional.get());
         } else {
             throw new ResourceNotFoundException("Resource: Pizza. Not found with id: " + id);
         }
     }
 
-    public Page<PizzaDtoDefault> findAllPizzasPaginated(Pageable pageable) {
+    public List<PizzaDto> findPizzasByOrderId(Long orderId) {
+        List<PizzaDto> pizzaDtos = new ArrayList<>();
+        for (PizzaModel i : pizzaRepository.findByOrderId(orderId)) {
+            pizzaDtos.add(new PizzaDto(i));
+        }
+        return pizzaDtos;
+    }
+
+    public Page<PizzaDto> findAllPizzasPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
@@ -47,21 +64,38 @@ public class PizzaService {
         // Paginated JPA query
         Page<PizzaModel> pagedPizzas = pizzaRepository.findAll(pageable);
 
-        return pagedPizzas.map(PizzaDtoDefault::new);
+        return pagedPizzas.map(PizzaDto::new);
     }
 
-    public PizzaDtoDefault savePizza( PizzaDtoDefault pizzaDto) {
-        PizzaModel pizzaModel = new PizzaModel(pizzaDto);
-        return new PizzaDtoDefault(pizzaRepository.save(pizzaModel));
+    public PizzaDto savePizza(PizzaPostDto pizzaPostDto) {
+        PizzaModel pizzaModel = new PizzaModel(pizzaPostDto);
+        SizeModel sizeModel = sizeService.findSizeById(pizzaPostDto.getPizzaSize());
+        pizzaModel.setPizzaSize(sizeModel);
+
+        List<FlavorDto> flavorDtos = flavorService.findFlavorsByIds(pizzaPostDto.getFlavors());
+        List<FlavorModel> flavorModels = new ArrayList<>();
+        for (FlavorDto i : flavorDtos) {
+            flavorModels.add(new FlavorModel(i));
+        }
+        pizzaModel.setFlavors(flavorModels);
+
+        List<EdgeDto> edgeDtos = edgeService.findEdgesByIds(pizzaPostDto.getEdges());
+        List<EdgeModel> edgeModels = new ArrayList<>();
+        for (EdgeDto i : edgeDtos) {
+            edgeModels.add(new EdgeModel(i));
+        }
+        pizzaModel.setEdges(edgeModels);
+
+        return new PizzaDto(pizzaRepository.save(pizzaModel));
     }
 
-    public PizzaDtoDefault updatePizza(Long id,  PizzaDtoDefault pizzaDto) {
+    public PizzaDto updatePizza(Long id, PizzaDto pizzaDto) {
         Optional<PizzaModel> existentPizzaModelOptional = pizzaRepository.findById(id);
 
         if (existentPizzaModelOptional.isPresent()) {
             PizzaModel updatedPizzaModel = new PizzaModel(pizzaDto);
             BeanUtils.copyProperties(existentPizzaModelOptional, updatedPizzaModel);
-            return new PizzaDtoDefault(pizzaRepository.save(updatedPizzaModel));
+            return new PizzaDto(pizzaRepository.save(updatedPizzaModel));
         } else {
             throw new ResourceNotFoundException("Resource: Pizza. Not found with id: " + id);
         }
