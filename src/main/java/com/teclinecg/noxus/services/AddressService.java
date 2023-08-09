@@ -28,18 +28,18 @@ public class AddressService {
     private CustomerAccountService customerAccountService;
 
     @Transactional
-    public AddressPostDto findAddressById(Long id) {
+    public AddressDto findAddressById(Long id) {
         Optional<AddressModel> addressOptional = addressRepository.findById(id);
 
         if (addressOptional.isPresent()) {
-            return new AddressPostDto(addressOptional.get());
+            return new AddressDto(addressOptional.get());
         } else {
             throw new ResourceNotFoundException("Resource: Address. Not found with id: " + id);
         }
     }
 
     @Transactional
-    public Page<AddressPostDto> findAllAddressesPaginated(Pageable pageable) {
+    public Page<AddressDto> findAllAddressesPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
@@ -50,7 +50,7 @@ public class AddressService {
         // Paginated JPA query
         Page<AddressModel> pagedAddresses = addressRepository.findAll(pageable);
 
-        return pagedAddresses.map(AddressPostDto::new);
+        return pagedAddresses.map(AddressDto::new);
     }
 
     @Transactional
