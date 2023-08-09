@@ -21,8 +21,8 @@ public class CustomerAccountController {
 
     @GetMapping
     @ApiOperation(value = "http://localhost:8080/customer-account?page=0&size=2", notes = "Returns Customer Accounts Paginated")
-    public ResponseEntity<Page<CustomerAccountPostDto>> findAllCustomerAccountsPaginated(Pageable pageable) {
-        Page<CustomerAccountPostDto> customerAccounts = customerAccountService.findAllCustomerAccountsPaginated(pageable);
+    public ResponseEntity<Page<CustomerAccountDto>> findAllCustomerAccountsPaginated(Pageable pageable) {
+        Page<CustomerAccountDto> customerAccounts = customerAccountService.findAllCustomerAccountsPaginated(pageable);
 
         // Headers
         HttpHeaders headers = new HttpHeaders();
@@ -32,12 +32,12 @@ public class CustomerAccountController {
         return ResponseEntity.ok().headers(headers).body(customerAccounts);
     }
 
-//    @GetMapping(value = "/{id}")
-//    @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Returns Customer Account Selected By Id")
-//    public ResponseEntity<CustomerAccountPostDto> findCustomerAccountById(@PathVariable Long id) {
-//        CustomerAccountPostDto customerAccount = customerAccountService.findCustomerAccountById(id);
-//        return ResponseEntity.ok().body(customerAccount);
-//    }
+    @GetMapping(value = "/{id}")
+    @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Returns Customer Account Selected By Id")
+    public ResponseEntity<CustomerAccountDto> findCustomerAccountById(@PathVariable Long id) {
+        CustomerAccountDto customerAccount = customerAccountService.findCustomerAccountById(id);
+        return ResponseEntity.ok().body(customerAccount);
+    }
 
     @PostMapping
     @ApiOperation(value = "http://localhost:8080/customer-account", notes = "Save a new customer-account")
