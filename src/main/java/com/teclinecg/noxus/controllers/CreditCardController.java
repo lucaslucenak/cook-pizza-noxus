@@ -21,8 +21,8 @@ public class CreditCardController {
 
     @GetMapping
     @ApiOperation(value = "http://localhost:8080/credit-card?page=0&size=2", notes = "Returns Credit Cards Paginated")
-    public ResponseEntity<Page<CreditCardPostDto>> findAllCreditCardsPaginated(Pageable pageable) {
-        Page<CreditCardPostDto> creditCards = creditCardService.findAllCreditCardsPaginated(pageable);
+    public ResponseEntity<Page<CreditCardDto>> findAllCreditCardsPaginated(Pageable pageable) {
+        Page<CreditCardDto> creditCards = creditCardService.findAllCreditCardsPaginated(pageable);
 
         // Headers
         HttpHeaders headers = new HttpHeaders();
@@ -34,8 +34,8 @@ public class CreditCardController {
 
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/credit-card/{creditCardId}", notes = "Returns Credit Card Selected By Id")
-    public ResponseEntity<CreditCardPostDto> findCreditCardById(@PathVariable Long id) {
-        CreditCardPostDto creditCard = creditCardService.findCreditCardById(id);
+    public ResponseEntity<CreditCardDto> findCreditCardById(@PathVariable Long id) {
+        CreditCardDto creditCard = creditCardService.findCreditCardById(id);
         return ResponseEntity.ok().body(creditCard);
     }
 

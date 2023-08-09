@@ -26,17 +26,17 @@ public class CreditCardService {
     @Autowired
     private CustomerAccountService customerAccountService;
 
-    public CreditCardPostDto findCreditCardById(Long id) {
+    public CreditCardDto findCreditCardById(Long id) {
         Optional<CreditCardModel> creditCardOptional = creditCardRepository.findById(id);
 
         if (creditCardOptional.isPresent()) {
-            return new CreditCardPostDto(creditCardOptional.get());
+            return new CreditCardDto(creditCardOptional.get());
         } else {
             throw new ResourceNotFoundException("Resource: Credit Card. Not found with id: " + id);
         }
     }
 
-    public Page<CreditCardPostDto> findAllCreditCardsPaginated(Pageable pageable) {
+    public Page<CreditCardDto> findAllCreditCardsPaginated(Pageable pageable) {
         if (pageable.getPageNumber() < 0) {
             throw new InvalidPageNumberException("Invalid Page Number. Must be greater or equal than zero");
         }
@@ -47,7 +47,7 @@ public class CreditCardService {
         // Paginated JPA query
         Page<CreditCardModel> pagedCreditCards = creditCardRepository.findAll(pageable);
 
-        return pagedCreditCards.map(CreditCardPostDto::new);
+        return pagedCreditCards.map(CreditCardDto::new);
     }
 
     public CreditCardDto saveCreditCard(CreditCardPostDto creditCardPostDto) {
