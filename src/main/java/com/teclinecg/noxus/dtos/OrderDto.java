@@ -13,7 +13,6 @@ import java.util.Objects;
 public class OrderDto {
 
     private Long id;
-    @NotNull(message = "Field orderPrice shouldn't be null")
     @DecimalMin(value = "0.0", inclusive = true)
     private Double orderPrice;
     private String observation;

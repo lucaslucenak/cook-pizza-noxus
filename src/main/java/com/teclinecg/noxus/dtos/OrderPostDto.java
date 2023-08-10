@@ -12,7 +12,6 @@ import java.util.List;
 public class OrderPostDto {
 
     private Long id;
-    @NotNull(message = "Field orderPrice shouldn't be null")
     @DecimalMin(value = "0.0", inclusive = true, message = "Decimal min value: 0.0")
     private Double orderPrice;
     private String observation;
