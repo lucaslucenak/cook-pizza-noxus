@@ -70,6 +70,7 @@ public class OrderService {
 
     public OrderDto saveOrder(OrderPostDto orderPostDto) {
         OrderModel orderModel = new OrderModel(orderPostDto);
+        Double orderPrice = 0.0;
 
         List<DrinkDto> drinkDtos = drinkService.findDrinksByIds(orderPostDto.getDrinks());
         List<DrinkModel> drinkModels = new ArrayList<>();
@@ -95,6 +96,8 @@ public class OrderService {
 
         List<PizzaModel> pizzaModels = new ArrayList<>();
         for (PizzaPostDto i : orderPostDto.getPizzas()) {
+            Double pizzaPrice = 0.0;
+
             PizzaModel pizzaModel = new PizzaModel();
 
             SizeModel sizeModel = sizeService.findSizeById(i.getPizzaSize());
@@ -104,6 +107,7 @@ public class OrderService {
             List<FlavorModel> flavorModels = new ArrayList<>();
             for (FlavorDto x : flavorDtos) {
                 flavorModels.add(new FlavorModel(x));
+                pizzaPrice += x.getPrice();
             }
             pizzaModel.setFlavors(flavorModels);
 
@@ -111,14 +115,23 @@ public class OrderService {
             List<EdgeModel> edgeModels = new ArrayList<>();
             for (EdgeDto x : edgeDtos) {
                 edgeModels.add(new EdgeModel(x));
+                pizzaPrice += x.getPrice();
             }
             pizzaModel.setEdges(edgeModels);
             pizzaModel.setOrder(orderModel);
-            pizzaModel.setPrice(i.getPrice());
+            pizzaModel.setPrice(pizzaPrice);
 
             pizzaModels.add(pizzaModel);
         }
         orderModel.setPizzas(pizzaModels);
+
+        for (PizzaModel i : orderModel.getPizzas()) {
+            orderPrice += i.getPrice();
+        }
+        for (DrinkModel i : orderModel.getDrinks()) {
+            orderPrice += i.getPrice();
+        }
+        orderModel.setOrderPrice(orderPrice);
 
 //        List<PizzaDto> pizzaDto = pizzaService.findPizzasByOrderId(orderModel.getId());
 //        for (PizzaDto i : pizzaDto) {
