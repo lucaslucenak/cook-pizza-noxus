@@ -32,12 +32,12 @@ public class CustomerAccountModel {
     @Column(nullable = false)
     private String cellphoneNumber;
 
-    @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<AddressModel> addresses;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customerAccount", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<CreditCardModel> creditCards;
 
     @ManyToOne(fetch = FetchType.EAGER)

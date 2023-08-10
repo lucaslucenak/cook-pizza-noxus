@@ -5,6 +5,8 @@ import com.teclinecg.noxus.dtos.CustomerAccountDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
+import com.teclinecg.noxus.models.AddressModel;
+import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import com.teclinecg.noxus.models.StatusModel;
 import com.teclinecg.noxus.repositories.CustomerAccountRepository;
@@ -49,9 +51,22 @@ public class CustomerAccountService {
         return pagedCustomerAccounts.map(CustomerAccountDto::new);
     }
 
-    public CustomerAccountDto saveCustomerAccount(CustomerAccountPostDto customerAccountDto) {
-        CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountDto);
-        customerAccountModel.setStatus(statusService.findStatusById(customerAccountDto.getStatus()));
+    public CustomerAccountDto saveCustomerAccount(CustomerAccountPostDto customerAccountPostDto) {
+        CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountPostDto);
+        customerAccountModel.setStatus(statusService.findStatusById(customerAccountPostDto.getStatus()));
+
+        if (customerAccountPostDto.getAddresses().size() > 0 && customerAccountPostDto.getAddresses() != null) {
+            for (AddressModel i : customerAccountPostDto.getAddresses()) {
+                i.setCustomerAccount(customerAccountModel);
+            }
+        }
+
+        if (customerAccountPostDto.getCreditCards().size() > 0 && customerAccountPostDto.getAddresses() != null) {
+            for (CreditCardModel i : customerAccountPostDto.getCreditCards()) {
+                i.setCustomerAccount(customerAccountModel);
+            }
+        }
+
         return new CustomerAccountDto(customerAccountRepository.save(customerAccountModel));
     }
 
