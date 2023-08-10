@@ -2,10 +2,12 @@ package com.teclinecg.noxus.models;
 
 import com.teclinecg.noxus.enums.PizzaSizeEnum;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Objects;
 
 @Entity
+@Builder
 @Table(name = "size")
 public class SizeModel {
 

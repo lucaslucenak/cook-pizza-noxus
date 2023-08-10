@@ -3,12 +3,14 @@ package com.teclinecg.noxus.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.DrinkDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Builder
 @Table(name = "drink")
 public class DrinkModel {
 

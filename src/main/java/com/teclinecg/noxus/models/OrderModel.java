@@ -5,6 +5,7 @@ import com.teclinecg.noxus.dtos.OrderDto;
 import com.teclinecg.noxus.dtos.OrderPostDto;
 import com.teclinecg.noxus.dtos.PizzaPostDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Builder
 @Table(name = "orderrr")
 public class OrderModel {
 

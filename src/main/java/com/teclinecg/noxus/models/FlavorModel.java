@@ -3,6 +3,7 @@ package com.teclinecg.noxus.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.FlavorDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "flavor")
+@Builder
 public class FlavorModel {
 
     @Id

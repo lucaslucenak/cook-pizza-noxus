@@ -2,10 +2,12 @@ package com.teclinecg.noxus.models;
 
 import com.teclinecg.noxus.enums.PaymentMethodEnum;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Objects;
 
 @Entity
+@Builder
 @Table(name = "payment_method")
 public class PaymentMethodModel {
 

@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.CustomerAccountDto;
 import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Builder
 @Table(name = "customer_account")
 public class CustomerAccountModel {
 
