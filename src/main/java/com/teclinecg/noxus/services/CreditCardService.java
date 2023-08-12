@@ -60,13 +60,17 @@ public class CreditCardService {
         return new CreditCardDto(creditCardRepository.save(creditCardModel));
     }
 
-    public CreditCardPostDto updateCreditCard(Long id, CreditCardPostDto creditCardDto) {
+    public CreditCardDto updateCreditCard(Long id, CreditCardPostDto creditCardPostDto) {
         Optional<CreditCardModel> existentCreditCardModelOptional = creditCardRepository.findById(id);
 
         if (existentCreditCardModelOptional.isPresent()) {
-            CreditCardModel updatedCreditCardModel = new CreditCardModel(creditCardDto);
+            CreditCardModel updatedCreditCardModel = new CreditCardModel(creditCardPostDto);
+
+            CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountService.findCustomerAccountById(creditCardPostDto.getCustomerAccount()));
+            updatedCreditCardModel.setCustomerAccount(customerAccountModel);
+
             BeanUtils.copyProperties(existentCreditCardModelOptional, updatedCreditCardModel);
-            return new CreditCardPostDto(creditCardRepository.save(updatedCreditCardModel));
+            return new CreditCardDto(creditCardRepository.save(updatedCreditCardModel));
         } else {
             throw new ResourceNotFoundException("Resource: Credit Card. Not found with id: " + id);
         }
