@@ -47,8 +47,12 @@ public class PizzaService {
 
     public List<PizzaDto> findPizzasByOrderId(Long orderId) {
         List<PizzaDto> pizzaDtos = new ArrayList<>();
-        for (PizzaModel i : pizzaRepository.findByOrderId(orderId)) {
-            pizzaDtos.add(new PizzaDto(i));
+        for (Optional<PizzaModel> i : pizzaRepository.findByOrderId(orderId)) {
+            if (i.isPresent()) {
+                pizzaDtos.add(new PizzaDto(i.get()));
+            } else {
+                throw new ResourceNotFoundException("Resource: Pizza. Not found with order id: " + orderId);
+            }
         }
         return pizzaDtos;
     }
