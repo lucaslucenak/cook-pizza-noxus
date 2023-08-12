@@ -63,13 +63,16 @@ public class AddressService {
     }
 
     @Transactional
-    public AddressPostDto updateAddress(Long id, AddressPostDto addressDto) {
+    public AddressDto updateAddress(Long id, AddressPostDto addressPostDto) {
         Optional<AddressModel> existentAddressModelOptional = addressRepository.findById(id);
 
         if (existentAddressModelOptional.isPresent()) {
-            AddressModel updatedAddressModel = new AddressModel(addressDto);
+            AddressModel updatedAddressModel = new AddressModel(addressPostDto);
+            CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountService.findCustomerAccountById(addressPostDto.getCustomerAccount()));
+            updatedAddressModel.setCustomerAccount(customerAccountModel);
+
             BeanUtils.copyProperties(existentAddressModelOptional, updatedAddressModel);
-            return new AddressPostDto(addressRepository.save(updatedAddressModel));
+            return new AddressDto(addressRepository.save(updatedAddressModel));
         } else {
             throw new ResourceNotFoundException("Resource: Address. Not found with id: " + id);
         }
