@@ -14,7 +14,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -132,8 +134,10 @@ public class PizzaRepositoryTest {
         // Arrange -> beforeEach
 
         // Act
-        List<PizzaModel> returnedPizzas = pizzaRepository.findByOrderId(orderModel.getId());
-
+        List<PizzaModel> returnedPizzas = new ArrayList<>();
+        for (Optional<PizzaModel> i : pizzaRepository.findByOrderId(orderModel.getId())) {
+            returnedPizzas.add(i.get());
+        }
 
         // Assert
         Assertions.assertEquals(pizzaModels, returnedPizzas);
