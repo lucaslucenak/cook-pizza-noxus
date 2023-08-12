@@ -131,6 +131,7 @@ public class OrderService {
         for (DrinkModel i : orderModel.getDrinks()) {
             orderPrice += i.getPrice();
         }
+        orderPrice += orderModel.getDeliveryTax().getTax();
         orderModel.setOrderPrice(orderPrice);
 
 //        List<PizzaDto> pizzaDto = pizzaService.findPizzasByOrderId(orderModel.getId());
