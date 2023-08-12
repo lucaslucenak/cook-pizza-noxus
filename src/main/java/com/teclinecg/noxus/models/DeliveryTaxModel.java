@@ -2,10 +2,12 @@ package com.teclinecg.noxus.models;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Objects;
 
 @Entity
+@Builder
 @Table(name = "delivery_tax")
 public class DeliveryTaxModel {
 

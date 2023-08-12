@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.AddressDto;
 import com.teclinecg.noxus.dtos.AddressPostDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 
 @Entity
+@Builder
 @Table(name = "address")
 public class AddressModel {
 

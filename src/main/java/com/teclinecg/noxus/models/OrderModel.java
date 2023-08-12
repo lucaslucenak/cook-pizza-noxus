@@ -5,6 +5,7 @@ import com.teclinecg.noxus.dtos.OrderDto;
 import com.teclinecg.noxus.dtos.OrderPostDto;
 import com.teclinecg.noxus.dtos.PizzaPostDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Builder
 @Table(name = "orderrr")
 public class OrderModel {
 
@@ -191,6 +193,24 @@ public class OrderModel {
 
     public void addPizza(PizzaModel pizzaModel) {
         pizzas.add(pizzaModel);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderModel{" +
+                "id=" + id +
+                ", orderPrice=" + orderPrice +
+                ", observation='" + observation + '\'' +
+                ", dispatchDateTime=" + dispatchDateTime +
+                ", arrivalForecast=" + arrivalForecast +
+                ", pizzas=" + pizzas +
+                ", drinks=" + drinks +
+                ", customerAccount=" + customerAccount +
+                ", address=" + address +
+                ", deliveryTax=" + deliveryTax +
+                ", paymentMethod=" + paymentMethod +
+                ", deliveryType=" + deliveryType +
+                '}';
     }
 
     @Override

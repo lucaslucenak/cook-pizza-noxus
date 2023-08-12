@@ -2,6 +2,7 @@ package com.teclinecg.noxus.models;
 
 import com.teclinecg.noxus.enums.StatusEnum;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Objects;
 
@@ -17,6 +18,10 @@ public class StatusModel {
     private StatusEnum status;
 
     public StatusModel() {
+    }
+
+    public StatusModel(StatusEnum status) {
+        this.status = status;
     }
 
     public StatusModel(Long id, int statusCode) {

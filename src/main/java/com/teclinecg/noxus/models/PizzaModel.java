@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.PizzaDto;
 import com.teclinecg.noxus.dtos.PizzaPostDto;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "pizza")
+@Builder
 public class PizzaModel {
 
     @Id
