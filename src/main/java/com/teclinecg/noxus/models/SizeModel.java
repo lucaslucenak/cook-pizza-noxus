@@ -21,6 +21,10 @@ public class SizeModel {
     public SizeModel() {
     }
 
+    public SizeModel(PizzaSizeEnum size) {
+        this.size = size;
+    }
+
     public SizeModel(Long id, PizzaSizeEnum size) {
         this.id = id;
         this.size = size;

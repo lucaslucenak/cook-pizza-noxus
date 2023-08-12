@@ -196,6 +196,24 @@ public class OrderModel {
     }
 
     @Override
+    public String toString() {
+        return "OrderModel{" +
+                "id=" + id +
+                ", orderPrice=" + orderPrice +
+                ", observation='" + observation + '\'' +
+                ", dispatchDateTime=" + dispatchDateTime +
+                ", arrivalForecast=" + arrivalForecast +
+                ", pizzas=" + pizzas +
+                ", drinks=" + drinks +
+                ", customerAccount=" + customerAccount +
+                ", address=" + address +
+                ", deliveryTax=" + deliveryTax +
+                ", paymentMethod=" + paymentMethod +
+                ", deliveryType=" + deliveryType +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
