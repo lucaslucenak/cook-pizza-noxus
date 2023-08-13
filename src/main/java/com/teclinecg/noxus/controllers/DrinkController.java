@@ -45,7 +45,7 @@ public class DrinkController {
         return ResponseEntity.ok().body(drinkDto);
     }
 
-    @PutMapping
+    @PutMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/drink/{drinkId}", notes = "Update an existing drink")
     public ResponseEntity<DrinkDto> updateDrinkById(@PathVariable Long id, @Valid @RequestBody DrinkDto drinkDto) {
         drinkDto = drinkService.updateDrink(id, drinkDto);
