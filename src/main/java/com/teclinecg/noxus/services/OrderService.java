@@ -134,24 +134,90 @@ public class OrderService {
         orderPrice += orderModel.getDeliveryTax().getTax();
         orderModel.setOrderPrice(orderPrice);
 
-//        List<PizzaDto> pizzaDto = pizzaService.findPizzasByOrderId(orderModel.getId());
-//        for (PizzaDto i : pizzaDto) {
-//            orderModel.addPizza(new PizzaModel(i));
-//        }
-//
-//        for (PizzaPostDto i : orderPostDto.getPizzas()) {
-//            i.setOrder(orderModel);
-//            pizzaService.savePizza(i);
-//        }
-
         return new OrderDto(orderRepository.save(orderModel));
     }
 
-    public OrderDto updateOrder(Long id, OrderDto orderDto) {
+    public OrderDto updateOrder(Long id, OrderPostDto orderPostDto) {
         Optional<OrderModel> existentOrderModelOptional = orderRepository.findById(id);
 
         if (existentOrderModelOptional.isPresent()) {
-            OrderModel updatedOrderModel = new OrderModel(orderDto);
+            OrderModel updatedOrderModel = new OrderModel(orderPostDto);
+            Double updatedOrderPrice = 0.0;
+
+            // Update Pizzas
+            if (orderPostDto.getPizzas().size() > 0 && orderPostDto.getPizzas() != null) {
+                List<PizzaModel> updatedPizzas = new ArrayList<>();
+                for (PizzaPostDto i : orderPostDto.getPizzas()) {
+                    PizzaModel pizzaModel = new PizzaModel();
+                    Double updatedPizzaPrice = 0.0;
+
+                    pizzaModel.setPizzaSize(sizeService.findSizeById(i.getPizzaSize()));
+
+                    List<FlavorModel> updatedFlavors = new ArrayList<>();
+                    for (FlavorDto x : flavorService.findFlavorsByIds(i.getFlavors())) {
+                        updatedFlavors.add(new FlavorModel(x));
+                        updatedPizzaPrice += x.getPrice();
+                    }
+                    pizzaModel.setFlavors(updatedFlavors);
+
+                    List<EdgeModel> updatedEdges = new ArrayList<>();
+                    for (EdgeDto x : edgeService.findEdgesByIds(i.getEdges())) {
+                        updatedEdges.add(new EdgeModel(x));
+                        updatedPizzaPrice += x.getPrice();
+                    }
+                    pizzaModel.setEdges(updatedEdges);
+
+                    pizzaModel.setPrice(updatedPizzaPrice);
+                    pizzaModel.setOrder(updatedOrderModel);
+                    updatedPizzas.add(pizzaModel);
+                }
+                updatedOrderModel.setPizzas(updatedPizzas);
+            }
+
+            // Update Drinks
+            if (orderPostDto.getDrinks().size() > 0 && orderPostDto.getDrinks() != null) {
+                List<DrinkModel> updatedDrinks = new ArrayList<>();
+                for (Long i : orderPostDto.getDrinks()) {
+                    updatedDrinks.add(new DrinkModel(drinkService.findDrinkById(i)));
+                }
+                updatedOrderModel.setDrinks(updatedDrinks);
+            }
+
+            // Update Customer Account
+            if (orderPostDto.getCustomerAccount() != null) {
+                updatedOrderModel.setCustomerAccount(new CustomerAccountModel(customerAccountService.findCustomerAccountById(orderPostDto.getCustomerAccount())));
+            }
+
+            // Update Address
+            if (orderPostDto.getAddress() != null) {
+                updatedOrderModel.setAddress(new AddressModel(addressService.findAddressById(orderPostDto.getAddress())));
+            }
+
+            // Update Delivery Tax
+            if (orderPostDto.getDeliveryTax() != null) {
+                updatedOrderModel.setDeliveryTax(deliveryTaxService.findDeliveryTaxById(orderPostDto.getDeliveryTax()));
+            }
+
+            // Update Payment Method
+            if (orderPostDto.getPaymentMethod() != null) {
+                updatedOrderModel.setPaymentMethod(paymentMethodService.findPaymentMethodById(orderPostDto.getPaymentMethod()));
+            }
+
+            // Update Delivery Type
+            if (orderPostDto.getDeliveryType() != null) {
+                updatedOrderModel.setDeliveryType(deliveryTypeService.findDeliveryTypeById(orderPostDto.getDeliveryType()));
+            }
+
+            //Update Order Price
+            for (PizzaModel i : updatedOrderModel.getPizzas()) {
+                updatedOrderPrice += i.getPrice();
+            }
+            for (DrinkModel i : updatedOrderModel.getDrinks()) {
+                updatedOrderPrice += i.getPrice();
+            }
+            updatedOrderPrice += updatedOrderModel.getDeliveryTax().getTax();
+            updatedOrderModel.setOrderPrice(updatedOrderPrice);
+
             BeanUtils.copyProperties(existentOrderModelOptional, updatedOrderModel);
             return new OrderDto(orderRepository.save(updatedOrderModel));
         } else {
