@@ -13,8 +13,6 @@ import java.util.Objects;
 public class PizzaDto {
 
     private Long id;
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = true)
     private Double price;
     @NotNull(message = "Field order shouldn't be null")
     @NotEmpty(message = "Field order shouldn't be empty")
