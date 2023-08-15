@@ -45,11 +45,10 @@ public class PizzaController {
         return ResponseEntity.ok().body(pizzaService.savePizza(pizzaPostDto));
     }
 
-    @PutMapping
+    @PutMapping(value = "{id}")
     @ApiOperation(value = "http://localhost:8080/pizza/{pizzaId}", notes = "Update an existing pizza")
-    public ResponseEntity<PizzaDto> updatePizzaById(@PathVariable Long id, @Valid @RequestBody PizzaDto pizzaDto) {
-        pizzaDto = pizzaService.updatePizza(id, pizzaDto);
-        return ResponseEntity.ok().body(pizzaDto);
+    public ResponseEntity<PizzaDto> updatePizzaById(@PathVariable Long id, @Valid @RequestBody PizzaPostDto pizzaPostDto) {
+        return ResponseEntity.ok().body(pizzaService.updatePizza(id, pizzaPostDto));
     }
 
     @DeleteMapping(value = "{id}")
