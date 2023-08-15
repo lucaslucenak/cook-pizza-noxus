@@ -137,6 +137,39 @@ public class OrderService {
         return new OrderDto(orderRepository.save(orderModel));
     }
 
+    public OrderDto addPizzaIntoExistingOrder(PizzaPostDto pizzaPostDto) {
+        OrderModel orderModel = new OrderModel(this.findOrderById(pizzaPostDto.getOrder()));
+        Double pizzaPrice = 0.0;
+
+        PizzaModel pizzaModel = new PizzaModel(pizzaPostDto);
+        SizeModel sizeModel = sizeService.findSizeById(pizzaPostDto.getPizzaSize());
+        pizzaModel.setPizzaSize(sizeModel);
+
+        List<FlavorDto> flavorDtos = flavorService.findFlavorsByIds(pizzaPostDto.getFlavors());
+        List<FlavorModel> flavorModels = new ArrayList<>();
+        for (FlavorDto i : flavorDtos) {
+            flavorModels.add(new FlavorModel(i));
+            pizzaPrice += i.getPrice();
+        }
+        pizzaModel.setFlavors(flavorModels);
+
+        List<EdgeDto> edgeDtos = edgeService.findEdgesByIds(pizzaPostDto.getEdges());
+        List<EdgeModel> edgeModels = new ArrayList<>();
+        for (EdgeDto i : edgeDtos) {
+            edgeModels.add(new EdgeModel(i));
+            pizzaPrice += i.getPrice();
+        }
+        pizzaModel.setEdges(edgeModels);
+
+        pizzaModel.setPrice(pizzaPrice);
+        pizzaModel.setOrder(orderModel);
+
+        orderModel.addPizza(pizzaModel);
+        orderModel.setOrderPrice(orderModel.getOrderPrice() + pizzaPrice);
+
+        return new OrderDto(orderRepository.save(orderModel));
+    }
+
     public OrderDto updateOrder(Long id, OrderPostDto orderPostDto) {
         Optional<OrderModel> existentOrderModelOptional = orderRepository.findById(id);
 

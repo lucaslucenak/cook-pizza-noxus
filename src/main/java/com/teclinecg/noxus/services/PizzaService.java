@@ -71,27 +71,29 @@ public class PizzaService {
         return pagedPizzas.map(PizzaDto::new);
     }
 
-    public PizzaDto savePizza(PizzaPostDto pizzaPostDto) {
-        PizzaModel pizzaModel = new PizzaModel(pizzaPostDto);
-        SizeModel sizeModel = sizeService.findSizeById(pizzaPostDto.getPizzaSize());
-        pizzaModel.setPizzaSize(sizeModel);
-
-        List<FlavorDto> flavorDtos = flavorService.findFlavorsByIds(pizzaPostDto.getFlavors());
-        List<FlavorModel> flavorModels = new ArrayList<>();
-        for (FlavorDto i : flavorDtos) {
-            flavorModels.add(new FlavorModel(i));
-        }
-        pizzaModel.setFlavors(flavorModels);
-
-        List<EdgeDto> edgeDtos = edgeService.findEdgesByIds(pizzaPostDto.getEdges());
-        List<EdgeModel> edgeModels = new ArrayList<>();
-        for (EdgeDto i : edgeDtos) {
-            edgeModels.add(new EdgeModel(i));
-        }
-        pizzaModel.setEdges(edgeModels);
-
-        return new PizzaDto(pizzaRepository.save(pizzaModel));
-    }
+//    public PizzaDto savePizza(PizzaPostDto pizzaPostDto) {
+//        PizzaModel pizzaModel = new PizzaModel(pizzaPostDto);
+//        SizeModel sizeModel = sizeService.findSizeById(pizzaPostDto.getPizzaSize());
+//        pizzaModel.setPizzaSize(sizeModel);
+//
+//        List<FlavorDto> flavorDtos = flavorService.findFlavorsByIds(pizzaPostDto.getFlavors());
+//        List<FlavorModel> flavorModels = new ArrayList<>();
+//        for (FlavorDto i : flavorDtos) {
+//            flavorModels.add(new FlavorModel(i));
+//        }
+//        pizzaModel.setFlavors(flavorModels);
+//
+//        List<EdgeDto> edgeDtos = edgeService.findEdgesByIds(pizzaPostDto.getEdges());
+//        List<EdgeModel> edgeModels = new ArrayList<>();
+//        for (EdgeDto i : edgeDtos) {
+//            edgeModels.add(new EdgeModel(i));
+//        }
+//        pizzaModel.setEdges(edgeModels);
+//
+//        pizzaModel.setOrder(new OrderModel(orderService.findOrderById(pizzaPostDto.getOrder())));
+//
+//        return new PizzaDto(pizzaRepository.save(pizzaModel));
+//    }
 
     public PizzaDto updatePizza(Long id, PizzaPostDto pizzaPostDto) {
         Optional<PizzaModel> existentPizzaModelOptional = pizzaRepository.findById(id);

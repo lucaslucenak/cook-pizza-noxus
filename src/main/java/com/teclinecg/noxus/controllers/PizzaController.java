@@ -39,11 +39,10 @@ public class PizzaController {
         return ResponseEntity.ok().body(pizza);
     }
 
-    @PostMapping
-    @ApiOperation(value = "http://localhost:8080/pizza", notes = "Save a new pizza")
-    public ResponseEntity<PizzaDto> savePizza(@Valid @RequestBody PizzaPostDto pizzaPostDto) {
-        return ResponseEntity.ok().body(pizzaService.savePizza(pizzaPostDto));
-    }
+//    @ApiOperation(value = "http://localhost:8080/pizza", notes = "Save a new pizza")
+//    public ResponseEntity<PizzaDto> savePizza(@Valid @RequestBody PizzaPostDto pizzaPostDto) {
+//        return ResponseEntity.ok().body(pizzaService.savePizza(pizzaPostDto));
+//    }
 
     @PutMapping(value = "{id}")
     @ApiOperation(value = "http://localhost:8080/pizza/{pizzaId}", notes = "Update an existing pizza")

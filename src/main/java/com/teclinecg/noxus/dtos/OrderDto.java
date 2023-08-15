@@ -13,7 +13,6 @@ import java.util.Objects;
 public class OrderDto {
 
     private Long id;
-    @DecimalMin(value = "0.0", inclusive = true)
     private Double orderPrice;
     private String observation;
     private LocalDateTime dispatchDateTime;

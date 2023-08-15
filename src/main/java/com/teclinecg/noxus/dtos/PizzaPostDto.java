@@ -11,8 +11,6 @@ import java.util.List;
 public class PizzaPostDto {
 
     private Long id;
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = true)
     private Double price;
     private Long order;
     private Long pizzaSize;
