@@ -7,11 +7,9 @@ import com.teclinecg.noxus.dtos.PizzaPostDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
-import com.teclinecg.noxus.models.EdgeModel;
-import com.teclinecg.noxus.models.FlavorModel;
-import com.teclinecg.noxus.models.PizzaModel;
-import com.teclinecg.noxus.models.SizeModel;
+import com.teclinecg.noxus.models.*;
 import com.teclinecg.noxus.repositories.PizzaRepository;
+import lombok.Lombok;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +32,8 @@ public class PizzaService {
     private FlavorService flavorService;
     @Autowired
     private EdgeService edgeService;
+    @Autowired
+    private OrderService orderService;
 
     public PizzaDto findPizzaById(Long id) {
         Optional<PizzaModel> pizzaOptional = pizzaRepository.findById(id);
@@ -93,11 +93,35 @@ public class PizzaService {
         return new PizzaDto(pizzaRepository.save(pizzaModel));
     }
 
-    public PizzaDto updatePizza(Long id, PizzaDto pizzaDto) {
+    public PizzaDto updatePizza(Long id, PizzaPostDto pizzaPostDto) {
         Optional<PizzaModel> existentPizzaModelOptional = pizzaRepository.findById(id);
 
         if (existentPizzaModelOptional.isPresent()) {
-            PizzaModel updatedPizzaModel = new PizzaModel(pizzaDto);
+            PizzaModel updatedPizzaModel = new PizzaModel(pizzaPostDto);
+            Double updatedPizzaPrice = 0.0;
+
+            // Update Order
+            OrderModel updatedOrder = new OrderModel(orderService.findOrderById(pizzaPostDto.getOrder()));
+            updatedPizzaModel.setOrder(updatedOrder);
+
+            // Update Size
+            SizeModel updatedSize = sizeService.findSizeById(pizzaPostDto.getPizzaSize());
+            updatedPizzaModel.setPizzaSize(updatedSize);
+
+            // Update Flavors
+            List<FlavorModel> updatedFlavors = new ArrayList<>();
+            for (Long i : pizzaPostDto.getFlavors()) {
+                updatedFlavors.add(new FlavorModel(flavorService.findFlavorById(i)));
+            }
+            updatedPizzaModel.setFlavors(updatedFlavors);
+
+            // Update Edges
+            List<EdgeModel> updatedEdges = new ArrayList<>();
+            for (Long i : pizzaPostDto.getEdges()) {
+                updatedEdges.add(new EdgeModel(edgeService.findEdgeById(i)));
+            }
+            updatedPizzaModel.setEdges(updatedEdges);
+
             BeanUtils.copyProperties(existentPizzaModelOptional, updatedPizzaModel);
             return new PizzaDto(pizzaRepository.save(updatedPizzaModel));
         } else {

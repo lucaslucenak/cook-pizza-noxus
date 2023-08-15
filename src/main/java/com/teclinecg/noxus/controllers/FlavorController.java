@@ -45,7 +45,7 @@ public class FlavorController {
         return ResponseEntity.ok().body(flavorDto);
     }
 
-    @PutMapping
+    @PutMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/flavor/{flavorId}", notes = "Update an existing flavor")
     public ResponseEntity<FlavorDto> updateFlavorById(@PathVariable Long id, @Valid @RequestBody FlavorDto flavorDto) {
         flavorDto = flavorService.updateFlavor(id, flavorDto);

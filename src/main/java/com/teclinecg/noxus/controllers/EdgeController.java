@@ -45,7 +45,7 @@ public class EdgeController {
         return ResponseEntity.ok().body(edgeDto);
     }
 
-    @PutMapping
+    @PutMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/edge/{edgeId}", notes = "Update an existing edge")
     public ResponseEntity<EdgeDto> updateEdgeById(@PathVariable Long id, @Valid @RequestBody EdgeDto edgeDto) {
         edgeDto = edgeService.updateEdge(id, edgeDto);

@@ -45,11 +45,10 @@ public class AddressController {
         return ResponseEntity.ok().body(addressService.saveAddress(addressPostDto));
     }
 
-    @PutMapping
+    @PutMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/address/{addressId}", notes = "Update an existing Address")
-    public ResponseEntity<AddressPostDto> updateAddressById(@PathVariable Long id, @Valid @RequestBody AddressPostDto addressDto) {
-        addressDto = addressService.updateAddress(id, addressDto);
-        return ResponseEntity.ok().body(addressDto);
+    public ResponseEntity<AddressDto> updateAddressById(@PathVariable Long id, @Valid @RequestBody AddressPostDto addressPostDto) {
+        return ResponseEntity.ok().body(addressService.updateAddress(id, addressPostDto));
     }
 
     @DeleteMapping(value = "{id}")

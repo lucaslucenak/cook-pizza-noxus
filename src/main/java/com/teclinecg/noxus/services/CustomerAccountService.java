@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -70,13 +72,27 @@ public class CustomerAccountService {
         return new CustomerAccountDto(customerAccountRepository.save(customerAccountModel));
     }
 
-    public CustomerAccountPostDto updateCustomerAccount(Long id, CustomerAccountPostDto customerAccountDto) {
+    public CustomerAccountDto updateCustomerAccount(Long id, CustomerAccountPostDto customerAccountPostDto) {
         Optional<CustomerAccountModel> existentCustomerAccountModelOptional = customerAccountRepository.findById(id);
 
         if (existentCustomerAccountModelOptional.isPresent()) {
-            CustomerAccountModel updatedCustomerAccount = new CustomerAccountModel(customerAccountDto);
+            CustomerAccountModel updatedCustomerAccount = new CustomerAccountModel(customerAccountPostDto);
+            updatedCustomerAccount.setStatus(statusService.findStatusById(customerAccountPostDto.getStatus()));
+
+            if (customerAccountPostDto.getAddresses().size() > 0 && customerAccountPostDto.getAddresses() != null) {
+                for (AddressModel i : customerAccountPostDto.getAddresses()) {
+                    i.setCustomerAccount(existentCustomerAccountModelOptional.get());
+                }
+            }
+
+            if (customerAccountPostDto.getCreditCards().size() > 0 && customerAccountPostDto.getAddresses() != null) {
+                for (CreditCardModel i : customerAccountPostDto.getCreditCards()) {
+                    i.setCustomerAccount(existentCustomerAccountModelOptional.get());
+                }
+            }
+
             BeanUtils.copyProperties(existentCustomerAccountModelOptional, updatedCustomerAccount);
-            return new CustomerAccountPostDto(customerAccountRepository.save(updatedCustomerAccount));
+            return new CustomerAccountDto(customerAccountRepository.save(updatedCustomerAccount));
         } else {
             throw new ResourceNotFoundException("Resource: Customer Account. Not found with id: " + id);
         }

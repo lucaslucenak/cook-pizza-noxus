@@ -46,11 +46,10 @@ public class CustomerAccountController {
         return ResponseEntity.ok().body(customerAccountDto);
     }
 
-    @PutMapping
+    @PutMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/customer-account/{customerAccountId}", notes = "Update an existing Customer Account")
-    public ResponseEntity<CustomerAccountPostDto> updateCustomerAccountById(@PathVariable Long id, @Valid @RequestBody CustomerAccountPostDto customerAccountDto) {
-        customerAccountDto = customerAccountService.updateCustomerAccount(id, customerAccountDto);
-        return ResponseEntity.ok().body(customerAccountDto);
+    public ResponseEntity<CustomerAccountDto> updateCustomerAccountById(@PathVariable Long id, @Valid @RequestBody CustomerAccountPostDto customerAccountPostDto) {
+        return ResponseEntity.ok().body(customerAccountService.updateCustomerAccount(id, customerAccountPostDto));
     }
 
     @DeleteMapping(value = "{id}")

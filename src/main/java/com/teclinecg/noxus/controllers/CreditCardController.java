@@ -46,11 +46,10 @@ public class CreditCardController {
         return ResponseEntity.ok().body(creditCardDto);
     }
 
-    @PutMapping
+    @PutMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/credit-card/{creditCardId}", notes = "Update an existing Credit Card")
-    public ResponseEntity<CreditCardPostDto> updateCreditCardById(@PathVariable Long id, @Valid  @RequestBody CreditCardPostDto creditCardDto) {
-        creditCardDto = creditCardService.updateCreditCard(id, creditCardDto);
-        return ResponseEntity.ok().body(creditCardDto);
+    public ResponseEntity<CreditCardDto> updateCreditCardById(@PathVariable Long id, @Valid  @RequestBody CreditCardPostDto creditCardPostDto) {
+        return ResponseEntity.ok().body(creditCardService.updateCreditCard(id, creditCardPostDto));
     }
 
     @DeleteMapping(value = "{id}")

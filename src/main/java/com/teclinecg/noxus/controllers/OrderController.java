@@ -45,11 +45,10 @@ public class OrderController {
         return ResponseEntity.ok().body(orderService.saveOrder(orderPostDto));
     }
 
-    @PutMapping
+    @PutMapping(value = "/{id}")
     @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Update an existing order")
-    public ResponseEntity<OrderDto> updateOrderById(@PathVariable Long id, @Valid @RequestBody OrderDto orderDto) {
-        orderDto = orderService.updateOrder(id, orderDto);
-        return ResponseEntity.ok().body(orderDto);
+    public ResponseEntity<OrderDto> updateOrderById(@PathVariable Long id, @Valid @RequestBody OrderPostDto orderPostDto) {
+        return ResponseEntity.ok().body(orderService.updateOrder(id, orderPostDto));
     }
 
     @DeleteMapping(value = "{id}")
