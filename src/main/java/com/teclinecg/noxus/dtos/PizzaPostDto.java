@@ -11,7 +11,6 @@ import java.util.List;
 public class PizzaPostDto {
 
     private Long id;
-    private Double price;
     private Long order;
     private Long pizzaSize;
     private List<Long> flavors;
@@ -24,9 +23,8 @@ public class PizzaPostDto {
         BeanUtils.copyProperties(pizzaModel, this);
     }
 
-    public PizzaPostDto(Long id, Double price, Long order, Long pizzaSize, List<Long> flavors, List<Long> edges) {
+    public PizzaPostDto(Long id, Long order, Long pizzaSize, List<Long> flavors, List<Long> edges) {
         this.id = id;
-        this.price = price;
         this.order = order;
         this.pizzaSize = pizzaSize;
         this.flavors = flavors;
@@ -39,14 +37,6 @@ public class PizzaPostDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public Long getOrder() {
