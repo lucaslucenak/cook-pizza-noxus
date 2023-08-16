@@ -170,6 +170,15 @@ public class OrderService {
         return new OrderDto(orderRepository.save(orderModel));
     }
 
+    public OrderDto addDrinkIntoExistingOrder(Long drinkId, Long orderId) {
+        OrderModel orderModel = new OrderModel(this.findOrderById(orderId));
+        DrinkModel drinkModel = new DrinkModel(drinkService.findDrinkById(drinkId));
+
+        orderModel.addDrink(drinkModel);
+
+        return new OrderDto(orderRepository.save(orderModel));
+    }
+
     public OrderDto updateOrder(Long id, OrderPostDto orderPostDto) {
         Optional<OrderModel> existentOrderModelOptional = orderRepository.findById(id);
 

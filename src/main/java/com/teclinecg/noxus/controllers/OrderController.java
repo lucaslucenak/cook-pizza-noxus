@@ -1,9 +1,6 @@
 package com.teclinecg.noxus.controllers;
 
-import com.teclinecg.noxus.dtos.OrderDto;
-import com.teclinecg.noxus.dtos.OrderPostDto;
-import com.teclinecg.noxus.dtos.PizzaDto;
-import com.teclinecg.noxus.dtos.PizzaPostDto;
+import com.teclinecg.noxus.dtos.*;
 import com.teclinecg.noxus.services.OrderService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
@@ -48,9 +45,15 @@ public class OrderController {
     }
 
     @PostMapping(value = "/add-pizza-into-order")
-    @ApiOperation(value = "http://localhost:8080/pizza", notes = "Add pizza into an existent order")
+    @ApiOperation(value = "http://localhost:8080/add-pizza-into-order", notes = "Add pizza into an existent order")
     public ResponseEntity<OrderDto> addPizzaIntoExistingOrder(@Valid @RequestBody PizzaPostDto pizzaPostDto) {
         return ResponseEntity.ok().body(orderService.addPizzaIntoExistingOrder(pizzaPostDto));
+    }
+
+    @PostMapping(value = "/add-drink-into-order/{drinkId}/{orderId}")
+    @ApiOperation(value = "http://localhost:8080/1/1", notes = "Add drink into an existent order")
+    public ResponseEntity<OrderDto> addPizzaIntoExistingOrder(@PathVariable Long drinkId, @PathVariable Long orderId) {
+        return ResponseEntity.ok().body(orderService.addDrinkIntoExistingOrder(drinkId, orderId));
     }
 
     @PutMapping(value = "/{id}")
