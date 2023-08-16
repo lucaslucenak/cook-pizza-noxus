@@ -195,6 +195,10 @@ public class OrderModel {
         pizzas.add(pizzaModel);
     }
 
+    public void addDrink(DrinkModel drinkModel) {
+        drinks.add(drinkModel);
+    }
+
     @Override
     public String toString() {
         return "OrderModel{" +
