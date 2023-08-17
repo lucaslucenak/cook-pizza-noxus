@@ -1,12 +1,15 @@
 package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.DrinkModel;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class DrinkDto {
@@ -19,6 +22,8 @@ public class DrinkDto {
     @NotNull(message = "Field price shouldn't be null")
     @DecimalMin(value = "0.0", inclusive = true)
     private Double price;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public DrinkDto() {
     }
@@ -49,6 +54,22 @@ public class DrinkDto {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
