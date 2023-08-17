@@ -4,13 +4,16 @@ import com.teclinecg.noxus.models.AddressModel;
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import com.teclinecg.noxus.models.StatusModel;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class CustomerAccountDto {
@@ -44,6 +47,8 @@ public class CustomerAccountDto {
     @NotNull(message = "Field status shouldn't be null")
     @NotEmpty(message = "Field status shouldn't be empty")
     private StatusModel status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public CustomerAccountDto() {
     }
@@ -62,6 +67,20 @@ public class CustomerAccountDto {
         this.addresses = addresses;
         this.creditCards = creditCards;
         this.status = status;
+    }
+
+    public CustomerAccountDto(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.cpf = cpf;
+        this.email = email;
+        this.cellphoneNumber = cellphoneNumber;
+        this.addresses = addresses;
+        this.creditCards = creditCards;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -134,5 +153,21 @@ public class CustomerAccountDto {
 
     public void setStatus(StatusModel status) {
         this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
