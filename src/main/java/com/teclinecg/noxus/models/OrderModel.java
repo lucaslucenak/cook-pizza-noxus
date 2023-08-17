@@ -7,6 +7,9 @@ import com.teclinecg.noxus.dtos.PizzaPostDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import java.util.Objects;
 @Entity
 @Builder
 @Table(name = "orderrr")
+@EntityListeners(AuditingEntityListener.class) // Able to register created_at and updated_at
 public class OrderModel {
 
     @Id
@@ -69,6 +73,14 @@ public class OrderModel {
     @JoinColumn(name = "delivery_type_id", nullable = false)
     private DeliveryTypeModel deliveryType;
 
+    @Column(nullable = false, updatable = false)
+    @CreatedDate // Auto fill
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, updatable = false)
+    @LastModifiedDate // Auto fill
+    private LocalDateTime updatedAt;
+
     public OrderModel() {
     }
 
@@ -80,7 +92,7 @@ public class OrderModel {
         BeanUtils.copyProperties(orderPostDto, this);
     }
 
-    public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, List<DrinkModel> drinks, CustomerAccountModel customerAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType) {
+    public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, List<DrinkModel> drinks, CustomerAccountModel customerAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.orderPrice = orderPrice;
         this.observation = observation;
@@ -93,6 +105,8 @@ public class OrderModel {
         this.deliveryTax = deliveryTax;
         this.paymentMethod = paymentMethod;
         this.deliveryType = deliveryType;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -197,6 +211,22 @@ public class OrderModel {
 
     public void addDrink(DrinkModel drinkModel) {
         drinks.add(drinkModel);
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override

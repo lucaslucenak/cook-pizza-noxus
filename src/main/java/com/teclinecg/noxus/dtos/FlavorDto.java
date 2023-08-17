@@ -3,12 +3,15 @@ package com.teclinecg.noxus.dtos;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.models.FlavorModel;
 import com.teclinecg.noxus.models.PizzaModel;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +27,8 @@ public class FlavorDto {
     private Double price;
     @JsonIgnore
     private List<PizzaModel> pizzas;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public FlavorDto() {
     }
@@ -62,6 +67,22 @@ public class FlavorDto {
 
     public void setPizzas(List<PizzaModel> pizzas) {
         this.pizzas = pizzas;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
