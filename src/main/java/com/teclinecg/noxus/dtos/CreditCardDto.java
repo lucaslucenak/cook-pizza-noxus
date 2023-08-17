@@ -4,6 +4,7 @@ import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
 import org.springframework.beans.BeanUtils;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class CreditCardDto {
@@ -15,6 +16,8 @@ public class CreditCardDto {
     private String expirationDate;
     private String ownerCPF;
     private CustomerAccountModel customerAccount;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public CreditCardDto() {
     }
@@ -23,7 +26,7 @@ public class CreditCardDto {
         BeanUtils.copyProperties(creditCardModel, this);
     }
 
-    public CreditCardDto(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount) {
+    public CreditCardDto(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.ownerName = ownerName;
         this.number = number;
@@ -31,6 +34,8 @@ public class CreditCardDto {
         this.expirationDate = expirationDate;
         this.ownerCPF = ownerCPF;
         this.customerAccount = customerAccount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -87,6 +92,22 @@ public class CreditCardDto {
 
     public void setCustomerAccount(CustomerAccountModel customerAccount) {
         this.customerAccount = customerAccount;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override

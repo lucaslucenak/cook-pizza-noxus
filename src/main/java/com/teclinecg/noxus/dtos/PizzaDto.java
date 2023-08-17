@@ -2,11 +2,14 @@ package com.teclinecg.noxus.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.models.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +29,8 @@ public class PizzaDto {
     @NotNull(message = "Field edges shouldn't be null")
     @NotEmpty(message = "Field edges shouldn't be empty")
     private List<EdgeModel> edges;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public PizzaDto() {
     }
@@ -80,6 +85,22 @@ public class PizzaDto {
 
     public void setEdges(List<EdgeModel> edges) {
         this.edges = edges;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override

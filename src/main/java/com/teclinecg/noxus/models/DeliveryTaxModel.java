@@ -3,12 +3,17 @@ package com.teclinecg.noxus.models;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Builder
 @Table(name = "delivery_tax")
+@EntityListeners(AuditingEntityListener.class) // Able to register created_at and updated_at
 public class DeliveryTaxModel {
 
     @Id
@@ -18,10 +23,26 @@ public class DeliveryTaxModel {
     private Double tax;
     private String neighbourhood;
 
+    @Column(nullable = false, updatable = false)
+    @CreatedDate // Auto fill
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, updatable = false)
+    @LastModifiedDate // Auto fill
+    private LocalDateTime updatedAt;
+
     public DeliveryTaxModel(Long id, Double tax, String neighbourhood) {
         this.id = id;
         this.tax = tax;
         this.neighbourhood = neighbourhood;
+    }
+
+    public DeliveryTaxModel(Long id, Double tax, String neighbourhood, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.tax = tax;
+        this.neighbourhood = neighbourhood;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public DeliveryTaxModel() {
@@ -49,6 +70,22 @@ public class DeliveryTaxModel {
 
     public void setNeighbourhood(String neighbourhood) {
         this.neighbourhood = neighbourhood;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override

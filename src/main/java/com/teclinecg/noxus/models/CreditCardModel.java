@@ -4,11 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.CreditCardPostDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name = "credit_card")
+@EntityListeners(AuditingEntityListener.class) // Able to register created_at and updated_at
 public class CreditCardModel {
 
     @Id
@@ -26,6 +31,14 @@ public class CreditCardModel {
     @JoinColumn(name = "customer_account_id", nullable = false)
     private CustomerAccountModel customerAccount;
 
+    @Column(nullable = false, updatable = false)
+    @CreatedDate // Auto fill
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, updatable = false)
+    @LastModifiedDate // Auto fill
+    private LocalDateTime updatedAt;
+
     public CreditCardModel() {
     }
 
@@ -33,7 +46,7 @@ public class CreditCardModel {
         BeanUtils.copyProperties(creditCardPostDto, this);
     }
 
-    public CreditCardModel(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount) {
+    public CreditCardModel(Long id, String ownerName, String number, String ccv, String expirationDate, String ownerCPF, CustomerAccountModel customerAccount, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.ownerName = ownerName;
         this.number = number;
@@ -41,6 +54,8 @@ public class CreditCardModel {
         this.expirationDate = expirationDate;
         this.ownerCPF = ownerCPF;
         this.customerAccount = customerAccount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -97,6 +112,22 @@ public class CreditCardModel {
 
     public void setOwnerCPF(String ownerCPF) {
         this.ownerCPF = ownerCPF;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override

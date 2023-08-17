@@ -5,13 +5,18 @@ import com.teclinecg.noxus.dtos.DrinkDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Builder
 @Table(name = "drink")
+@EntityListeners(AuditingEntityListener.class) // Able to register created_at and updated_at
 public class DrinkModel {
 
     @Id
@@ -23,6 +28,14 @@ public class DrinkModel {
 
     @ManyToMany(mappedBy = "drinks", fetch = FetchType.EAGER)
     private List<OrderModel> orders;
+
+    @Column(nullable = false, updatable = false)
+    @CreatedDate // Auto fill
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, updatable = false)
+    @LastModifiedDate // Auto fill
+    private LocalDateTime updatedAt;
 
     public DrinkModel() {
     }
@@ -36,6 +49,15 @@ public class DrinkModel {
         this.name = name;
         this.price = price;
         this.orders = orders;
+    }
+
+    public DrinkModel(Long id, String name, Double price, List<OrderModel> orders, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.orders = orders;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -72,6 +94,22 @@ public class DrinkModel {
 
     public void addOrder(OrderModel orderModel) {
         orders.add(orderModel);
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override

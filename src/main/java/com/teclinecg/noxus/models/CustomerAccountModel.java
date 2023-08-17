@@ -6,13 +6,18 @@ import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Builder
 @Table(name = "customer_account")
+@EntityListeners(AuditingEntityListener.class) // Able to register created_at and updated_at
 public class CustomerAccountModel {
 
     @Id
@@ -47,6 +52,14 @@ public class CustomerAccountModel {
     @JoinColumn(name = "status_id", nullable = false)
     private StatusModel status;
 
+    @Column(nullable = false, updatable = false)
+    @CreatedDate // Auto fill
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, updatable = false)
+    @LastModifiedDate // Auto fill
+    private LocalDateTime updatedAt;
+
     public CustomerAccountModel() {
     }
 
@@ -58,7 +71,7 @@ public class CustomerAccountModel {
         BeanUtils.copyProperties(customerAccountDto, this);
     }
 
-    public CustomerAccountModel(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status) {
+    public CustomerAccountModel(Long id, String firstName, String lastName, String cpf, String email, String cellphoneNumber, List<AddressModel> addresses, List<CreditCardModel> creditCards, StatusModel status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -68,6 +81,8 @@ public class CustomerAccountModel {
         this.addresses = addresses;
         this.creditCards = creditCards;
         this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -140,6 +155,22 @@ public class CustomerAccountModel {
 
     public void setCellphoneNumber(String cellphoneNumber) {
         this.cellphoneNumber = cellphoneNumber;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override

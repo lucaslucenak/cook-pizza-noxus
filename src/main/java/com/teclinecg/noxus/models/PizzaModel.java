@@ -6,14 +6,19 @@ import com.teclinecg.noxus.dtos.PizzaPostDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 
 @Entity
-@Table(name = "pizza")
 @Builder
+@Table(name = "pizza")
+@EntityListeners(AuditingEntityListener.class) // Able to register created_at and updated_at
 public class PizzaModel {
 
     @Id
@@ -46,6 +51,14 @@ public class PizzaModel {
     )
     private List<EdgeModel> edges;
 
+    @Column(nullable = false, updatable = false)
+    @CreatedDate // Auto fill
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, updatable = false)
+    @LastModifiedDate // Auto fill
+    private LocalDateTime updatedAt;
+
     public PizzaModel() {
     }
 
@@ -57,13 +70,15 @@ public class PizzaModel {
         BeanUtils.copyProperties(pizzaPostDto, this);
     }
 
-    public PizzaModel(Long id, Double price, OrderModel order, SizeModel pizzaSize, List<FlavorModel> flavors, List<EdgeModel> edges) {
+    public PizzaModel(Long id, Double price, OrderModel order, SizeModel pizzaSize, List<FlavorModel> flavors, List<EdgeModel> edges, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.price = price;
         this.order = order;
         this.pizzaSize = pizzaSize;
         this.flavors = flavors;
         this.edges = edges;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -112,6 +127,22 @@ public class PizzaModel {
 
     public void setEdges(List<EdgeModel> edges) {
         this.edges = edges;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
