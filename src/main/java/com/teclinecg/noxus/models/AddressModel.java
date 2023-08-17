@@ -6,12 +6,17 @@ import com.teclinecg.noxus.dtos.AddressPostDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Builder
 @Table(name = "address")
+@EntityListeners(AuditingEntityListener.class) // Able to register created_at and updated_at
 public class AddressModel {
 
     @Id
@@ -44,6 +49,14 @@ public class AddressModel {
     @JoinColumn(name = "customer_account_id", nullable = false)
     private CustomerAccountModel customerAccount;
 
+    @Column(nullable = false, updatable = false)
+    @CreatedDate // Auto fill
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, updatable = false)
+    @LastModifiedDate // Auto fill
+    private LocalDateTime updatedAt;
+
     public AddressModel() {
     }
 
@@ -53,6 +66,20 @@ public class AddressModel {
 
     public AddressModel(AddressPostDto addressPostDto) {
         BeanUtils.copyProperties(addressPostDto, this);
+    }
+
+    public AddressModel(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.neighbourhood = neighbourhood;
+        this.city = city;
+        this.cep = cep;
+        this.complement = complement;
+        this.referencePoint = referencePoint;
+        this.customerAccount = customerAccount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public AddressModel(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount) {
@@ -138,6 +165,22 @@ public class AddressModel {
 
     public void setCustomerAccount(CustomerAccountModel customerAccount) {
         this.customerAccount = customerAccount;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
