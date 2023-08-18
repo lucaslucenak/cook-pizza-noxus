@@ -23,7 +23,9 @@ public class FlavorModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String flavor;
+    @Column(nullable = false)
     private Double price;
 
     @JsonIgnore

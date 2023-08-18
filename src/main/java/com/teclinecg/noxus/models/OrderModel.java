@@ -25,7 +25,6 @@ public class OrderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Double orderPrice;
     private String observation;
     private LocalDateTime dispatchDateTime;

@@ -23,7 +23,9 @@ public class EdgeModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String edge;
+    @Column(nullable = false)
     private Double price;
 
     @JsonIgnore
