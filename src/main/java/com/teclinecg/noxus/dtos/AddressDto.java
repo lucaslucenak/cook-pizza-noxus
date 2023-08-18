@@ -2,6 +2,7 @@ package com.teclinecg.noxus.dtos;
 
 import com.teclinecg.noxus.models.AddressModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
+import com.teclinecg.noxus.models.NeighbourhoodModel;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -26,7 +27,7 @@ public class AddressDto {
     @NotNull(message = "Field neighbourhood shouldn't be null")
     @NotEmpty(message = "Field neighbourhood shouldn't be empty")
     @NotBlank(message = "Field neighbourhood shouldn't be blank")
-    private String neighbourhood;
+    private NeighbourhoodModel neighbourhood;
     @NotNull(message = "Field city shouldn't be null")
     @NotEmpty(message = "Field city shouldn't be empty")
     @NotBlank(message = "Field city shouldn't be blank")
@@ -53,7 +54,7 @@ public class AddressDto {
         BeanUtils.copyProperties(addressModel, this);
     }
 
-    public AddressDto(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public AddressDto(Long id, String streetName, String streetNumber, NeighbourhoodModel neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
@@ -91,11 +92,11 @@ public class AddressDto {
         this.streetNumber = streetNumber;
     }
 
-    public String getNeighbourhood() {
+    public NeighbourhoodModel getNeighbourhood() {
         return neighbourhood;
     }
 
-    public void setNeighbourhood(String neighbourhood) {
+    public void setNeighbourhood(NeighbourhoodModel neighbourhood) {
         this.neighbourhood = neighbourhood;
     }
 
