@@ -42,6 +42,23 @@ public class OrderDto {
     public OrderDto() {
     }
 
+    public OrderDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, List<DrinkModel> drinks, CustomerAccountModel customerAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.orderPrice = orderPrice;
+        this.observation = observation;
+        this.dispatchDateTime = dispatchDateTime;
+        this.arrivalForecast = arrivalForecast;
+        this.pizzas = pizzas;
+        this.drinks = drinks;
+        this.customerAccount = customerAccount;
+        this.address = address;
+        this.deliveryTax = deliveryTax;
+        this.paymentMethod = paymentMethod;
+        this.deliveryType = deliveryType;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public OrderDto(OrderModel orderModel) {
         BeanUtils.copyProperties(orderModel, this);
     }

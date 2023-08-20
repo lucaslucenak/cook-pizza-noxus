@@ -23,4 +23,13 @@ public class DeliveryTaxService {
             throw new ResourceNotFoundException("Resource: Delivery Tax. Not found with id: " + id);
         }
     }
+
+    public DeliveryTaxModel findDeliveryTaxByNeighbourhoodId(Long neighbourhoodId) {
+        Optional<DeliveryTaxModel> optionalDeliveryTaxModel = deliveryTaxRepository.findByNeighbourhoodId(neighbourhoodId);
+        if (optionalDeliveryTaxModel.isPresent()) {
+            return optionalDeliveryTaxModel.get();
+        } else {
+            throw new ResourceNotFoundException("Resource: Delivery Tax. Not found with neighbourhood id: " + neighbourhoodId);
+        }
+    }
 }

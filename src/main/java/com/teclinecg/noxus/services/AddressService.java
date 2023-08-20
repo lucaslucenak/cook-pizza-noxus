@@ -9,6 +9,7 @@ import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.AddressModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
+import com.teclinecg.noxus.models.NeighbourhoodModel;
 import com.teclinecg.noxus.repositories.AddressRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class AddressService {
     private AddressRepository addressRepository;
     @Autowired
     private CustomerAccountService customerAccountService;
+    @Autowired
+    private NeighbourhoodService neighbourhoodService;
 
     @Transactional
     public AddressDto findAddressById(Long id) {
@@ -56,8 +59,11 @@ public class AddressService {
     @Transactional
     public AddressDto saveAddress(AddressPostDto addressPostDto) {
         CustomerAccountModel customerAccountModel = new CustomerAccountModel(customerAccountService.findCustomerAccountById(addressPostDto.getCustomerAccount()));
+        NeighbourhoodModel neighbourhoodModel = neighbourhoodService.findNeighbourhoodById(addressPostDto.getNeighbourhood());
+
         AddressModel addressModel = new AddressModel(addressPostDto);
         addressModel.setCustomerAccount(customerAccountModel);
+        addressModel.setNeighbourhood(neighbourhoodModel);
 
         return new AddressDto(addressRepository.save(addressModel));
     }

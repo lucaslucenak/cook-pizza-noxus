@@ -1,6 +1,7 @@
 package com.teclinecg.noxus.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,8 +23,11 @@ public class DeliveryTaxModel {
 
     @Column(nullable = false)
     private Double tax;
-    @Column(nullable = false)
-    private String neighbourhood;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "neighbourhood_id", nullable = false)
+    private NeighbourhoodModel neighbourhood;
 
     @Column(nullable = false, updatable = false)
     @CreatedDate // Auto fill
@@ -33,13 +37,13 @@ public class DeliveryTaxModel {
     @LastModifiedDate // Auto fill
     private LocalDateTime updatedAt;
 
-    public DeliveryTaxModel(Long id, Double tax, String neighbourhood) {
+    public DeliveryTaxModel(Long id, Double tax, NeighbourhoodModel neighbourhood) {
         this.id = id;
         this.tax = tax;
         this.neighbourhood = neighbourhood;
     }
 
-    public DeliveryTaxModel(Long id, Double tax, String neighbourhood, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public DeliveryTaxModel(Long id, Double tax, NeighbourhoodModel neighbourhood, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.tax = tax;
         this.neighbourhood = neighbourhood;
@@ -66,11 +70,11 @@ public class DeliveryTaxModel {
         this.tax = tax;
     }
 
-    public String getNeighbourhood() {
+    public NeighbourhoodModel getNeighbourhood() {
         return neighbourhood;
     }
 
-    public void setNeighbourhood(String neighbourhood) {
+    public void setNeighbourhood(NeighbourhoodModel neighbourhood) {
         this.neighbourhood = neighbourhood;
     }
 

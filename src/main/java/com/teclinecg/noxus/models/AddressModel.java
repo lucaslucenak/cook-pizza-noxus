@@ -29,8 +29,10 @@ public class AddressModel {
     @Column(nullable = false)
     private String streetNumber;
 
-    @Column(nullable = false)
-    private String neighbourhood;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "neighbourhood_id", nullable = false)
+    private NeighbourhoodModel neighbourhood;
 
     @Column(nullable = false)
     private String city;
@@ -68,7 +70,7 @@ public class AddressModel {
         BeanUtils.copyProperties(addressPostDto, this);
     }
 
-    public AddressModel(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public AddressModel(Long id, String streetName, String streetNumber, NeighbourhoodModel neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
@@ -82,7 +84,7 @@ public class AddressModel {
         this.updatedAt = updatedAt;
     }
 
-    public AddressModel(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount) {
+    public AddressModel(Long id, String streetName, String streetNumber, NeighbourhoodModel neighbourhood, String city, String cep, String complement, String referencePoint, CustomerAccountModel customerAccount) {
         this.id = id;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
@@ -119,11 +121,11 @@ public class AddressModel {
         this.streetNumber = streetNumber;
     }
 
-    public String getNeighbourhood() {
+    public NeighbourhoodModel getNeighbourhood() {
         return neighbourhood;
     }
 
-    public void setNeighbourhood(String neighbourhood) {
+    public void setNeighbourhood(NeighbourhoodModel neighbourhood) {
         this.neighbourhood = neighbourhood;
     }
 

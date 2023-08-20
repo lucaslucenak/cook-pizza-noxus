@@ -20,9 +20,7 @@ public class AddressPostDto {
     @NotBlank(message = "Field streetNumber shouldn't be blank")
     private String streetNumber;
     @NotNull(message = "Field neighbourhood shouldn't be null")
-    @NotEmpty(message = "Field neighbourhood shouldn't be empty")
-    @NotBlank(message = "Field neighbourhood shouldn't be blank")
-    private String neighbourhood;
+    private Long neighbourhood;
     @NotNull(message = "Field city shouldn't be null")
     @NotEmpty(message = "Field city shouldn't be empty")
     @NotBlank(message = "Field city shouldn't be blank")
@@ -47,7 +45,7 @@ public class AddressPostDto {
         BeanUtils.copyProperties(addressModel, this);
     }
 
-    public AddressPostDto(Long id, String streetName, String streetNumber, String neighbourhood, String city, String cep, String complement, String referencePoint, Long customerAccount) {
+    public AddressPostDto(Long id, String streetName, String streetNumber, Long neighbourhood, String city, String cep, String complement, String referencePoint, Long customerAccount) {
         this.id = id;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
@@ -83,11 +81,11 @@ public class AddressPostDto {
         this.streetNumber = streetNumber;
     }
 
-    public String getNeighbourhood() {
+    public Long getNeighbourhood() {
         return neighbourhood;
     }
 
-    public void setNeighbourhood(String neighbourhood) {
+    public void setNeighbourhood(Long neighbourhood) {
         this.neighbourhood = neighbourhood;
     }
 
