@@ -20,7 +20,7 @@ public class OrderPostDto {
     private List<Long> drinks;
     private Long customerAccount;
     private Long address;
-    private Long deliveryTax;
+//    private Long deliveryTax;
     private Long paymentMethod;
     private Long deliveryType;
 
@@ -31,7 +31,7 @@ public class OrderPostDto {
         BeanUtils.copyProperties(orderModel, this);
     }
 
-    public OrderPostDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaPostDto> pizzas, List<Long> drinks, Long customerAccount, Long address, Long deliveryTax, Long paymentMethod, Long deliveryType) {
+    public OrderPostDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaPostDto> pizzas, List<Long> drinks, Long customerAccount, Long address, Long paymentMethod, Long deliveryType) {
         this.id = id;
         this.orderPrice = orderPrice;
         this.observation = observation;
@@ -41,7 +41,6 @@ public class OrderPostDto {
         this.drinks = drinks;
         this.customerAccount = customerAccount;
         this.address = address;
-        this.deliveryTax = deliveryTax;
         this.paymentMethod = paymentMethod;
         this.deliveryType = deliveryType;
     }
@@ -116,14 +115,6 @@ public class OrderPostDto {
 
     public void setAddress(Long address) {
         this.address = address;
-    }
-
-    public Long getDeliveryTax() {
-        return deliveryTax;
-    }
-
-    public void setDeliveryTax(Long deliveryTax) {
-        this.deliveryTax = deliveryTax;
     }
 
     public Long getPaymentMethod() {

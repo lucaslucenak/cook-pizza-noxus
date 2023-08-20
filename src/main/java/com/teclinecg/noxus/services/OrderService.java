@@ -43,6 +43,8 @@ public class OrderService {
     private FlavorService flavorService;
     @Autowired
     private EdgeService edgeService;
+    @Autowired
+    private NeighbourhoodService neighbourhoodService;
 
     public OrderDto findOrderById(Long id) {
         Optional<OrderModel> orderOptional = orderRepository.findById(id);
@@ -85,7 +87,9 @@ public class OrderService {
         AddressModel addressModel = new AddressModel(addressService.findAddressById(orderPostDto.getAddress()));
         orderModel.setAddress(addressModel);
 
-        DeliveryTaxModel deliveryTaxModel = deliveryTaxService.findDeliveryTaxById(orderPostDto.getDeliveryTax());
+        NeighbourhoodModel neighbourhoodModel = addressModel.getNeighbourhood();
+        DeliveryTaxModel deliveryTaxModel = deliveryTaxService.findDeliveryTaxByNeighbourhoodId(neighbourhoodModel.getId());
+//        DeliveryTaxModel deliveryTaxModel = deliveryTaxService.findDeliveryTaxById(orderPostDto.getDeliveryTax());
         orderModel.setDeliveryTax(deliveryTaxModel);
 
         PaymentMethodModel paymentMethodModel = paymentMethodService.findPaymentMethodById(orderPostDto.getPaymentMethod());
@@ -190,7 +194,7 @@ public class OrderService {
             if (orderPostDto.getPizzas().size() > 0 && orderPostDto.getPizzas() != null) {
                 List<PizzaModel> updatedPizzas = new ArrayList<>();
                 for (PizzaPostDto i : orderPostDto.getPizzas()) {
-                    PizzaModel pizzaModel = new PizzaModel();
+                    PizzaModel pizzaModel = new PizzaModel(pizzaService.findPizzaById(i.getId()));
                     Double updatedPizzaPrice = 0.0;
 
                     pizzaModel.setPizzaSize(sizeService.findSizeById(i.getPizzaSize()));
@@ -230,15 +234,18 @@ public class OrderService {
                 updatedOrderModel.setCustomerAccount(new CustomerAccountModel(customerAccountService.findCustomerAccountById(orderPostDto.getCustomerAccount())));
             }
 
-            // Update Address
+            // Update Address and Delivery Tax
             if (orderPostDto.getAddress() != null) {
-                updatedOrderModel.setAddress(new AddressModel(addressService.findAddressById(orderPostDto.getAddress())));
+                AddressModel addressModel = new AddressModel(addressService.findAddressById(orderPostDto.getAddress()));
+                updatedOrderModel.setAddress(addressModel);
+                DeliveryTaxModel deliveryTaxModel = deliveryTaxService.findDeliveryTaxByNeighbourhoodId(addressModel.getNeighbourhood().getId());
+                updatedOrderModel.setDeliveryTax(deliveryTaxModel);
             }
 
             // Update Delivery Tax
-            if (orderPostDto.getDeliveryTax() != null) {
-                updatedOrderModel.setDeliveryTax(deliveryTaxService.findDeliveryTaxById(orderPostDto.getDeliveryTax()));
-            }
+//            if (orderPostDto.getAddress() != null) {
+//                updatedOrderModel.setDeliveryTax(deliveryTaxService.findDeliveryTaxById(orderPostDto.getDeliveryTax()));
+//            }
 
             // Update Payment Method
             if (orderPostDto.getPaymentMethod() != null) {

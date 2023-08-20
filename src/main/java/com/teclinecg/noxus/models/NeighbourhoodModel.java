@@ -30,6 +30,10 @@ public class NeighbourhoodModel {
     @JsonIgnore
     private List<AddressModel> addresses;
 
+    @OneToMany(mappedBy = "neighbourhood", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<DeliveryTaxModel> deliveryTaxes;
+
     @Column(nullable = false, updatable = false)
     @CreatedDate // Auto fill
     private LocalDateTime createdAt;
@@ -56,6 +60,15 @@ public class NeighbourhoodModel {
         this.id = id;
         this.neighbourhood = neighbourhood;
         this.addresses = addresses;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public NeighbourhoodModel(Long id, NeighbourhoodEnum neighbourhood, List<AddressModel> addresses, List<DeliveryTaxModel> deliveryTaxes, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.neighbourhood = neighbourhood;
+        this.addresses = addresses;
+        this.deliveryTaxes = deliveryTaxes;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

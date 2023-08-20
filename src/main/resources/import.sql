@@ -12,7 +12,7 @@ insert into edge(edge, price, created_at, updated_at) values ('Catupiry', 10.0, 
 
 insert into drink(name, price, created_at, updated_at) values('Coca-Cola 1L', 8.0, NOW(), NOW());
 
-insert into delivery_tax(tax, neighbourhood, created_at, updated_at) values(7.0, 'São José', NOW(), NOW());
+insert into delivery_tax(tax, neighbourhood_id, created_at, updated_at) values(7.0, 1, NOW(), NOW());
 
 insert into payment_method(payment_method, created_at, updated_at) values ('CREDIT_CARD', NOW(), NOW());
 
