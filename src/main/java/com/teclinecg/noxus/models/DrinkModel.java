@@ -25,11 +25,15 @@ public class DrinkModel {
 
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private Double price;
 
-    @ManyToMany(mappedBy = "drinks", fetch = FetchType.EAGER)
-    private List<OrderModel> orders;
+//    @ManyToMany(mappedBy = "drinks", fetch = FetchType.EAGER)
+//    private List<OrderModel> orders;
+
+//    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private List<OrderDrink> orderDrinks;
 
     @Column(nullable = false, updatable = false)
     @CreatedDate // Auto fill
@@ -46,18 +50,16 @@ public class DrinkModel {
         BeanUtils.copyProperties(drinkDto, this);
     }
 
-    public DrinkModel(Long id, String name, Double price, List<OrderModel> orders) {
+    public DrinkModel(Long id, String name, Double price) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.orders = orders;
     }
 
-    public DrinkModel(Long id, String name, Double price, List<OrderModel> orders, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public DrinkModel(Long id, String name, Double price, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.orders = orders;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -86,18 +88,6 @@ public class DrinkModel {
         this.price = price;
     }
 
-    public List<OrderModel> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<OrderModel> orders) {
-        this.orders = orders;
-    }
-
-    public void addOrder(OrderModel orderModel) {
-        orders.add(orderModel);
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -119,11 +109,11 @@ public class DrinkModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DrinkModel that = (DrinkModel) o;
-        return id.equals(that.id) && Objects.equals(name, that.name) && Objects.equals(price, that.price) && Objects.equals(orders, that.orders);
+        return id.equals(that.id) && Objects.equals(name, that.name) && Objects.equals(price, that.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, orders);
+        return Objects.hash(id, name, price);
     }
 }
