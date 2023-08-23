@@ -52,15 +52,15 @@ public class OrderController {
 
     @PostMapping(value = "/add-drink-into-order/{drinkId}/{orderId}")
     @ApiOperation(value = "http://localhost:8080/1/1", notes = "Add drink into an existent order")
-    public ResponseEntity<OrderDto> addPizzaIntoExistingOrder(@PathVariable Long drinkId, @PathVariable Long orderId) {
-        return ResponseEntity.ok().body(orderService.addDrinkIntoExistingOrder(drinkId, orderId));
+    public ResponseEntity<OrderDto> addPizzaIntoExistingOrder(@PathVariable Long drinkId, @PathVariable Integer drinkQuantity, @PathVariable Long orderId) {
+        return ResponseEntity.ok().body(orderService.addDrinkIntoExistingOrder(drinkId, drinkQuantity, orderId));
     }
 
-    @PutMapping(value = "/{id}")
-    @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Update an existing order")
-    public ResponseEntity<OrderDto> updateOrderById(@PathVariable Long id, @Valid @RequestBody OrderPostDto orderPostDto) {
-        return ResponseEntity.ok().body(orderService.updateOrder(id, orderPostDto));
-    }
+//    @PutMapping(value = "/{id}")
+//    @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Update an existing order")
+//    public ResponseEntity<OrderDto> updateOrderById(@PathVariable Long id, @Valid @RequestBody OrderPostDto orderPostDto) {
+//        return ResponseEntity.ok().body(orderService.updateOrder(id, orderPostDto));
+//    }
 
     @DeleteMapping(value = "{id}")
     @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Delete an existing order")

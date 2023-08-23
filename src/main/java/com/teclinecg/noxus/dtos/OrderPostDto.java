@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public class OrderPostDto {
 
@@ -17,7 +18,7 @@ public class OrderPostDto {
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
     private List<PizzaPostDto> pizzas;
-    private List<Long> drinks;
+    private Map<Long, Integer> drinks; //DrinkId | Quantity
     private Long customerAccount;
     private Long address;
 //    private Long deliveryTax;
@@ -31,7 +32,7 @@ public class OrderPostDto {
         BeanUtils.copyProperties(orderModel, this);
     }
 
-    public OrderPostDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaPostDto> pizzas, List<Long> drinks, Long customerAccount, Long address, Long paymentMethod, Long deliveryType) {
+    public OrderPostDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaPostDto> pizzas, Map<Long, Integer> drinks, Long customerAccount, Long address, Long paymentMethod, Long deliveryType) {
         this.id = id;
         this.orderPrice = orderPrice;
         this.observation = observation;
@@ -93,11 +94,11 @@ public class OrderPostDto {
         this.pizzas = pizzas;
     }
 
-    public List<Long> getDrinks() {
+    public Map<Long, Integer> getDrinks() {
         return drinks;
     }
 
-    public void setDrinks(List<Long> drinks) {
+    public void setDrinks(Map<Long, Integer> drinks) {
         this.drinks = drinks;
     }
 
