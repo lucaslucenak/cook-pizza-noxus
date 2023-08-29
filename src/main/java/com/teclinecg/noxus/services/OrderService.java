@@ -210,107 +210,158 @@ public class OrderService {
 
         return new OrderDto(orderRepository.save(orderModel));
     }
-//
-//    public OrderDto updateOrder(Long id, OrderPostDto orderPostDto) {
-//        Optional<OrderModel> existentOrderModelOptional = orderRepository.findById(id);
-//
-//        if (existentOrderModelOptional.isPresent()) {
-//            OrderModel updatedOrderModel = new OrderModel(orderPostDto);
-//            Double updatedOrderPrice = 0.0;
-//
-//            // Update Pizzas
-//            if (orderPostDto.getPizzas().size() > 0 && orderPostDto.getPizzas() != null) {
-//                List<PizzaModel> updatedPizzas = new ArrayList<>();
-//                for (PizzaPostDto i : orderPostDto.getPizzas()) {
-//                    PizzaModel pizzaModel = new PizzaModel(pizzaService.findPizzaById(i.getId()));
-//                    Double updatedPizzaPrice = 0.0;
-//
-//                    pizzaModel.setPizzaSize(sizeService.findSizeById(i.getPizzaSize()));
-//
-//                    List<FlavorModel> updatedFlavors = new ArrayList<>();
-//                    for (FlavorDto x : flavorService.findFlavorsByIds(i.getFlavors())) {
-//                        updatedFlavors.add(new FlavorModel(x));
-//                        updatedPizzaPrice += x.getPrice();
-//                    }
-//                    pizzaModel.setFlavors(updatedFlavors);
-//
-//                    List<EdgeModel> updatedEdges = new ArrayList<>();
-//                    for (EdgeDto x : edgeService.findEdgesByIds(i.getEdges())) {
-//                        updatedEdges.add(new EdgeModel(x));
-//                        updatedPizzaPrice += x.getPrice();
-//                    }
-//                    pizzaModel.setEdges(updatedEdges);
-//
-//                    pizzaModel.setPrice(updatedPizzaPrice);
-//                    pizzaModel.setOrder(updatedOrderModel);
-//                    updatedPizzas.add(pizzaModel);
-//                }
-//                updatedOrderModel.setPizzas(updatedPizzas);
-//            }
-//
-//            // Update Drinks
+
+    public OrderDto updateOrder(Long id, OrderPostDto orderPostDto) {
+        Optional<OrderModel> existentOrderModelOptional = orderRepository.findById(id);
+
+        if (existentOrderModelOptional.isPresent()) {
+            OrderModel updatedOrderModel = new OrderModel(orderPostDto);
+            Double updatedOrderPrice = 0.0;
+
+            // Update Pizzas
+            if (orderPostDto.getPizzas().size() > 0 && orderPostDto.getPizzas() != null) {
+                List<PizzaModel> updatedPizzas = new ArrayList<>();
+                for (PizzaPostDto i : orderPostDto.getPizzas()) {
+                    PizzaModel pizzaModel = new PizzaModel(pizzaService.findPizzaById(i.getId()));
+                    Double updatedPizzaPrice = 0.0;
+
+                    pizzaModel.setPizzaSize(sizeService.findSizeById(i.getPizzaSize()));
+
+                    List<FlavorModel> updatedFlavors = new ArrayList<>();
+                    for (FlavorDto x : flavorService.findFlavorsByIds(i.getFlavors())) {
+                        updatedFlavors.add(new FlavorModel(x));
+                        updatedPizzaPrice += x.getPrice();
+                    }
+                    pizzaModel.setFlavors(updatedFlavors);
+
+                    List<EdgeModel> updatedEdges = new ArrayList<>();
+                    for (EdgeDto x : edgeService.findEdgesByIds(i.getEdges())) {
+                        updatedEdges.add(new EdgeModel(x));
+                        updatedPizzaPrice += x.getPrice();
+                    }
+                    pizzaModel.setEdges(updatedEdges);
+
+                    pizzaModel.setPrice(updatedPizzaPrice);
+                    pizzaModel.setOrder(updatedOrderModel);
+                    updatedPizzas.add(pizzaModel);
+                }
+                updatedOrderModel.setPizzas(updatedPizzas);
+            }
+
 //            if (orderPostDto.getDrinks().size() > 0 && orderPostDto.getDrinks() != null) {
-//                Map<DrinkModel, Long> drinksMap = new HashMap<>();
-//                for (Map.Entry<Long, Integer> i : orderPostDto.getDrinks().entrySet()) {
-//                    DrinkModel drinkModel = new DrinkModel(drinkService.findDrinkById(i.getKey()));
-//                    Integer quantity = i.getValue();
-//                    drinksMap.put(drinkModel, quantity);
+//                List<OrderDrink> existentOrderDrinks = orderDrinkService.findOrderDrinksByOrderId(id);
+//                // iMPROVE
+//                for (OrderDrink i : existentOrderDrinks) {
+//                    for (Map.Entry<Long, Integer> j : orderPostDto.getDrinks().entrySet()) {
+//                        Long drinkId = j.getKey();
+//                        Integer drinkQuantity = j.getValue();
+//                        // If the relationships exists, just update
+//                        if (Objects.equals(i.getId().getDrink().getId(), drinkId)) {
+//                            i.setQuantity(drinkQuantity);
+//                            orderDrinkService.saveOrderDrink(i);
+//                        }
+//                        // If not, create
+//                        else {
+//                            OrderDrink newOrderDrink = new OrderDrink();
+//                            OrderDrinkId orderDrinkId = new OrderDrinkId();
+//                            DrinkModel drinkModel = new DrinkModel(drinkService.findDrinkById(drinkId));
+//                            orderDrinkId.setDrink(drinkModel);
+//                            orderDrinkId.setOrder(updatedOrderModel);
+//
+//                            orderDrinkService.saveOrderDrink(new OrderDrink(orderDrinkId, drinkQuantity));
+//                        }
+//                    }
 //                }
-//                updatedOrderModel.setDrinks(drinksMap);
+////                for (Map.Entry<Long, Integer> i : orderPostDto.getDrinks().entrySet()) {
+////                    DrinkModel drinkModel = new DrinkModel(drinkService.findDrinkById(i.getKey()));
+////                    Integer quantity = i.getValue();
+////
+////                    OrderDrinkId orderDrinkId = new OrderDrinkId(orderModel, drinkModel);
+////                    OrderDrink orderDrinkModel = new OrderDrink(orderDrinkId, quantity);
+////
+////                    orderDrinkService.saveOrderDrink(orderDrinkModel);
+////                }
+////                for (Map.Entry<Long, Integer> i : orderPostDto.getDrinks().entrySet()) {
+////
+////                    DrinkModel drinkModel = new DrinkModel(drinkService.findDrinkById(i.getKey()));
+////                    Integer quantity = i.getValue();
+////                    drinksMap.put(drinkModel, quantity);
+////                }
+////                updatedOrderModel.setDrinks(drinksMap);
 ////                List<DrinkModel> updatedDrinks = new ArrayList<>();
 ////                for (Long i : orderPostDto.getDrinks()) {
 ////                    updatedDrinks.add(new DrinkModel(drinkService.findDrinkById(i)));
 ////                }
 ////                updatedOrderModel.setDrinks(updatedDrinks);
 //            }
-//
-//            // Update Customer Account
-//            if (orderPostDto.getCustomerAccount() != null) {
-//                updatedOrderModel.setCustomerAccount(new CustomerAccountModel(customerAccountService.findCustomerAccountById(orderPostDto.getCustomerAccount())));
-//            }
-//
-//            // Update Address and Delivery Tax
+
+            // Update Customer Account
+            if (orderPostDto.getCustomerAccount() != null) {
+                updatedOrderModel.setCustomerAccount(new CustomerAccountModel(customerAccountService.findCustomerAccountById(orderPostDto.getCustomerAccount())));
+            }
+
+            // Update Address and Delivery Tax
+            if (orderPostDto.getAddress() != null) {
+                AddressModel addressModel = new AddressModel(addressService.findAddressById(orderPostDto.getAddress()));
+                updatedOrderModel.setAddress(addressModel);
+                DeliveryTaxModel deliveryTaxModel = deliveryTaxService.findDeliveryTaxByNeighbourhoodId(addressModel.getNeighbourhood().getId());
+                updatedOrderModel.setDeliveryTax(deliveryTaxModel);
+            }
+
+            // Update Delivery Tax
 //            if (orderPostDto.getAddress() != null) {
-//                AddressModel addressModel = new AddressModel(addressService.findAddressById(orderPostDto.getAddress()));
-//                updatedOrderModel.setAddress(addressModel);
-//                DeliveryTaxModel deliveryTaxModel = deliveryTaxService.findDeliveryTaxByNeighbourhoodId(addressModel.getNeighbourhood().getId());
-//                updatedOrderModel.setDeliveryTax(deliveryTaxModel);
+//                updatedOrderModel.setDeliveryTax(deliveryTaxService.findDeliveryTaxById(orderPostDto.getDeliveryTax()));
 //            }
-//
-//            // Update Delivery Tax
-////            if (orderPostDto.getAddress() != null) {
-////                updatedOrderModel.setDeliveryTax(deliveryTaxService.findDeliveryTaxById(orderPostDto.getDeliveryTax()));
-////            }
-//
-//            // Update Payment Method
-//            if (orderPostDto.getPaymentMethod() != null) {
-//                updatedOrderModel.setPaymentMethod(paymentMethodService.findPaymentMethodById(orderPostDto.getPaymentMethod()));
-//            }
-//
-//            // Update Delivery Type
-//            if (orderPostDto.getDeliveryType() != null) {
-//                updatedOrderModel.setDeliveryType(deliveryTypeService.findDeliveryTypeById(orderPostDto.getDeliveryType()));
-//            }
-//
-//            //Update Order Price
-//            for (PizzaModel i : updatedOrderModel.getPizzas()) {
-//                updatedOrderPrice += i.getPrice();
-//            }
+
+            // Update Payment Method
+            if (orderPostDto.getPaymentMethod() != null) {
+                updatedOrderModel.setPaymentMethod(paymentMethodService.findPaymentMethodById(orderPostDto.getPaymentMethod()));
+            }
+
+            // Update Delivery Type
+            if (orderPostDto.getDeliveryType() != null) {
+                updatedOrderModel.setDeliveryType(deliveryTypeService.findDeliveryTypeById(orderPostDto.getDeliveryType()));
+            }
+
+            //Update Order Price
+            for (PizzaModel i : updatedOrderModel.getPizzas()) {
+                updatedOrderPrice += i.getPrice();
+            }
+            for (OrderDrink i : orderDrinkService.findOrderDrinksByOrderId(id)) {
+                DrinkModel drink = new DrinkModel(drinkService.findDrinkById(i.getId().getDrink().getId()));
+                updatedOrderPrice += drink.getPrice() * i.getQuantity();
+            }
 //            for (Map.Entry<DrinkModel, Long> i : updatedOrderModel.getDrinks().entrySet()) {
 //                updatedOrderPrice += i.getKey().getPrice();
 //            }
-////            for (DrinkModel i : updatedOrderModel.getDrinks()) {
-////                updatedOrderPrice += i.getPrice();
-////            }
-//            updatedOrderPrice += updatedOrderModel.getDeliveryTax().getTax();
-//            updatedOrderModel.setOrderPrice(updatedOrderPrice);
-//
-//            BeanUtils.copyProperties(existentOrderModelOptional, updatedOrderModel);
-//            return new OrderDto(orderRepository.save(updatedOrderModel));
-//        } else {
-//            throw new ResourceNotFoundException("Resource: Order. Not found with id: " + id);
-//        }
-//    }
+//            for (DrinkModel i : updatedOrderModel.getDrinks()) {
+//                updatedOrderPrice += i.getPrice();
+//            }
+            updatedOrderPrice += updatedOrderModel.getDeliveryTax().getTax();
+            updatedOrderModel.setOrderPrice(updatedOrderPrice);
+
+            BeanUtils.copyProperties(existentOrderModelOptional, updatedOrderModel);
+            orderRepository.save(updatedOrderModel);
+            // Update Drinks
+            // Delete all OrderDrinks by OrderId and recreate them
+            orderDrinkService.deleteOrderDrinksByOrderId(updatedOrderModel.getId());
+            if (orderPostDto.getDrinks().size() > 0 && orderPostDto.getDrinks() != null) {
+                for (Map.Entry<Long, Integer> i : orderPostDto.getDrinks().entrySet()) {
+                    DrinkModel drinkModel = new DrinkModel(drinkService.findDrinkById(i.getKey()));
+                    Integer quantity = i.getValue();
+
+                    OrderDrinkId orderDrinkId = new OrderDrinkId(updatedOrderModel, drinkModel);
+                    OrderDrink orderDrinkModel = new OrderDrink(orderDrinkId, quantity);
+
+                    orderDrinkService.saveOrderDrink(orderDrinkModel);
+                }
+            }
+
+            return new OrderDto(updatedOrderModel);
+        } else {
+            throw new ResourceNotFoundException("Resource: Order. Not found with id: " + id);
+        }
+    }
 
     public void deleteOrderById(Long id) {
         if (orderRepository.existsById(id)) {

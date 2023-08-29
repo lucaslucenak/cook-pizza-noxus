@@ -56,11 +56,11 @@ public class OrderController {
         return ResponseEntity.ok().body(orderService.addDrinkIntoExistingOrder(drinkId, drinkQuantity, orderId));
     }
 
-//    @PutMapping(value = "/{id}")
-//    @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Update an existing order")
-//    public ResponseEntity<OrderDto> updateOrderById(@PathVariable Long id, @Valid @RequestBody OrderPostDto orderPostDto) {
-//        return ResponseEntity.ok().body(orderService.updateOrder(id, orderPostDto));
-//    }
+    @PutMapping(value = "/{id}")
+    @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Update an existing order")
+    public ResponseEntity<OrderDto> updateOrderById(@PathVariable Long id, @Valid @RequestBody OrderPostDto orderPostDto) {
+        return ResponseEntity.ok().body(orderService.updateOrder(id, orderPostDto));
+    }
 
     @DeleteMapping(value = "{id}")
     @ApiOperation(value = "http://localhost:8080/order/{orderId}", notes = "Delete an existing order")

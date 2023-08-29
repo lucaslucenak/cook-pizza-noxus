@@ -26,15 +26,28 @@ public class OrderDrinkService {
     @Autowired
     private OrderDrinkRepository orderDrinkRepository;
 
-//    public DrinkDto findDrinksByOrderId(Long orderId) {
-//        Optional<DrinkModel> drinkOptional = drinkRepository.findById(id);
-//
-//        if (drinkOptional.isPresent()) {
-//            return new DrinkDto(drinkOptional.get());
-//        } else {
-//            throw new ResourceNotFoundException("Resource: Drink. Not found with id: " + id);
-//        }
-//    }
+    public List<OrderDrink> findOrderDrinksByOrderId(Long orderId) {
+        List<Optional<OrderDrink>> orderDrinks = orderDrinkRepository.findByIdOrderId(orderId);
+        List<OrderDrink> orderDrinksReturn = new ArrayList<>();
+
+        for (Optional<OrderDrink> i : orderDrinks) {
+            if (i.isPresent()) {
+                orderDrinksReturn.add(i.get());
+            } else {
+                throw new ResourceNotFoundException("Resource: OrderDrink. Not found with order id: " + orderId);
+            }
+        }
+        return orderDrinksReturn;
+    }
+
+    public void deleteOrderDrinksByOrderId(Long orderId) {
+        if (orderDrinkRepository.findByIdOrderId(orderId).size() > 0) {
+            orderDrinkRepository.deleteByIdOrderId(orderId);
+        }
+        else {
+                throw new ResourceNotFoundException("Resource: OrderDrink. Not found with order id: " + orderId);
+        }
+    }
 //
 //    public List<DrinkDto> findDrinksByIds(List<Long> ids) {
 //        List<DrinkDto> drinkDtos = new ArrayList<>();
