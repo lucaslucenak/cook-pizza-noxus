@@ -219,34 +219,34 @@ public class OrderService {
             Double updatedOrderPrice = 0.0;
 
             // Update Pizzas
-            if (orderPostDto.getPizzas().size() > 0 && orderPostDto.getPizzas() != null) {
-                List<PizzaModel> updatedPizzas = new ArrayList<>();
-                for (PizzaPostDto i : orderPostDto.getPizzas()) {
-                    PizzaModel pizzaModel = new PizzaModel(pizzaService.findPizzaById(i.getId()));
-                    Double updatedPizzaPrice = 0.0;
-
-                    pizzaModel.setPizzaSize(sizeService.findSizeById(i.getPizzaSize()));
-
-                    List<FlavorModel> updatedFlavors = new ArrayList<>();
-                    for (FlavorDto x : flavorService.findFlavorsByIds(i.getFlavors())) {
-                        updatedFlavors.add(new FlavorModel(x));
-                        updatedPizzaPrice += x.getPrice();
-                    }
-                    pizzaModel.setFlavors(updatedFlavors);
-
-                    List<EdgeModel> updatedEdges = new ArrayList<>();
-                    for (EdgeDto x : edgeService.findEdgesByIds(i.getEdges())) {
-                        updatedEdges.add(new EdgeModel(x));
-                        updatedPizzaPrice += x.getPrice();
-                    }
-                    pizzaModel.setEdges(updatedEdges);
-
-                    pizzaModel.setPrice(updatedPizzaPrice);
-                    pizzaModel.setOrder(updatedOrderModel);
-                    updatedPizzas.add(pizzaModel);
-                }
-                updatedOrderModel.setPizzas(updatedPizzas);
-            }
+//            if (orderPostDto.getPizzas().size() > 0 && orderPostDto.getPizzas() != null) {
+//                List<PizzaModel> updatedPizzas = new ArrayList<>();
+//                for (PizzaPostDto i : orderPostDto.getPizzas()) {
+//                    PizzaModel pizzaModel = new PizzaModel(pizzaService.findPizzaById(i.getId()));
+//                    Double updatedPizzaPrice = 0.0;
+//
+//                    pizzaModel.setPizzaSize(sizeService.findSizeById(i.getPizzaSize()));
+//
+//                    List<FlavorModel> updatedFlavors = new ArrayList<>();
+//                    for (FlavorDto x : flavorService.findFlavorsByIds(i.getFlavors())) {
+//                        updatedFlavors.add(new FlavorModel(x));
+//                        updatedPizzaPrice += x.getPrice();
+//                    }
+//                    pizzaModel.setFlavors(updatedFlavors);
+//
+//                    List<EdgeModel> updatedEdges = new ArrayList<>();
+//                    for (EdgeDto x : edgeService.findEdgesByIds(i.getEdges())) {
+//                        updatedEdges.add(new EdgeModel(x));
+//                        updatedPizzaPrice += x.getPrice();
+//                    }
+//                    pizzaModel.setEdges(updatedEdges);
+//
+//                    pizzaModel.setPrice(updatedPizzaPrice);
+//                    pizzaModel.setOrder(updatedOrderModel);
+//                    updatedPizzas.add(pizzaModel);
+//                }
+//                updatedOrderModel.setPizzas(updatedPizzas);
+//            }
 
 //            if (orderPostDto.getDrinks().size() > 0 && orderPostDto.getDrinks() != null) {
 //                List<OrderDrink> existentOrderDrinks = orderDrinkService.findOrderDrinksByOrderId(id);
@@ -327,9 +327,16 @@ public class OrderService {
             for (PizzaModel i : updatedOrderModel.getPizzas()) {
                 updatedOrderPrice += i.getPrice();
             }
-            for (OrderDrink i : orderDrinkService.findOrderDrinksByOrderId(id)) {
-                DrinkModel drink = new DrinkModel(drinkService.findDrinkById(i.getId().getDrink().getId()));
-                updatedOrderPrice += drink.getPrice() * i.getQuantity();
+//            for (OrderDrink i : orderDrinkService.findOrderDrinksByOrderId(id)) {
+//                DrinkModel drink = new DrinkModel(drinkService.findDrinkById(i.getId().getDrink().getId()));
+//                updatedOrderPrice += drink.getPrice() * i.getQuantity();
+//            }
+            if (orderPostDto.getDrinks().size() > 0 && orderPostDto.getDrinks() != null) {
+                for (Map.Entry<Long, Integer> i : orderPostDto.getDrinks().entrySet()) {
+                    DrinkModel drinkModel = new DrinkModel(drinkService.findDrinkById(i.getKey()));
+                    Integer quantity = i.getValue();
+                    updatedOrderPrice += drinkModel.getPrice() * quantity;
+                }
             }
 //            for (Map.Entry<DrinkModel, Long> i : updatedOrderModel.getDrinks().entrySet()) {
 //                updatedOrderPrice += i.getKey().getPrice();
@@ -338,10 +345,10 @@ public class OrderService {
 //                updatedOrderPrice += i.getPrice();
 //            }
             updatedOrderPrice += updatedOrderModel.getDeliveryTax().getTax();
-            updatedOrderModel.setOrderPrice(updatedOrderPrice);
 
             BeanUtils.copyProperties(existentOrderModelOptional, updatedOrderModel);
             orderRepository.save(updatedOrderModel);
+
             // Update Drinks
             // Delete all OrderDrinks by OrderId and recreate them
             orderDrinkService.deleteOrderDrinksByOrderId(updatedOrderModel.getId());
@@ -356,6 +363,7 @@ public class OrderService {
                     orderDrinkService.saveOrderDrink(orderDrinkModel);
                 }
             }
+            updatedOrderModel.setOrderPrice(updatedOrderPrice);
 
             return new OrderDto(updatedOrderModel);
         } else {
