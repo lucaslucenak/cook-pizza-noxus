@@ -3,9 +3,12 @@ package com.teclinecg.noxus.services;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.OrderDrinkModel;
 import com.teclinecg.noxus.repositories.OrderDrinkRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +33,7 @@ public class OrderDrinkService {
         return orderDrinksReturnModel;
     }
 
+    @Transactional
     public void deleteOrderDrinksByOrderId(Long orderId) {
         if (orderDrinkRepository.findByIdOrderId(orderId).size() > 0) {
             orderDrinkRepository.deleteByIdOrderId(orderId);

@@ -19,3 +19,5 @@ insert into payment_method(payment_method, created_at, updated_at) values ('CRED
 insert into delivery_type(delivery_type, created_at, updated_at) values ('DELIVERY', NOW(), NOW());
 
 insert into customer_account(first_name, last_name, cpf, email, cellphone_number, status_id, created_at, updated_at) values ('Lucas', 'Siqueira', '108.917.264-89', 'lucas.lucenak@gmail.com', '83986907270', 1, NOW(), NOW());
+
+insert into address(street_name, street_number, neighbourhood_id, city, cep, complement, reference_point, customer_account_id, created_at, updated_at) values ('R. Iremar Marinho', '83', 1, 'Campina Grande', '58400-448', 'primeiro andar', 'posto maia', 1, NOW(), NOW())
