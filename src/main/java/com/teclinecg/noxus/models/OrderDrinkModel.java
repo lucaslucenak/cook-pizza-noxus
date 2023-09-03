@@ -4,17 +4,17 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "order_drink")
-public class OrderDrink {
+public class OrderDrinkModel {
 
     @EmbeddedId
     private OrderDrinkId id = new OrderDrinkId();
 
     private Integer quantity;
 
-    public OrderDrink() {
+    public OrderDrinkModel() {
     }
 
-    public OrderDrink(OrderDrinkId id, Integer quantity) {
+    public OrderDrinkModel(OrderDrinkId id, Integer quantity) {
         this.id = id;
         this.quantity = quantity;
     }

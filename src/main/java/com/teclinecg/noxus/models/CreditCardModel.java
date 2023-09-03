@@ -1,7 +1,7 @@
 package com.teclinecg.noxus.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.teclinecg.noxus.dtos.CreditCardPostDto;
+import com.teclinecg.noxus.dtos.post.CreditCardPostDto;
 import jakarta.persistence.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.CreatedDate;

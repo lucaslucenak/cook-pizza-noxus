@@ -1,6 +1,6 @@
 package com.teclinecg.noxus.controllers;
 
-import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
+import com.teclinecg.noxus.dtos.post.CustomerAccountPostDto;
 import com.teclinecg.noxus.dtos.CustomerAccountDto;
 import com.teclinecg.noxus.services.CustomerAccountService;
 import io.swagger.annotations.ApiOperation;

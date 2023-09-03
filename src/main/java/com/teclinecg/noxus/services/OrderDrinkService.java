@@ -1,23 +1,13 @@
 package com.teclinecg.noxus.services;
 
-import com.teclinecg.noxus.dtos.DrinkDto;
-import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
-import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
-import com.teclinecg.noxus.models.DrinkModel;
-import com.teclinecg.noxus.models.OrderDrink;
-import com.teclinecg.noxus.models.OrderDrinkId;
-import com.teclinecg.noxus.repositories.DrinkRepository;
+import com.teclinecg.noxus.models.OrderDrinkModel;
 import com.teclinecg.noxus.repositories.OrderDrinkRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -26,18 +16,18 @@ public class OrderDrinkService {
     @Autowired
     private OrderDrinkRepository orderDrinkRepository;
 
-    public List<OrderDrink> findOrderDrinksByOrderId(Long orderId) {
-        List<Optional<OrderDrink>> orderDrinks = orderDrinkRepository.findByIdOrderId(orderId);
-        List<OrderDrink> orderDrinksReturn = new ArrayList<>();
+    public List<OrderDrinkModel> findOrderDrinksByOrderId(Long orderId) {
+        List<Optional<OrderDrinkModel>> orderDrinks = orderDrinkRepository.findByIdOrderId(orderId);
+        List<OrderDrinkModel> orderDrinksReturnModel = new ArrayList<>();
 
-        for (Optional<OrderDrink> i : orderDrinks) {
+        for (Optional<OrderDrinkModel> i : orderDrinks) {
             if (i.isPresent()) {
-                orderDrinksReturn.add(i.get());
+                orderDrinksReturnModel.add(i.get());
             } else {
                 throw new ResourceNotFoundException("Resource: OrderDrink. Not found with order id: " + orderId);
             }
         }
-        return orderDrinksReturn;
+        return orderDrinksReturnModel;
     }
 
     public void deleteOrderDrinksByOrderId(Long orderId) {
@@ -71,8 +61,8 @@ public class OrderDrinkService {
 //        return pagedDrinks.map(DrinkDto::new);
 //    }
 //
-    public OrderDrink saveOrderDrink(OrderDrink orderDrink) {
-        return orderDrinkRepository.save(orderDrink);
+    public OrderDrinkModel saveOrderDrink(OrderDrinkModel orderDrinkModel) {
+        return orderDrinkRepository.save(orderDrinkModel);
     }
 //    public DrinkDto saveDrink(DrinkDto drinkDto) {
 //        DrinkModel drinkModel = new DrinkModel(drinkDto);

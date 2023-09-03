@@ -1,6 +1,6 @@
 package com.teclinecg.noxus.controllers;
 
-import com.teclinecg.noxus.dtos.CreditCardPostDto;
+import com.teclinecg.noxus.dtos.post.CreditCardPostDto;
 import com.teclinecg.noxus.dtos.CreditCardDto;
 import com.teclinecg.noxus.services.CreditCardService;
 import io.swagger.annotations.ApiOperation;

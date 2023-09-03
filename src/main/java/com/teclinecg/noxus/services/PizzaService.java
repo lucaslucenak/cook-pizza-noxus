@@ -3,13 +3,13 @@ package com.teclinecg.noxus.services;
 import com.teclinecg.noxus.dtos.EdgeDto;
 import com.teclinecg.noxus.dtos.FlavorDto;
 import com.teclinecg.noxus.dtos.PizzaDto;
-import com.teclinecg.noxus.dtos.PizzaPostDto;
+import com.teclinecg.noxus.dtos.post.OrderPostPizzaDto;
+import com.teclinecg.noxus.dtos.post.PizzaPostDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.*;
 import com.teclinecg.noxus.repositories.PizzaRepository;
-import lombok.Lombok;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -69,6 +69,45 @@ public class PizzaService {
         Page<PizzaModel> pagedPizzas = pizzaRepository.findAll(pageable);
 
         return pagedPizzas.map(PizzaDto::new);
+    }
+
+    public Double getPizzaPrice(OrderPostPizzaDto orderPostPizzaDto) {
+        Double pizzaPrice = 0.0;
+
+        for (FlavorDto j : flavorService.findFlavorsByIds(orderPostPizzaDto.getFlavors())) {
+            pizzaPrice += j.getPrice();
+        }
+        for (EdgeDto j : edgeService.findEdgesByIds(orderPostPizzaDto.getEdges())) {
+            pizzaPrice += j.getPrice();
+        }
+        return pizzaPrice;
+    }
+
+    public PizzaDto savePizza(OrderPostPizzaDto orderPostPizzaDto, OrderModel orderModel) {
+
+        PizzaModel pizzaModel = new PizzaModel();
+        Double pizzaPrice = 0.0;
+
+        SizeModel sizeModel = sizeService.findSizeById(orderPostPizzaDto.getPizzaSize());
+        pizzaModel.setPizzaSize(sizeModel);
+
+        List<FlavorModel> flavorModels = new ArrayList<>();
+        for (FlavorDto j : flavorService.findFlavorsByIds(orderPostPizzaDto.getFlavors())) {
+            flavorModels.add(new FlavorModel(j));
+            pizzaPrice += j.getPrice();
+        }
+        pizzaModel.setFlavors(flavorModels);
+
+        List<EdgeModel> edgeModels = new ArrayList<>();
+        for (EdgeDto j : edgeService.findEdgesByIds(orderPostPizzaDto.getEdges())) {
+            edgeModels.add(new EdgeModel(j));
+            pizzaPrice += j.getPrice();
+        }
+        pizzaModel.setEdges(edgeModels);
+        pizzaModel.setPrice(pizzaPrice);
+        pizzaModel.setOrder(orderModel);
+
+        return new PizzaDto(pizzaRepository.save(pizzaModel));
     }
 
 //    public PizzaDto savePizza(PizzaPostDto pizzaPostDto) {

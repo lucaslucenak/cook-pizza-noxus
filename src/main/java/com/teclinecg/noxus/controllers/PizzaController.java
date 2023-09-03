@@ -1,7 +1,7 @@
 package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.PizzaDto;
-import com.teclinecg.noxus.dtos.PizzaPostDto;
+import com.teclinecg.noxus.dtos.post.PizzaPostDto;
 import com.teclinecg.noxus.services.PizzaService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;

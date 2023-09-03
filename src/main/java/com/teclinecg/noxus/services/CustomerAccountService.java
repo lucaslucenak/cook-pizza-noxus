@@ -1,6 +1,6 @@
 package com.teclinecg.noxus.services;
 
-import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
+import com.teclinecg.noxus.dtos.post.CustomerAccountPostDto;
 import com.teclinecg.noxus.dtos.CustomerAccountDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
@@ -8,17 +8,13 @@ import com.teclinecg.noxus.exceptions.ResourceNotFoundException;
 import com.teclinecg.noxus.models.AddressModel;
 import com.teclinecg.noxus.models.CreditCardModel;
 import com.teclinecg.noxus.models.CustomerAccountModel;
-import com.teclinecg.noxus.models.StatusModel;
 import com.teclinecg.noxus.repositories.CustomerAccountRepository;
-import com.teclinecg.noxus.repositories.StatusRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service

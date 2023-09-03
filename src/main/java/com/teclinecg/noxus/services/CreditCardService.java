@@ -1,8 +1,7 @@
 package com.teclinecg.noxus.services;
 
-import com.teclinecg.noxus.dtos.CreditCardPostDto;
+import com.teclinecg.noxus.dtos.post.CreditCardPostDto;
 import com.teclinecg.noxus.dtos.CreditCardDto;
-import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;

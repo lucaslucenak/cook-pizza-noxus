@@ -1,4 +1,4 @@
-package com.teclinecg.noxus.dtos;
+package com.teclinecg.noxus.dtos.post;
 
 import com.teclinecg.noxus.models.AddressModel;
 import jakarta.validation.constraints.NotBlank;

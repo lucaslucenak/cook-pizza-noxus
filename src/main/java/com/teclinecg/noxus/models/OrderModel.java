@@ -2,8 +2,7 @@ package com.teclinecg.noxus.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.OrderDto;
-import com.teclinecg.noxus.dtos.OrderPostDto;
-import com.teclinecg.noxus.dtos.PizzaPostDto;
+import com.teclinecg.noxus.dtos.post.OrderPostDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.springframework.beans.BeanUtils;
@@ -28,13 +27,13 @@ public class OrderModel {
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
-    @JoinTable(name = "order_pizza",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "pizza_id")
-    )
-    private List<PizzaModel> pizzas = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonIgnore
+//    @JoinTable(name = "order_pizza",
+//            joinColumns = @JoinColumn(name = "order_id"),
+//            inverseJoinColumns = @JoinColumn(name = "pizza_id")
+//    )
+//    private List<PizzaModel> pizzas = new ArrayList<>();
 
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @JsonIgnore
@@ -93,13 +92,12 @@ public class OrderModel {
         BeanUtils.copyProperties(orderPostDto, this);
     }
 
-    public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaModel> pizzas, CustomerAccountModel customerAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public OrderModel(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, CustomerAccountModel customerAccount, AddressModel address, DeliveryTaxModel deliveryTax, PaymentMethodModel paymentMethod, DeliveryTypeModel deliveryType, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.orderPrice = orderPrice;
         this.observation = observation;
         this.dispatchDateTime = dispatchDateTime;
         this.arrivalForecast = arrivalForecast;
-        this.pizzas = pizzas;
         this.customerAccount = customerAccount;
         this.address = address;
         this.deliveryTax = deliveryTax;
@@ -149,15 +147,6 @@ public class OrderModel {
         this.arrivalForecast = arrivalForecast;
     }
 
-    public List<PizzaModel> getPizzas() {
-        return pizzas;
-    }
-
-    public void setPizzas(List<PizzaModel> pizzas) {
-        this.pizzas = pizzas;
-    }
-
-
     public CustomerAccountModel getCustomerAccount() {
         return customerAccount;
     }
@@ -198,10 +187,6 @@ public class OrderModel {
         this.deliveryType = deliveryType;
     }
 
-    public void addPizza(PizzaModel pizzaModel) {
-        pizzas.add(pizzaModel);
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -226,7 +211,6 @@ public class OrderModel {
                 ", observation='" + observation + '\'' +
                 ", dispatchDateTime=" + dispatchDateTime +
                 ", arrivalForecast=" + arrivalForecast +
-                ", pizzas=" + pizzas +
                 ", customerAccount=" + customerAccount +
                 ", address=" + address +
                 ", deliveryTax=" + deliveryTax +
@@ -240,11 +224,11 @@ public class OrderModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderModel that = (OrderModel) o;
-        return id.equals(that.id) && Objects.equals(orderPrice, that.orderPrice) && Objects.equals(observation, that.observation) && Objects.equals(dispatchDateTime, that.dispatchDateTime) && Objects.equals(arrivalForecast, that.arrivalForecast) && Objects.equals(pizzas, that.pizzas) && Objects.equals(customerAccount, that.customerAccount) && Objects.equals(address, that.address) && Objects.equals(deliveryTax, that.deliveryTax) && Objects.equals(paymentMethod, that.paymentMethod) && Objects.equals(deliveryType, that.deliveryType);
+        return id.equals(that.id) && Objects.equals(orderPrice, that.orderPrice) && Objects.equals(observation, that.observation) && Objects.equals(dispatchDateTime, that.dispatchDateTime) && Objects.equals(arrivalForecast, that.arrivalForecast) && Objects.equals(customerAccount, that.customerAccount) && Objects.equals(address, that.address) && Objects.equals(deliveryTax, that.deliveryTax) && Objects.equals(paymentMethod, that.paymentMethod) && Objects.equals(deliveryType, that.deliveryType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderPrice, observation, dispatchDateTime, arrivalForecast, pizzas, customerAccount, address, deliveryTax, paymentMethod, deliveryType);
+        return Objects.hash(id, orderPrice, observation, dispatchDateTime, arrivalForecast, customerAccount, address, deliveryTax, paymentMethod, deliveryType);
     }
 }

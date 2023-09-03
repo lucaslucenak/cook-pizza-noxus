@@ -1,8 +1,7 @@
 package com.teclinecg.noxus.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teclinecg.noxus.dtos.PizzaDto;
-import com.teclinecg.noxus.dtos.PizzaPostDto;
+import com.teclinecg.noxus.dtos.post.PizzaPostDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.springframework.beans.BeanUtils;

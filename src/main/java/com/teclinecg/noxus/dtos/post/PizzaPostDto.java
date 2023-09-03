@@ -1,4 +1,4 @@
-package com.teclinecg.noxus.dtos;
+package com.teclinecg.noxus.dtos.post;
 
 import com.teclinecg.noxus.models.*;
 import jakarta.validation.constraints.DecimalMin;
@@ -15,6 +15,7 @@ public class PizzaPostDto {
     private Long pizzaSize;
     private List<Long> flavors;
     private List<Long> edges;
+    private Integer quantity;
 
     public PizzaPostDto() {
     }
@@ -23,12 +24,13 @@ public class PizzaPostDto {
         BeanUtils.copyProperties(pizzaModel, this);
     }
 
-    public PizzaPostDto(Long id, Long order, Long pizzaSize, List<Long> flavors, List<Long> edges) {
+    public PizzaPostDto(Long id, Long order, Long pizzaSize, List<Long> flavors, List<Long> edges, Integer quantity) {
         this.id = id;
         this.order = order;
         this.pizzaSize = pizzaSize;
         this.flavors = flavors;
         this.edges = edges;
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -69,5 +71,13 @@ public class PizzaPostDto {
 
     public void setEdges(List<Long> edges) {
         this.edges = edges;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

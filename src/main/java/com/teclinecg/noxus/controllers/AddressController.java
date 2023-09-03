@@ -1,7 +1,7 @@
 package com.teclinecg.noxus.controllers;
 
 import com.teclinecg.noxus.dtos.AddressDto;
-import com.teclinecg.noxus.dtos.AddressPostDto;
+import com.teclinecg.noxus.dtos.post.AddressPostDto;
 import com.teclinecg.noxus.services.AddressService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;

@@ -1,9 +1,7 @@
 package com.teclinecg.noxus.services;
 
 import com.teclinecg.noxus.dtos.AddressDto;
-import com.teclinecg.noxus.dtos.AddressPostDto;
-import com.teclinecg.noxus.dtos.CustomerAccountDto;
-import com.teclinecg.noxus.dtos.CustomerAccountPostDto;
+import com.teclinecg.noxus.dtos.post.AddressPostDto;
 import com.teclinecg.noxus.exceptions.InvalidPageNumberException;
 import com.teclinecg.noxus.exceptions.InvalidPageRegisterSizeException;
 import com.teclinecg.noxus.exceptions.ResourceNotFoundException;

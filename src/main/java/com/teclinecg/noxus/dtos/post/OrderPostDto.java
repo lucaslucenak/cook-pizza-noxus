@@ -1,4 +1,4 @@
-package com.teclinecg.noxus.dtos;
+package com.teclinecg.noxus.dtos.post;
 
 import com.teclinecg.noxus.models.*;
 import jakarta.validation.constraints.DecimalMin;
@@ -17,7 +17,7 @@ public class OrderPostDto {
     private String observation;
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
-    private List<PizzaPostDto> pizzas;
+    private List<OrderPostPizzaDto> pizzas;
     private Map<Long, Integer> drinks; //DrinkId | Quantity
     private Long customerAccount;
     private Long address;
@@ -32,7 +32,7 @@ public class OrderPostDto {
         BeanUtils.copyProperties(orderModel, this);
     }
 
-    public OrderPostDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<PizzaPostDto> pizzas, Map<Long, Integer> drinks, Long customerAccount, Long address, Long paymentMethod, Long deliveryType) {
+    public OrderPostDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<OrderPostPizzaDto> pizzas, Map<Long, Integer> drinks, Long customerAccount, Long address, Long paymentMethod, Long deliveryType) {
         this.id = id;
         this.orderPrice = orderPrice;
         this.observation = observation;
@@ -86,11 +86,11 @@ public class OrderPostDto {
         this.arrivalForecast = arrivalForecast;
     }
 
-    public List<PizzaPostDto> getPizzas() {
+    public List<OrderPostPizzaDto> getPizzas() {
         return pizzas;
     }
 
-    public void setPizzas(List<PizzaPostDto> pizzas) {
+    public void setPizzas(List<OrderPostPizzaDto> pizzas) {
         this.pizzas = pizzas;
     }
 
