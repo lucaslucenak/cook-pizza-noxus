@@ -13,7 +13,6 @@ import java.util.Map;
 public class OrderPostDto {
 
     private Long id;
-    private Double orderPrice;
     private String observation;
     private LocalDateTime dispatchDateTime;
     private LocalDateTime arrivalForecast;
@@ -21,7 +20,6 @@ public class OrderPostDto {
     private Map<Long, Integer> drinks; //DrinkId | Quantity
     private Long customerAccount;
     private Long address;
-//    private Long deliveryTax;
     private Long paymentMethod;
     private Long deliveryType;
 
@@ -32,9 +30,8 @@ public class OrderPostDto {
         BeanUtils.copyProperties(orderModel, this);
     }
 
-    public OrderPostDto(Long id, Double orderPrice, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<OrderPostPizzaDto> pizzas, Map<Long, Integer> drinks, Long customerAccount, Long address, Long paymentMethod, Long deliveryType) {
+    public OrderPostDto(Long id, String observation, LocalDateTime dispatchDateTime, LocalDateTime arrivalForecast, List<OrderPostPizzaDto> pizzas, Map<Long, Integer> drinks, Long customerAccount, Long address, Long paymentMethod, Long deliveryType) {
         this.id = id;
-        this.orderPrice = orderPrice;
         this.observation = observation;
         this.dispatchDateTime = dispatchDateTime;
         this.arrivalForecast = arrivalForecast;
@@ -52,14 +49,6 @@ public class OrderPostDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getOrderPrice() {
-        return orderPrice;
-    }
-
-    public void setOrderPrice(Double orderPrice) {
-        this.orderPrice = orderPrice;
     }
 
     public String getObservation() {

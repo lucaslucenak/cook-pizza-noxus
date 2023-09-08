@@ -6,6 +6,7 @@ import com.teclinecg.noxus.models.OrderPizzaModel;
 import com.teclinecg.noxus.repositories.OrderPizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class OrderPizzaService {
         return orderPizzasReturnModels;
     }
 
+    @Transactional
     public void deleteOrderPizzasByOrderId(Long orderId) {
         if (orderPizzaRepository.findByIdOrderId(orderId).size() > 0) {
             orderPizzaRepository.deleteByIdOrderId(orderId);
